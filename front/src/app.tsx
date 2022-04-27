@@ -1,14 +1,19 @@
 import React from 'react';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
+import { useAppDispatch } from './app/hooks';
+import { useAppSelector } from './app/hooks';
+import { stateFalse, stateTrue } from './features/jwt/jwtSlice';
 
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = React.useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const authStatus: boolean = useAppSelector((state) => state.jwtBoolean.value);
 
-  const AreWeAuthenticated: () => Promise<void> = async () => {
+  const AreWeAuthenticated = async () => {
     try {
       const checkHeader = await fetch(
         'http://localhost:8000/authentication/verify',
@@ -20,7 +25,7 @@ const App: React.FC = () => {
 
       const parseRes = await checkHeader.json();
 
-      parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+      parseRes === true ? dispatch(stateTrue()) : dispatch(stateFalse());
     } catch (error) {
       console.error('Exception ' + error);
     }
@@ -30,16 +35,32 @@ const App: React.FC = () => {
     AreWeAuthenticated();
   }, []);
 
-  const setAuth = (boolean: boolean) => {
-    setIsAuthenticated(boolean)
-  }
-
   return (
     <>
       <h1>HELLO)))))0000</h1>
-      <Login />
-      <Register />
-      <Dashboard />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              !authStatus ? <Login /> : <Navigate to="/dashboard" replace />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              !authStatus ? <Register /> : <Navigate to="/dashboard" replace />
+            }
+          />
+          <Route
+            path="/dashboard"
+            element={
+              authStatus ? <Dashboard /> : <Navigate to="/login" replace />
+            }
+          />
+          <Route index element={<Login />} />
+        </Routes>
+      </BrowserRouter>
     </>
   );
 };

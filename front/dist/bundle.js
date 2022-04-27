@@ -835,19 +835,23 @@ if (false) {}
  *   return <div>{store.getState()}</div>
  * }
  */
-function useReduxContext() {
-  const contextValue = useContext(ReactReduxContext);
+function useReduxContext_useReduxContext() {
+  const contextValue = (0,react.useContext)(Context_ReactReduxContext);
 
   if (false) {}
 
   return contextValue;
 }
+;// CONCATENATED MODULE: ./node_modules/react-redux/es/utils/useSyncExternalStore.js
+const useSyncExternalStore_notInitialized = () => {
+  throw new Error('uSES not initialized!');
+};
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/hooks/useSelector.js
 
 
 
 
-let useSyncExternalStoreWithSelector = (/* unused pure expression or super */ null && (notInitialized));
+let useSyncExternalStoreWithSelector = useSyncExternalStore_notInitialized;
 const initializeUseSelector = fn => {
   useSyncExternalStoreWithSelector = fn;
 };
@@ -861,8 +865,8 @@ const refEquality = (a, b) => a === b;
  */
 
 
-function createSelectorHook(context = ReactReduxContext) {
-  const useReduxContext = context === ReactReduxContext ? useDefaultReduxContext : () => useContext(context);
+function createSelectorHook(context = Context_ReactReduxContext) {
+  const useReduxContext = context === Context_ReactReduxContext ? useReduxContext_useReduxContext : () => (0,react.useContext)(context);
   return function useSelector(selector, equalityFn = refEquality) {
     if (false) {}
 
@@ -872,7 +876,7 @@ function createSelectorHook(context = ReactReduxContext) {
       getServerState
     } = useReduxContext();
     const selectedState = useSyncExternalStoreWithSelector(subscription.addNestedSub, store.getState, getServerState || store.getState, selector, equalityFn);
-    useDebugValue(selectedState);
+    (0,react.useDebugValue)(selectedState);
     return selectedState;
   };
 }
@@ -900,7 +904,7 @@ function createSelectorHook(context = ReactReduxContext) {
  * }
  */
 
-const useSelector = /*#__PURE__*/(/* unused pure expression or super */ null && (createSelectorHook()));
+const useSelector = /*#__PURE__*/createSelectorHook();
 // EXTERNAL MODULE: ./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js
 var hoist_non_react_statics_cjs = __webpack_require__(679);
 // EXTERNAL MODULE: ./node_modules/react-is/index.js
@@ -1501,9 +1505,9 @@ function Provider({
  * @returns {Function} A `useStore` hook bound to the specified context.
  */
 
-function useStore_createStoreHook(context = ReactReduxContext) {
+function createStoreHook(context = Context_ReactReduxContext) {
   const useReduxContext = // @ts-ignore
-  context === ReactReduxContext ? useDefaultReduxContext : () => useContext(context);
+  context === Context_ReactReduxContext ? useReduxContext_useReduxContext : () => (0,react.useContext)(context);
   return function useStore() {
     const {
       store
@@ -1528,7 +1532,7 @@ function useStore_createStoreHook(context = ReactReduxContext) {
  * }
  */
 
-const useStore = /*#__PURE__*/(/* unused pure expression or super */ null && (useStore_createStoreHook()));
+const useStore_useStore = /*#__PURE__*/createStoreHook();
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/hooks/useDispatch.js
 
 
@@ -1539,9 +1543,9 @@ const useStore = /*#__PURE__*/(/* unused pure expression or super */ null && (us
  * @returns {Function} A `useDispatch` hook bound to the specified context.
  */
 
-function createDispatchHook(context = ReactReduxContext) {
+function createDispatchHook(context = Context_ReactReduxContext) {
   const useStore = // @ts-ignore
-  context === ReactReduxContext ? useDefaultStore : createStoreHook(context);
+  context === Context_ReactReduxContext ? useStore_useStore : createStoreHook(context);
   return function useDispatch() {
     const store = useStore(); // @ts-ignore
 
@@ -1570,7 +1574,7 @@ function createDispatchHook(context = ReactReduxContext) {
  * }
  */
 
-const useDispatch = /*#__PURE__*/(/* unused pure expression or super */ null && (createDispatchHook()));
+const useDispatch = /*#__PURE__*/createDispatchHook();
 ;// CONCATENATED MODULE: ./node_modules/react-redux/es/exports.js
 
 
@@ -4139,13 +4143,24 @@ const store = configureStore({
     },
 });
 
-;// CONCATENATED MODULE: ./src/pages/dashboard.tsx
+;// CONCATENATED MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+function extends_extends() {
+  extends_extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
 
-const Dashboard = () => {
-    return ((0,jsx_runtime.jsx)(jsx_runtime.Fragment, { children: (0,jsx_runtime.jsx)("h1", { children: "dashboard" }) }));
-};
-/* harmony default export */ const dashboard = (Dashboard);
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
 
+    return target;
+  };
+
+  return extends_extends.apply(this, arguments);
+}
 ;// CONCATENATED MODULE: ./node_modules/history/index.js
 
 
@@ -4154,7 +4169,7 @@ const Dashboard = () => {
  *
  * @see https://github.com/remix-run/history/tree/main/docs/api-reference.md#action
  */
-var history_Action;
+var Action;
 
 (function (Action) {
   /**
@@ -4178,11 +4193,11 @@ var history_Action;
    */
 
   Action["Replace"] = "REPLACE";
-})(history_Action || (history_Action = {}));
+})(Action || (Action = {}));
 
-var readOnly = (/* unused pure expression or super */ null && ( false ? 0 : function (obj) {
+var readOnly =  false ? 0 : function (obj) {
   return obj;
-}));
+};
 
 function history_warning(cond, message) {
   if (!cond) {
@@ -4211,7 +4226,7 @@ var PopStateEventType = 'popstate';
  * @see https://github.com/remix-run/history/tree/main/docs/api-reference.md#createbrowserhistory
  */
 
-function history_createBrowserHistory(options) {
+function createBrowserHistory(options) {
   if (options === void 0) {
     options = {};
   }
@@ -4243,7 +4258,7 @@ function history_createBrowserHistory(options) {
       blockers.call(blockedPopTx);
       blockedPopTx = null;
     } else {
-      var nextAction = history_Action.Pop;
+      var nextAction = Action.Pop;
 
       var _getIndexAndLocation = getIndexAndLocation(),
           nextIndex = _getIndexAndLocation[0],
@@ -4276,7 +4291,7 @@ function history_createBrowserHistory(options) {
   }
 
   window.addEventListener(PopStateEventType, handlePop);
-  var action = history_Action.Pop;
+  var action = Action.Pop;
 
   var _getIndexAndLocation2 = getIndexAndLocation(),
       index = _getIndexAndLocation2[0],
@@ -4287,13 +4302,13 @@ function history_createBrowserHistory(options) {
 
   if (index == null) {
     index = 0;
-    globalHistory.replaceState(_extends({}, globalHistory.state, {
+    globalHistory.replaceState(extends_extends({}, globalHistory.state, {
       idx: index
     }), '');
   }
 
   function createHref(to) {
-    return typeof to === 'string' ? to : createPath(to);
+    return typeof to === 'string' ? to : history_createPath(to);
   } // state defaults to `null` because `window.history.state` does
 
 
@@ -4302,7 +4317,7 @@ function history_createBrowserHistory(options) {
       state = null;
     }
 
-    return readOnly(_extends({
+    return readOnly(extends_extends({
       pathname: location.pathname,
       hash: '',
       search: ''
@@ -4342,7 +4357,7 @@ function history_createBrowserHistory(options) {
   }
 
   function push(to, state) {
-    var nextAction = history_Action.Push;
+    var nextAction = Action.Push;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4369,7 +4384,7 @@ function history_createBrowserHistory(options) {
   }
 
   function replace(to, state) {
-    var nextAction = history_Action.Replace;
+    var nextAction = Action.Replace;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4478,7 +4493,7 @@ function history_createHashHistory(options) {
       blockers.call(blockedPopTx);
       blockedPopTx = null;
     } else {
-      var nextAction = history_Action.Pop;
+      var nextAction = Action.Pop;
 
       var _getIndexAndLocation4 = getIndexAndLocation(),
           nextIndex = _getIndexAndLocation4[0],
@@ -4518,11 +4533,11 @@ function history_createHashHistory(options) {
         nextLocation = _getIndexAndLocation5[1]; // Ignore extraneous hashchange events.
 
 
-    if (createPath(nextLocation) !== createPath(location)) {
+    if (history_createPath(nextLocation) !== history_createPath(location)) {
       handlePop();
     }
   });
-  var action = history_Action.Pop;
+  var action = Action.Pop;
 
   var _getIndexAndLocation6 = getIndexAndLocation(),
       index = _getIndexAndLocation6[0],
@@ -4552,7 +4567,7 @@ function history_createHashHistory(options) {
   }
 
   function createHref(to) {
-    return getBaseHref() + '#' + (typeof to === 'string' ? to : createPath(to));
+    return getBaseHref() + '#' + (typeof to === 'string' ? to : history_createPath(to));
   }
 
   function getNextLocation(to, state) {
@@ -4600,7 +4615,7 @@ function history_createHashHistory(options) {
   }
 
   function push(to, state) {
-    var nextAction = history_Action.Push;
+    var nextAction = Action.Push;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4629,7 +4644,7 @@ function history_createHashHistory(options) {
   }
 
   function replace(to, state) {
-    var nextAction = history_Action.Replace;
+    var nextAction = Action.Replace;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4723,13 +4738,13 @@ function history_createMemoryHistory(options) {
     return location;
   });
   var index = clamp(initialIndex == null ? entries.length - 1 : initialIndex, 0, entries.length - 1);
-  var action = history_Action.Pop;
+  var action = Action.Pop;
   var location = entries[index];
   var listeners = createEvents();
   var blockers = createEvents();
 
   function createHref(to) {
-    return typeof to === 'string' ? to : createPath(to);
+    return typeof to === 'string' ? to : history_createPath(to);
   }
 
   function getNextLocation(to, state) {
@@ -4765,7 +4780,7 @@ function history_createMemoryHistory(options) {
   }
 
   function push(to, state) {
-    var nextAction = history_Action.Push;
+    var nextAction = Action.Push;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4782,7 +4797,7 @@ function history_createMemoryHistory(options) {
   }
 
   function replace(to, state) {
-    var nextAction = history_Action.Replace;
+    var nextAction = Action.Replace;
     var nextLocation = getNextLocation(to, state);
 
     function retry() {
@@ -4799,7 +4814,7 @@ function history_createMemoryHistory(options) {
 
   function go(delta) {
     var nextIndex = clamp(index + delta, 0, entries.length - 1);
-    var nextAction = history_Action.Pop;
+    var nextAction = Action.Pop;
     var nextLocation = entries[nextIndex];
 
     function retry() {
@@ -4891,7 +4906,7 @@ function createKey() {
  */
 
 
-function createPath(_ref) {
+function history_createPath(_ref) {
   var _ref$pathname = _ref.pathname,
       pathname = _ref$pathname === void 0 ? '/' : _ref$pathname,
       _ref$search = _ref.search,
@@ -5022,7 +5037,7 @@ function matchRoutes(routes, locationArg, basename) {
     basename = "/";
   }
 
-  let location = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+  let location = typeof locationArg === "string" ? history_parsePath(locationArg) : locationArg;
   let pathname = stripBasename(location.pathname || "/", basename);
 
   if (pathname == null) {
@@ -5101,7 +5116,7 @@ const dynamicSegmentValue = 3;
 const indexRouteValue = 2;
 const emptySegmentValue = 1;
 const staticSegmentValue = 10;
-const splatPenalty = (/* unused pure expression or super */ null && (-2));
+const splatPenalty = -2;
 
 const isSplat = s => s === "*";
 
@@ -5340,7 +5355,7 @@ function resolveTo(toArg, routePathnames, locationPathname) {
 }
 function getToPathname(to) {
   // Empty strings should be treated the same as / paths
-  return to === "" || to.pathname === "" ? "/" : typeof to === "string" ? history_parsePath(to).pathname : to.pathname;
+  return to === "" || to.pathname === "" ? "/" : typeof to === "string" ? parsePath(to).pathname : to.pathname;
 }
 function stripBasename(pathname, basename) {
   if (basename === "/") return pathname;
@@ -5372,12 +5387,12 @@ const normalizeHash = hash => !hash || hash === "#" ? "" : hash.startsWith("#") 
  * @see https://reactrouter.com/docs/en/v6/api#usehref
  */
 
-function useHref(to) {
+function react_router_useHref(to) {
   !useInRouterContext() ?  false ? 0 : react_router_invariant(false) : void 0;
   let {
     basename,
     navigator
-  } = (0,react.useContext)(NavigationContext);
+  } = useContext(NavigationContext);
   let {
     hash,
     pathname,
@@ -5547,12 +5562,12 @@ function useParams() {
 function react_router_useResolvedPath(to) {
   let {
     matches
-  } = (0,react.useContext)(RouteContext);
+  } = useContext(RouteContext);
   let {
     pathname: locationPathname
   } = react_router_useLocation();
   let routePathnamesJson = JSON.stringify(matches.map(match => match.pathnameBase));
-  return (0,react.useMemo)(() => resolveTo(to, JSON.parse(routePathnamesJson), locationPathname), [to, routePathnamesJson, locationPathname]);
+  return useMemo(() => resolveTo(to, JSON.parse(routePathnamesJson), locationPathname), [to, routePathnamesJson, locationPathname]);
 }
 /**
  * Returns the element of the route that matched the current location, prepared
@@ -5567,7 +5582,7 @@ function useRoutes(routes, locationArg) {
   !useInRouterContext() ?  false ? 0 : react_router_invariant(false) : void 0;
   let {
     matches: parentMatches
-  } = useContext(RouteContext);
+  } = (0,react.useContext)(RouteContext);
   let routeMatch = parentMatches[parentMatches.length - 1];
   let parentParams = routeMatch ? routeMatch.params : {};
   let parentPathname = routeMatch ? routeMatch.pathname : "/";
@@ -5582,7 +5597,7 @@ function useRoutes(routes, locationArg) {
   if (locationArg) {
     var _parsedLocationArg$pa;
 
-    let parsedLocationArg = typeof locationArg === "string" ? parsePath(locationArg) : locationArg;
+    let parsedLocationArg = typeof locationArg === "string" ? history_parsePath(locationArg) : locationArg;
     !(parentPathnameBase === "/" || ((_parsedLocationArg$pa = parsedLocationArg.pathname) == null ? void 0 : _parsedLocationArg$pa.startsWith(parentPathnameBase))) ?  false ? 0 : react_router_invariant(false) : void 0;
     location = parsedLocationArg;
   } else {
@@ -5610,7 +5625,7 @@ function _renderMatches(matches, parentMatches) {
 
   if (matches == null) return null;
   return matches.reduceRight((outlet, match, index) => {
-    return /*#__PURE__*/createElement(RouteContext.Provider, {
+    return /*#__PURE__*/(0,react.createElement)(RouteContext.Provider, {
       children: match.route.element !== undefined ? match.route.element : outlet,
       value: {
         outlet,
@@ -5674,7 +5689,7 @@ function Navigate(_ref2) {
   !useInRouterContext() ?  false ? 0 : react_router_invariant(false) : void 0;
    false ? 0 : void 0;
   let navigate = react_router_useNavigate();
-  useEffect(() => {
+  (0,react.useEffect)(() => {
     navigate(to, {
       replace,
       state
@@ -5721,14 +5736,14 @@ function react_router_Router(_ref3) {
   } = _ref3;
   !!useInRouterContext() ?  false ? 0 : react_router_invariant(false) : void 0;
   let basename = normalizePathname(basenameProp);
-  let navigationContext = useMemo(() => ({
+  let navigationContext = (0,react.useMemo)(() => ({
     basename,
     navigator,
     static: staticProp
   }), [basename, navigator, staticProp]);
 
   if (typeof locationProp === "string") {
-    locationProp = parsePath(locationProp);
+    locationProp = history_parsePath(locationProp);
   }
 
   let {
@@ -5738,7 +5753,7 @@ function react_router_Router(_ref3) {
     state = null,
     key = "default"
   } = locationProp;
-  let location = useMemo(() => {
+  let location = (0,react.useMemo)(() => {
     let trailingPathname = stripBasename(pathname, basename);
 
     if (trailingPathname == null) {
@@ -5759,9 +5774,9 @@ function react_router_Router(_ref3) {
     return null;
   }
 
-  return /*#__PURE__*/createElement(NavigationContext.Provider, {
+  return /*#__PURE__*/(0,react.createElement)(NavigationContext.Provider, {
     value: navigationContext
-  }, /*#__PURE__*/createElement(LocationContext.Provider, {
+  }, /*#__PURE__*/(0,react.createElement)(LocationContext.Provider, {
     children: children,
     value: {
       location,
@@ -5796,14 +5811,14 @@ function Routes(_ref4) {
 
 function createRoutesFromChildren(children) {
   let routes = [];
-  Children.forEach(children, element => {
-    if (! /*#__PURE__*/isValidElement(element)) {
+  react.Children.forEach(children, element => {
+    if (! /*#__PURE__*/(0,react.isValidElement)(element)) {
       // Ignore non-elements. This allows people to more easily inline
       // conditionals in their route config.
       return;
     }
 
-    if (element.type === Fragment) {
+    if (element.type === react.Fragment) {
       // Transparently support React.Fragment and its children.
       routes.push.apply(routes, createRoutesFromChildren(element.props.children));
       return;
@@ -5885,7 +5900,7 @@ function react_router_dom_objectWithoutPropertiesLoose(source, excluded) {
   return target;
 }
 
-const react_router_dom_excluded = ["onClick", "reloadDocument", "replace", "state", "target", "to"],
+const react_router_dom_excluded = (/* unused pure expression or super */ null && (["onClick", "reloadDocument", "replace", "state", "target", "to"])),
       _excluded2 = (/* unused pure expression or super */ null && (["aria-current", "caseSensitive", "className", "end", "style", "to", "children"]));
 
 function react_router_dom_warning(cond, message) {
@@ -5915,7 +5930,7 @@ function BrowserRouter(_ref) {
     children,
     window
   } = _ref;
-  let historyRef = useRef();
+  let historyRef = (0,react.useRef)();
 
   if (historyRef.current == null) {
     historyRef.current = createBrowserHistory({
@@ -5924,12 +5939,12 @@ function BrowserRouter(_ref) {
   }
 
   let history = historyRef.current;
-  let [state, setState] = useState({
+  let [state, setState] = (0,react.useState)({
     action: history.action,
     location: history.location
   });
-  useLayoutEffect(() => history.listen(setState), [history]);
-  return /*#__PURE__*/createElement(Router, {
+  (0,react.useLayoutEffect)(() => history.listen(setState), [history]);
+  return /*#__PURE__*/(0,react.createElement)(react_router_Router, {
     basename: basename,
     children: children,
     location: state.location,
@@ -6006,7 +6021,7 @@ function isModifiedEvent(event) {
 /**
  * The public API for rendering a history-aware <a>.
  */
-const Link = /*#__PURE__*/(0,react.forwardRef)(function LinkWithRef(_ref4, ref) {
+const Link = /*#__PURE__*/(/* unused pure expression or super */ null && (forwardRef(function LinkWithRef(_ref4, ref) {
   let {
     onClick,
     reloadDocument,
@@ -6035,14 +6050,14 @@ const Link = /*#__PURE__*/(0,react.forwardRef)(function LinkWithRef(_ref4, ref) 
   return (
     /*#__PURE__*/
     // eslint-disable-next-line jsx-a11y/anchor-has-content
-    (0,react.createElement)("a", react_router_dom_extends({}, rest, {
+    createElement("a", react_router_dom_extends({}, rest, {
       href: href,
       onClick: handleClick,
       ref: ref,
       target: target
     }))
   );
-});
+})));
 
 if (false) {}
 
@@ -6119,10 +6134,10 @@ function useLinkClickHandler(to, _temp) {
     replace: replaceProp,
     state
   } = _temp === void 0 ? {} : _temp;
-  let navigate = react_router_useNavigate();
-  let location = react_router_useLocation();
-  let path = react_router_useResolvedPath(to);
-  return (0,react.useCallback)(event => {
+  let navigate = useNavigate();
+  let location = useLocation();
+  let path = useResolvedPath(to);
+  return useCallback(event => {
     if (event.button === 0 && ( // Ignore everything but left clicks
     !target || target === "_self") && // Let browser handle "target=_blank" etc.
     !isModifiedEvent(event) // Ignore clicks with modifier keys
@@ -6202,7 +6217,12 @@ function createSearchParams(init) {
 
 //# sourceMappingURL=index.js.map
 
-;// CONCATENATED MODULE: ./src/pages/login.tsx
+;// CONCATENATED MODULE: ./src/app/hooks.ts
+
+const useAppDispatch = () => useDispatch();
+const useAppSelector = useSelector;
+
+;// CONCATENATED MODULE: ./src/pages/dashboard.tsx
 var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -6215,7 +6235,38 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 
+const Dashboard = () => {
+    const dispatch = useAppDispatch();
+    const Logout = (e) => __awaiter(void 0, void 0, void 0, function* () {
+        e.preventDefault();
+        try {
+            localStorage.removeItem('token');
+            dispatch(stateFalse());
+        }
+        catch (error) {
+            console.error('Exception ' + error);
+        }
+    });
+    return ((0,jsx_runtime.jsxs)(jsx_runtime.Fragment, { children: [(0,jsx_runtime.jsx)("h1", { children: "Dashboard" }), (0,jsx_runtime.jsx)("h2", { children: "Welcome, namee" }), (0,jsx_runtime.jsx)("button", Object.assign({ onClick: (e) => Logout(e) }, { children: "Logout" }))] }));
+};
+/* harmony default export */ const dashboard = (Dashboard);
+
+;// CONCATENATED MODULE: ./src/pages/login.tsx
+var login_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+
 const Login = () => {
+    const dispatch = useDispatch();
     const [input, setInput] = react.useState({
         email: '',
         password: '',
@@ -6224,11 +6275,11 @@ const Login = () => {
     const onChange = (e) => {
         setInput(Object.assign(Object.assign({}, input), { [e.target.name]: e.target.value }));
     };
-    const ClickedSubmit = (e) => __awaiter(void 0, void 0, void 0, function* () {
+    const ClickedSubmit = (e) => login_awaiter(void 0, void 0, void 0, function* () {
         e.preventDefault();
         try {
             const body = { email, password };
-            const response = yield fetch('http://localhost:5000/authentication/login', {
+            const response = yield fetch('http://localhost:8000/authentication/login', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json',
@@ -6238,15 +6289,17 @@ const Login = () => {
             const parseRes = yield response.json();
             if (parseRes.jwtToken) {
                 localStorage.setItem('token', parseRes.jwtToken);
+                dispatch(stateTrue());
             }
             else {
+                dispatch(stateFalse());
             }
         }
         catch (error) {
             console.error('Exception ' + error);
         }
     });
-    return ((0,jsx_runtime.jsxs)(jsx_runtime.Fragment, { children: [(0,jsx_runtime.jsx)("h1", { children: "Login" }), (0,jsx_runtime.jsxs)("form", Object.assign({ onSubmit: () => ClickedSubmit }, { children: [(0,jsx_runtime.jsx)("input", { type: "text", name: "email", value: email, onChange: (e) => onChange(e) }), (0,jsx_runtime.jsx)("input", { type: "password", name: "password", value: password, onChange: (e) => onChange(e) }), (0,jsx_runtime.jsx)("button", Object.assign({ type: "submit" }, { children: "Submit" }))] })), (0,jsx_runtime.jsx)(Link, Object.assign({ to: "/register" }, { children: "Register" }))] }));
+    return ((0,jsx_runtime.jsxs)(jsx_runtime.Fragment, { children: [(0,jsx_runtime.jsx)("h1", { children: "Login" }), (0,jsx_runtime.jsxs)("form", Object.assign({ onSubmit: () => ClickedSubmit }, { children: [(0,jsx_runtime.jsx)("input", { type: "text", name: "email", value: email, onChange: (e) => onChange(e) }), (0,jsx_runtime.jsx)("input", { type: "password", name: "password", value: password, onChange: (e) => onChange(e) }), (0,jsx_runtime.jsx)("button", Object.assign({ type: 'submit' }, { children: "Submit" }))] }))] }));
 };
 /* harmony default export */ const login = (Login);
 
@@ -6292,8 +6345,13 @@ var app_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argu
 
 
 
+
+
+
+
 const App = () => {
-    const [isAuthenticated, setIsAuthenticated] = react.useState(false);
+    const dispatch = useAppDispatch();
+    const authStatus = useAppSelector((state) => state.jwtBoolean.value);
     const AreWeAuthenticated = () => app_awaiter(void 0, void 0, void 0, function* () {
         try {
             const checkHeader = yield fetch('http://localhost:8000/authentication/verify', {
@@ -6301,7 +6359,7 @@ const App = () => {
                 headers: { jwtToken: localStorage.token },
             });
             const parseRes = yield checkHeader.json();
-            parseRes === true ? setIsAuthenticated(true) : setIsAuthenticated(false);
+            parseRes === true ? dispatch(stateTrue()) : dispatch(stateFalse());
         }
         catch (error) {
             console.error('Exception ' + error);
@@ -6310,10 +6368,7 @@ const App = () => {
     react.useEffect(() => {
         AreWeAuthenticated();
     }, []);
-    const setAuth = (boolean) => {
-        setIsAuthenticated(boolean);
-    };
-    return ((0,jsx_runtime.jsxs)(jsx_runtime.Fragment, { children: [(0,jsx_runtime.jsx)("h1", { children: "HELLO)))))0000" }), (0,jsx_runtime.jsx)(login, {}), (0,jsx_runtime.jsx)(register, {}), (0,jsx_runtime.jsx)(dashboard, {})] }));
+    return ((0,jsx_runtime.jsxs)(jsx_runtime.Fragment, { children: [(0,jsx_runtime.jsx)("h1", { children: "HELLO)))))0000" }), (0,jsx_runtime.jsx)(BrowserRouter, { children: (0,jsx_runtime.jsxs)(Routes, { children: [(0,jsx_runtime.jsx)(Route, { path: "/login", element: !authStatus ? (0,jsx_runtime.jsx)(login, {}) : (0,jsx_runtime.jsx)(Navigate, { to: "/dashboard", replace: true }) }), (0,jsx_runtime.jsx)(Route, { path: "/register", element: !authStatus ? (0,jsx_runtime.jsx)(register, {}) : (0,jsx_runtime.jsx)(Navigate, { to: "/dashboard", replace: true }) }), (0,jsx_runtime.jsx)(Route, { path: "/dashboard", element: authStatus ? (0,jsx_runtime.jsx)(dashboard, {}) : (0,jsx_runtime.jsx)(Navigate, { to: "/login", replace: true }) }), (0,jsx_runtime.jsx)(Route, { index: true, element: (0,jsx_runtime.jsx)(login, {}) })] }) })] }));
 };
 /* harmony default export */ const app = (App);
 

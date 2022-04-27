@@ -1,7 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { useDispatch } from 'react-redux';
+import { stateFalse, stateTrue } from '../features/jwt/jwtSlice';
+
 const Login: React.FC = () => {
+  const dispatch = useDispatch();
+
   const [input, setInput] = React.useState({
     email: '',
     password: '',
@@ -20,7 +25,7 @@ const Login: React.FC = () => {
       const body = { email, password };
 
       const response = await fetch(
-        'http://localhost:5000/authentication/login',
+        'http://localhost:8000/authentication/login',
         {
           method: 'POST',
           headers: {
@@ -35,9 +40,11 @@ const Login: React.FC = () => {
       if (parseRes.jwtToken) {
         localStorage.setItem('token', parseRes.jwtToken);
 
+        dispatch(stateTrue());
         // setAuth(true);
         // toast.success("Logged in Successfully");
       } else {
+        dispatch(stateFalse());
         // setAuth(false);
         // toast.error(parseRes);
       }
@@ -63,9 +70,9 @@ const Login: React.FC = () => {
           value={password}
           onChange={(e) => onChange(e)}
         />
-        <button type="submit">Submit</button>
+        <button type='submit'>Submit</button>
       </form>
-      <Link to="/register">Register</Link>
+      {/* <Link to="/register">Register</Link> */}
     </>
   );
 };
