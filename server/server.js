@@ -8,7 +8,9 @@ app.use(cors());
 
 //routes
 const authRoute = require('./routes/authRoute')
+const dashboardRouter = require('./routes/dashboard')
 app.use('/auth', authRoute);
+app.use('/dashboard', dashboardRouter)
 
 
 app.listen(port, () => {

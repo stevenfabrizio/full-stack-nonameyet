@@ -2,9 +2,11 @@ const pool = require('pg');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utilities/jwtGenerator');
+const validInfo = require('../middleware/validInfo');
+const authorization = require('../middleware/authorization');
 
 //register router
-router.post('/register', async (req, res) => {
+router.post('/register', validInfo, async (req, res) => {
   try {
     //1 get register info
     const { name, email, password } = req.body;
@@ -40,7 +42,7 @@ router.post('/register', async (req, res) => {
 });
 
 //login route
-router.post('/login', async (req, res) => {
+router.post('/login', validInfo, async (req, res) => {
   try {
     //1 get login info
     const { email, password } = req.body;
@@ -65,9 +67,20 @@ router.post('/login', async (req, res) => {
     //4 give them jwt token
     const token = jwtGenerator(user.rows[0].user_id);
     res.json({ token });
-    
   } catch (error) {
     console.error('Exception ' + error);
+  }
+});
+
+//verify route
+router.get('/is-verify', authorization, async (req, res) => {
+  try {
+
+    //if person is valid, return res.json true
+    res.json(true);
+  } catch (error) {
+    console.error('Exception ' + error);
+    res.status(500).send('Not Authorized.');
   }
 });
 
