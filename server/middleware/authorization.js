@@ -10,7 +10,7 @@ module.exports = function (req, res, next) {
 
   // Check if not token
   if (!token) {
-    return res.status(403).json({ msg: 'Authorization denied.' });
+    return res.status(403).json({ msg: 'Authorization denied. No jwtToken.' });
   }
 
   // Verify token
