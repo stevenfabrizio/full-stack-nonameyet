@@ -1,7 +1,10 @@
+--list of useful postgresql commands here
+
 psql -U postgres
-\c fullstacker
 
 CREATE DATABASE fullstacker;
+
+\c fullstacker
 
 create extension if not exists "uuid_ossp";
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
