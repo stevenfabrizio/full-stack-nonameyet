@@ -7,11 +7,10 @@ app.use(express.json());
 app.use(cors());
 
 //routes
-const authRoute = require('./routes/authRoute')
-const dashboardRouter = require('./routes/dashboard')
+const authRoute = require('./routes/authRoute');
+const dashboardRouter = require('./routes/dashboard');
 app.use('/auth', authRoute);
-app.use('/dashboard', dashboardRouter)
-
+app.use('/dashboard', dashboardRouter);
 
 app.listen(port, () => {
   console.log(`Running on port ${port}`);

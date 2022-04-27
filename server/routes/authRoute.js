@@ -1,4 +1,4 @@
-const pool = require('pg');
+const pool = require('../db');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const jwtGenerator = require('../utilities/jwtGenerator');
@@ -17,7 +17,7 @@ router.post('/register', validInfo, async (req, res) => {
     ]);
     //   res.json(user.rows);
 
-    if (user.rows.length !== 0) {
+    if (user.rows.length > 0) {
       return res.status(401).send('E-mail Already Exists.');
     }
 
@@ -27,14 +27,15 @@ router.post('/register', validInfo, async (req, res) => {
     const bcryptPassword = await bcrypt.hash(password, salt);
 
     //4 enter user in our database
-    const newUser = await pool.query(
+    let newUser = await pool.query(
       'INSERT INTO users (user_name, user_email, user_password) VALUES ($1, $2, $3) RETURNING *',
       [name, email, bcryptPassword]
     );
 
-    //5 generating jwt token
-    const token = jwtGenerator(newUser.rows[0].user_id);
-    res.json({ token });
+    // 5 generating jwt token
+    const jwtToken = jwtGenerator(newUser.rows[0].user_id);
+    return res.json({ jwtToken });
+    //
   } catch (error) {
     console.error('Exception ' + error);
     res.status(500).send('Server Error');
@@ -51,10 +52,10 @@ router.post('/login', validInfo, async (req, res) => {
     const user = await pool.query('SELECT * FROM users WHERE user_email = $1', [
       email,
     ]);
-
     if (user.rows.length === 0) {
       return res.status(401).send('Wrong e-mail or password.');
     }
+
     //3 check if their password matches db password
     const validPassword = await bcrypt.compare(
       password,
@@ -62,20 +63,20 @@ router.post('/login', validInfo, async (req, res) => {
     );
 
     if (!validPassword) {
+      return res.status(401).json('Invalid login password');
     }
 
     //4 give them jwt token
-    const token = jwtGenerator(user.rows[0].user_id);
-    res.json({ token });
+    const jwtToken = jwtGenerator(user.rows[0].user_id);
+    return res.json({ jwtToken });
   } catch (error) {
     console.error('Exception ' + error);
   }
 });
 
 //verify route
-router.get('/is-verify', authorization, async (req, res) => {
+router.post('/verify', authorization, async (req, res) => {
   try {
-
     //if person is valid, return res.json true
     res.json(true);
   } catch (error) {
