@@ -11,7 +11,7 @@ import Register from './pages/register';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const authStatus: boolean = useAppSelector((state) => state.jwtBoolean.value);
+  const authStatus: boolean = useAppSelector((state: { jwtBoolean: { value: any; }; }) => state.jwtBoolean.value);
 
   //gets the previous entered email and password from localstorage and attempts to log back in with that info.
   const AutoLogin = async () => {
