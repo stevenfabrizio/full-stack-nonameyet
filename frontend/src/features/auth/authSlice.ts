@@ -2,17 +2,21 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 // Define a type for the slice state
-interface jwtState {
+interface authState {
   value: boolean;
 }
 
 // Define the initial state using that type
-const initialState: jwtState = {
-  value: false,
+// const initialState: jwtState = {
+//   value: false,
+// };
+
+const initialState: authState = {
+  value: localStorage.getItem('LoggedInOrNot')==='yes',
 };
 
-export const jwtSlice = createSlice({
-  name: 'jwtBoolean',
+export const authSlice = createSlice({
+  name: 'authBoolean',
   initialState,
   reducers: {
     // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -21,17 +25,19 @@ export const jwtSlice = createSlice({
     // immutable state based off those changes
     stateTrue: (state) => {
       state.value = true;
+      localStorage.setItem('LoggedInOrNot', 'yes')
     },
     stateFalse: (state) => {
       state.value = false;
+      localStorage.setItem('LoggedInOrNot', 'no')
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { stateTrue, stateFalse } = jwtSlice.actions;
+export const { stateTrue, stateFalse } = authSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectJwt = (state: RootState) => state.jwtBoolean.value;
+export const selectAuth = (state: RootState) => state.authBoolean.value;
 
-export default jwtSlice.reducer;
+export default authSlice.reducer;

@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../app/hooks';
-import { stateFalse, stateTrue } from '../features/jwt/jwtSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { stateFalse, stateTrue } from '../features/auth/authSlice';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
+  const authStatus: boolean = useAppSelector(
+    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+  );
 
   const [inputs, setInputs] = React.useState({
     email: '',
@@ -42,6 +46,9 @@ const Register: React.FC = () => {
         localStorage.setItem('enteredEmail', email);
         localStorage.setItem('enteredPassword', password);
         dispatch(stateTrue());
+
+        // <Navigate to="/" replace />
+        navigate('/')
         // <Navigate to="/dashboard" replace />;
         //toast success
       } else {
@@ -51,6 +58,19 @@ const Register: React.FC = () => {
       console.error('Exception ' + error);
     }
   };
+
+  React.useEffect(() => {
+    console.log(authStatus)
+    if(localStorage.getItem('LoggedInOrNot') === 'yes'){
+      dispatch(stateTrue())
+      console.log(authStatus)
+      navigate('/');
+    }
+
+    // if(authStatus === true){
+    //   navigate('/');
+    // }
+  }, []);
 
   return (
     <>

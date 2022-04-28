@@ -1,28 +1,34 @@
 import React from 'react';
-// import { Navigate } from 'react-router-dom';
-import { useAppDispatch } from '../app/hooks';
-import { stateFalse } from '../features/jwt/jwtSlice';
+import { useNavigate, Navigate } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { stateFalse } from '../features/auth/authSlice';
 
 const Dashboard: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const authStatus: boolean = useAppSelector(
+    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+  );
 
-  // const GetProfile
-  const Logout = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const Logout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
 
-    try {
-      localStorage.removeItem('enteredEmail');
-      localStorage.removeItem('enteredPassword');
+    localStorage.removeItem('enteredEmail');
+    localStorage.removeItem('enteredPassword');
+    localStorage.removeItem('LoggedInOrNot');
 
-      dispatch(stateFalse());
-      // <Navigate to="/login" replace />;
-
-      // setAuth(false)
-      // toast success 'logged out successfully'
-    } catch (error) {
-      console.error('Exception ' + error);
-    }
+    dispatch(stateFalse());
+    // <Navigate to="/login" replace />;
+    navigate('/login');
   };
+
+  //if we get here accidently, leave if shouldnt be here.
+  React.useEffect(() => {
+    if (!authStatus) {
+      navigate('/login');
+    }
+  }, []);
+
   return (
     <>
       <h1>Dashboard</h1>

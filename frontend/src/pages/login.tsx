@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, Navigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../app/hooks';
-import { stateFalse, stateTrue } from '../features/jwt/jwtSlice';
+import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { stateFalse, stateTrue } from '../features/auth/authSlice';
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const authStatus: boolean = useAppSelector(
+    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+  );
 
   const [input, setInput] = React.useState({
     email: '',
@@ -20,13 +24,12 @@ const Login: React.FC = () => {
 
   const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    const body = { email, password };
+
+    localStorage.setItem('enteredEmail', email);
+    localStorage.setItem('enteredPassword', password);
 
     try {
-      const body = { email, password };
-
-      localStorage.setItem('enteredEmail', email);
-      localStorage.setItem('enteredPassword', password);
-
       const response = await fetch('/auth/login', {
         method: 'POST',
         headers: {
@@ -34,24 +37,31 @@ const Login: React.FC = () => {
         },
         body: JSON.stringify(body),
       });
+
       const parseRes = await response.json();
+
       console.log(parseRes);
 
       if (parseRes.LoggedIn) {
         console.log('good!');
         dispatch(stateTrue());
-        // setAuth(true);
-        // toast.success("Logged in Successfully");
+
+        // <Navigate to="/" replace />;
+        navigate('/');
+
       } else {
         dispatch(stateFalse());
-
-        // setAuth(false);
-        // toast.error(parseRes);
       }
     } catch (error) {
       console.error('Exception ' + error);
     }
   };
+
+  React.useEffect(() => {
+    if (authStatus === true) {
+      navigate('/');
+    }
+  }, []);
 
   return (
     <>

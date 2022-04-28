@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import jwtReducer from '../features/jwt/jwtSlice';
+import authReducer from '../features/auth/authSlice';
 
 export const store = configureStore({
   reducer: {
-    jwtBoolean: jwtReducer,
+    authBoolean: authReducer,
   },
 });
 
