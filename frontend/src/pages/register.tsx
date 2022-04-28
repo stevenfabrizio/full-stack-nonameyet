@@ -28,7 +28,7 @@ const Register: React.FC = () => {
       localStorage.setItem('enteredEmail', email);
       localStorage.setItem('enteredPassword', password);
 
-      const response = await fetch('https://haheha.herokuapp.com/auth/register', {
+      const response = await fetch('/auth/register', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
