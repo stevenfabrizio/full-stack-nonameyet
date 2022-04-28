@@ -27,7 +27,7 @@ const Login: React.FC = () => {
       localStorage.setItem('enteredEmail', email);
       localStorage.setItem('enteredPassword', password);
 
-      const response = await fetch('http://localhost:8000/auth/login', {
+      const response = await fetch('/auth/login', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',

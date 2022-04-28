@@ -6,3 +6,6 @@ https://youtu.be/cjqfF5hyZFg
 
 //original gh repo
 https://github.com/ousecTic/pern-jwt-tutorial
+
+//deployer
+https://www.youtube.com/watch?v=ZJxUOOND5_A&

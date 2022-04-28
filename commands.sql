@@ -19,6 +19,7 @@ CREATE TABLE users(
 
 --fake data insert SINGLE QUOTATIONS
 INSERT INTO users (user_name, user_email, user_password) VALUES ('agatha', 'ag55@gmail.com', 'nopassword');
+INSERT INTO users (user_name, user_email, user_password) VALUES ('1', '1@1.com', '1');
 
 --common command
 SELECT * FROM users;
