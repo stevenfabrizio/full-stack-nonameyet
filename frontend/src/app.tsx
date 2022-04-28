@@ -22,7 +22,7 @@ const App: React.FC = () => {
 
     if ((email && password) !== (null || undefined)) {
       const body = { email, password };
-      const response = await fetch('/auth/login', {
+      const response = await fetch('https://haheha.herokuapp.com/auth/login', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
