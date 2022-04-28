@@ -38,12 +38,16 @@ const Register: React.FC = () => {
 
       const parseRes = await response.json();
 
-      if (parseRes.didRegister) {
+      if (parseRes) {
         dispatch(stateTrue());
+        localStorage.setItem('enteredEmail', email);
+        localStorage.setItem('enteredPassword', password);
         //toast success
       }
+      else{
+        dispatch(stateFalse());
+      }
     } catch (error) {
-      dispatch(stateFalse());
       console.error('Exception ' + error);
     }
   };

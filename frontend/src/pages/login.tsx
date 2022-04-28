@@ -34,11 +34,7 @@ const Login: React.FC = () => {
         },
         body: JSON.stringify(body),
       });
-
-      console.log(JSON.stringify(body));
-
       const parseRes = await response.json();
-
       console.log(parseRes);
 
       if (parseRes.LoggedIn) {
@@ -47,7 +43,8 @@ const Login: React.FC = () => {
         dispatch(stateTrue());
         // setAuth(true);
         // toast.success("Logged in Successfully");
-      } else {
+      } 
+       else {
         dispatch(stateFalse());
         // setAuth(false);
         // toast.error(parseRes);

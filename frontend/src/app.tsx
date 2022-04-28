@@ -11,7 +11,9 @@ import Register from './pages/register';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const authStatus: boolean = useAppSelector((state: { jwtBoolean: { value: any; }; }) => state.jwtBoolean.value);
+  const authStatus: boolean = useAppSelector(
+    (state: { jwtBoolean: { value: any } }) => state.jwtBoolean.value
+  );
 
   //gets the previous entered email and password from localstorage and attempts to log back in with that info.
   const AutoLogin = async () => {
@@ -20,32 +22,35 @@ const App: React.FC = () => {
 
     console.log(email, password);
 
-    if ((email && password) !== (null || undefined)) {
-      const body = { email, password };
-      const response = await fetch('/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
+    try {
+      if (email !== (null || undefined)) {
+        const body = { email, password };
+        console.log(body)
 
-      // console.log(JSON.stringify(body));
+        const response = await fetch('/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        });
+        const parseRes = await response.json();
+        console.log(parseRes);
 
-      const parseRes = await response.json();
-
-      // console.log(parseRes);
-
-      if (parseRes.LoggedIn) {
-        console.log('good!');
-        dispatch(stateTrue());
-        // setAuth(true);
-        // toast.success("Logged in Successfully");
-      } else {
-        dispatch(stateFalse());
-        // setAuth(false);
-        // toast.error(parseRes);
+        if (parseRes.LoggedIn) {
+          console.log('good!');
+          localStorage.setItem('enteredEmail', email!);
+          localStorage.setItem('enteredPassword', password!);
+          dispatch(stateTrue());
+          // setAuth(true);
+          // toast.success("Logged in Successfully");
+        } 
       }
+    } catch (error) {
+      dispatch(stateFalse());
+      // setAuth(false);
+      // toast.error(parseRes);
+      console.error('Exception ' + error);
     }
   };
 

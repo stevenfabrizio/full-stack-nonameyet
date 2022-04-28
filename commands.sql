@@ -26,3 +26,5 @@ SELECT * FROM users;
 
 --will clear table
 DELETE FROM employee;
+
+-- heroku pg:psql -a haheha

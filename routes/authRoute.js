@@ -40,7 +40,7 @@ router.post('/register', validInfo, async (req, res) => {
     //
 
     //5 tell client person is now registered
-    return res.json({ didRegister: true });
+    return res.json({ LoggedIn: true });
   } catch (error) {
     console.error('Exception ' + error);
     res.status(500).send('Server Error');
@@ -78,7 +78,7 @@ router.post('/login', validInfo, async (req, res) => {
     // console.log(res.json({ jwtToken }));
     // return res.json(jwtToken);
 
-    return res.json({ LoggedIn: true });
+    return res.status(200).json({ LoggedIn: true });
   } catch (error) {
     console.error('Exception ' + error);
   }
