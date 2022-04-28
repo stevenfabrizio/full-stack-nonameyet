@@ -38,14 +38,13 @@ const Login: React.FC = () => {
       console.log(parseRes);
 
       if (parseRes.LoggedIn) {
-
         console.log('good!');
         dispatch(stateTrue());
         // setAuth(true);
         // toast.success("Logged in Successfully");
-      } 
-       else {
+      } else {
         dispatch(stateFalse());
+
         // setAuth(false);
         // toast.error(parseRes);
       }

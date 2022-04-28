@@ -1,5 +1,5 @@
 import React from 'react';
-
+// import { Navigate } from 'react-router-dom';
 import { useAppDispatch } from '../app/hooks';
 import { stateFalse } from '../features/jwt/jwtSlice';
 
@@ -15,6 +15,7 @@ const Dashboard: React.FC = () => {
       localStorage.removeItem('enteredPassword');
 
       dispatch(stateFalse());
+      // <Navigate to="/login" replace />;
 
       // setAuth(false)
       // toast success 'logged out successfully'

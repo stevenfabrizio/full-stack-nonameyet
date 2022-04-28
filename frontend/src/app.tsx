@@ -25,7 +25,7 @@ const App: React.FC = () => {
     try {
       if (email !== (null || undefined)) {
         const body = { email, password };
-        console.log(body)
+        console.log(body);
 
         const response = await fetch('/auth/login', {
           method: 'POST',
@@ -42,11 +42,15 @@ const App: React.FC = () => {
           localStorage.setItem('enteredEmail', email!);
           localStorage.setItem('enteredPassword', password!);
           dispatch(stateTrue());
+
+          // <Navigate to="/dashboard" replace />;
+
           // setAuth(true);
           // toast.success("Logged in Successfully");
-        } 
+        }
       }
     } catch (error) {
+      <Navigate to="/login" replace />;
       dispatch(stateFalse());
       // setAuth(false);
       // toast.error(parseRes);

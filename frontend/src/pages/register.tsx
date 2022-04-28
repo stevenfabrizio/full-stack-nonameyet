@@ -38,13 +38,13 @@ const Register: React.FC = () => {
 
       const parseRes = await response.json();
 
-      if (parseRes) {
-        dispatch(stateTrue());
+      if (parseRes.LoggedIn) {
         localStorage.setItem('enteredEmail', email);
         localStorage.setItem('enteredPassword', password);
+        dispatch(stateTrue());
+        // <Navigate to="/dashboard" replace />;
         //toast success
-      }
-      else{
+      } else {
         dispatch(stateFalse());
       }
     } catch (error) {
