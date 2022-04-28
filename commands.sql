@@ -29,4 +29,4 @@ DELETE FROM employee;
 
 -- heroku pg:psql -a haheha
 
---1@1.com 1   1@3.com 1
+--1@1.com 1   1@3.com 1   ag55@gmail.com nopassword

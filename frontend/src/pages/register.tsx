@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
@@ -31,6 +31,7 @@ const Register: React.FC = () => {
 
       localStorage.setItem('enteredEmail', email);
       localStorage.setItem('enteredPassword', password);
+      localStorage.setItem('name', name);
 
       const response = await fetch('/auth/register', {
         method: 'POST',
@@ -47,10 +48,7 @@ const Register: React.FC = () => {
         localStorage.setItem('enteredPassword', password);
         dispatch(stateTrue());
 
-        // <Navigate to="/" replace />
         navigate('/')
-        // <Navigate to="/dashboard" replace />;
-        //toast success
       } else {
         dispatch(stateFalse());
       }

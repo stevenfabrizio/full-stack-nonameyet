@@ -73,12 +73,19 @@ router.post('/login', validInfo, async (req, res) => {
       return res.status(401).json('Invalid login password');
     }
 
+    //3.5 get user name from all of this
+    const stevensUser = await pool.query(
+      'SELECT user_name FROM users WHERE user_email = $1',
+      [email]
+    );
+    const sendTheirName = stevensUser.rows[0].user_name
+
     //4 give them jwt token
     // const jwtToken = jwtGenerator(user.rows[0].user_id);
     // console.log(res.json({ jwtToken }));
     // return res.json(jwtToken);
 
-    return res.status(200).json({ LoggedIn: true });
+    return res.status(200).json({ LoggedIn: true, TheirName: sendTheirName });
   } catch (error) {
     console.error('Exception ' + error);
   }

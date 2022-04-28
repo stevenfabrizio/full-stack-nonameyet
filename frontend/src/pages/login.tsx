@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
@@ -40,19 +40,17 @@ const Login: React.FC = () => {
 
       const parseRes = await response.json();
 
-      console.log(parseRes);
-
       if (parseRes.LoggedIn) {
-        console.log('good!');
+        localStorage.setItem('name', parseRes.TheirName);
+
         dispatch(stateTrue());
 
-        // <Navigate to="/" replace />;
         navigate('/');
-
       } else {
         dispatch(stateFalse());
       }
     } catch (error) {
+      dispatch(stateFalse());
       console.error('Exception ' + error);
     }
   };

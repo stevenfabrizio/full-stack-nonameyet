@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse } from '../features/auth/authSlice';
 
@@ -9,6 +9,7 @@ const Dashboard: React.FC = () => {
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
+  const [name, setName] = React.useState('');
 
   const Logout = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
@@ -18,7 +19,6 @@ const Dashboard: React.FC = () => {
     localStorage.removeItem('LoggedInOrNot');
 
     dispatch(stateFalse());
-    // <Navigate to="/login" replace />;
     navigate('/login');
   };
 
@@ -27,12 +27,14 @@ const Dashboard: React.FC = () => {
     if (!authStatus) {
       navigate('/login');
     }
+
+    setName(localStorage.getItem('name')!);
   }, []);
 
   return (
     <>
       <h1>Dashboard</h1>
-      <h2>Welcome, namee</h2>
+      <h2>Welcome, {name}</h2>
       <button onClick={(e) => Logout(e)}>Logout</button>
     </>
   );
