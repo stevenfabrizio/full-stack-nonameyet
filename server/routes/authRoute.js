@@ -34,10 +34,13 @@ router.post('/register', validInfo, async (req, res) => {
     );
 
     // 5 generating jwt token
-    const jwtToken = jwtGenerator(newUser.rows[0].user_id);
-    console.log(res.json({ jwtToken }));
-    return res.json({ jwtToken });
+    // const jwtToken = jwtGenerator(newUser.rows[0].user_id);
+    // console.log(res.json({ jwtToken }));
+    // return res.json({ jwtToken });
     //
+
+    //5 tell client person is now registered
+    return res.json({ didRegister: true });
   } catch (error) {
     console.error('Exception ' + error);
     res.status(500).send('Server Error');
@@ -71,9 +74,11 @@ router.post('/login', validInfo, async (req, res) => {
     }
 
     //4 give them jwt token
-    const jwtToken = jwtGenerator(user.rows[0].user_id);
-    console.log(res.json({ jwtToken }));
-    return res.json(jwtToken);
+    // const jwtToken = jwtGenerator(user.rows[0].user_id);
+    // console.log(res.json({ jwtToken }));
+    // return res.json(jwtToken);
+
+    return res.json({ LoggedIn: true });
   } catch (error) {
     console.error('Exception ' + error);
   }
@@ -81,7 +86,7 @@ router.post('/login', validInfo, async (req, res) => {
 
 //verify route
 // router.post('/verify', authorization, async (req, res) => {
-router.post('/verify', authorization, async (req, res) => {
+router.post('/verify', async (req, res) => {
   try {
     //if person is valid, return res.json true
     res.json(true);

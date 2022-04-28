@@ -22,3 +22,6 @@ INSERT INTO users (user_name, user_email, user_password) VALUES ('agatha', 'ag55
 
 --common command
 SELECT * FROM users;
+
+--will clear table
+DELETE FROM employee;

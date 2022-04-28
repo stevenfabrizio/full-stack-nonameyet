@@ -13,26 +13,44 @@ const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector((state) => state.jwtBoolean.value);
 
-  const AreWeAuthenticated = async () => {
-    try {
-      const checkHeader = await fetch(
-        'http://localhost:8000/auth/verify',
-        {
-          method: 'POST',
-          headers: { jwtToken: localStorage.token },
-        }
-      );
+  //gets the previous entered email and password from localstorage and attempts to log back in with that info.
+  const AutoLogin = async () => {
+    const email = localStorage.getItem('enteredEmail');
+    const password = localStorage.getItem('enteredPassword');
 
-      const parseRes = await checkHeader.json();
+    console.log(email, password);
 
-      parseRes === true ? dispatch(stateTrue()) : dispatch(stateFalse());
-    } catch (error) {
-      console.error('Exception ' + error);
+    if ((email && password) !== (null || undefined)) {
+      const body = { email, password };
+      const response = await fetch('http://localhost:8000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      });
+
+      // console.log(JSON.stringify(body));
+
+      const parseRes = await response.json();
+
+      // console.log(parseRes);
+
+      if (parseRes.LoggedIn) {
+        console.log('good!');
+        dispatch(stateTrue());
+        // setAuth(true);
+        // toast.success("Logged in Successfully");
+      } else {
+        dispatch(stateFalse());
+        // setAuth(false);
+        // toast.error(parseRes);
+      }
     }
   };
 
   React.useEffect(() => {
-    AreWeAuthenticated();
+    AutoLogin();
   }, []);
 
   return (

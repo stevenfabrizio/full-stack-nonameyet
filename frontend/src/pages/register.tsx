@@ -18,14 +18,17 @@ const Register: React.FC = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
 
-  const ClickedSubmit = async (e: React.FormEvent<HTMLButtonElement>) => {
+  const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
       const body = { email, password, name };
       console.log(body);
 
-      const response = await fetch('http://localhost:5000/auth/register', {
+      localStorage.setItem('enteredEmail', email);
+      localStorage.setItem('enteredPassword', password);
+
+      const response = await fetch('http://localhost:8000/auth/register', {
         method: 'POST',
         headers: {
           'Content-type': 'application/json',
@@ -35,8 +38,7 @@ const Register: React.FC = () => {
 
       const parseRes = await response.json();
 
-      if (parseRes.jwtToken) {
-        localStorage.setItem('token', parseRes.jwtToken);
+      if (parseRes.didRegister) {
         dispatch(stateTrue());
         //toast success
       }
@@ -50,11 +52,11 @@ const Register: React.FC = () => {
     <>
       <h1>register</h1>
 
-      <form className="register-form">
+      <form onSubmit={ClickedSubmit} className="register-form">
         <input
           type="email"
           name="email"
-          placeholder="22@aol.com"
+          placeholder="222@aol.com"
           value={email}
           onChange={(e) => onChange(e)}
         ></input>
@@ -68,13 +70,11 @@ const Register: React.FC = () => {
         <input
           type="text"
           name="name"
-          placeholder="username"
+          placeholder="usernamelol"
           value={name}
           onChange={(e) => onChange(e)}
         ></input>
-        <button type="submit" onSubmit={(e) => ClickedSubmit(e)}>
-          Submit
-        </button>
+        <button type="submit">Submit</button>
       </form>
       <Link to="/login">Login</Link>
       <div></div>

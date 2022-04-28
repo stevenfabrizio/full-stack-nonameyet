@@ -18,11 +18,14 @@ const Login: React.FC = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const ClickedSubmit = async (e: { preventDefault: () => void; }) => {
+  const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
     try {
       const body = { email, password };
+
+      localStorage.setItem('enteredEmail', email);
+      localStorage.setItem('enteredPassword', password);
 
       const response = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
@@ -32,13 +35,15 @@ const Login: React.FC = () => {
         body: JSON.stringify(body),
       });
 
-      console.log(body)
+      console.log(JSON.stringify(body));
 
       const parseRes = await response.json();
 
-      if (parseRes.jwtToken) {
-        localStorage.setItem('token', parseRes.jwtToken);
+      console.log(parseRes);
 
+      if (parseRes.LoggedIn) {
+
+        console.log('good!');
         dispatch(stateTrue());
         // setAuth(true);
         // toast.success("Logged in Successfully");

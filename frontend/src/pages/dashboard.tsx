@@ -11,7 +11,8 @@ const Dashboard: React.FC = () => {
     e.preventDefault();
 
     try {
-      localStorage.removeItem('token');
+      localStorage.removeItem('enteredEmail');
+      localStorage.removeItem('enteredPassword');
 
       dispatch(stateFalse());
 

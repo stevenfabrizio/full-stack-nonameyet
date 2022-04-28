@@ -4,7 +4,7 @@ const pool = require('../db');
 const authorization = require('../middleware/authorization');
 
 // router.post('/', authorization, async (req, res) => {
-router.post('/', authorization, async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     //req.user has the payload
     // res.json(req.user)
