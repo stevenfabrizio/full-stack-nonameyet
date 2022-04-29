@@ -1,3 +1,6 @@
+# idfk
+
+---
 p1
 https://youtu.be/7UQBMb8ZpuE?t=4362
 
@@ -9,3 +12,5 @@ https://github.com/ousecTic/pern-jwt-tutorial
 
 //deployer
 https://www.youtube.com/watch?v=ZJxUOOND5_A&
+
+---

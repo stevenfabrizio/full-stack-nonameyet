@@ -5,17 +5,20 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
 
 const Login: React.FC = () => {
+  //redux stuff
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
 
-  const [input, setInput] = React.useState({
+  const [input, setInput] = React.useState<{
+    email: string;
+    password: string;
+  }>({
     email: '',
     password: '',
   });
-
   const { email, password } = input;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +47,6 @@ const Login: React.FC = () => {
         localStorage.setItem('name', parseRes.TheirName);
 
         dispatch(stateTrue());
-
         navigate('/');
       } else {
         dispatch(stateFalse());
@@ -55,8 +57,9 @@ const Login: React.FC = () => {
     }
   };
 
+  //on page load, nav to dashboard if we should be logged in.
   React.useEffect(() => {
-    if (authStatus === true) {
+    if (authStatus) {
       navigate('/');
     }
   }, []);
@@ -69,19 +72,20 @@ const Login: React.FC = () => {
         <input
           type="text"
           name="email"
-          placeholder="ag55@gmail.com"
+          placeholder="some@email.whatever"
           value={email}
           onChange={(e) => onChange(e)}
         />
         <input
           type="password"
           name="password"
-          placeholder="nopassword"
+          placeholder=""
           value={password}
           onChange={(e) => onChange(e)}
         />
         <button type="submit">Submit</button>
       </form>
+
       <Link to="/register">Register</Link>
     </>
   );

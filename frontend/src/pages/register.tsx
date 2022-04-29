@@ -6,7 +6,7 @@ import { stateFalse, stateTrue } from '../features/auth/authSlice';
 
 const Register: React.FC = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         localStorage.setItem('enteredPassword', password);
         dispatch(stateTrue());
 
-        navigate('/')
+        navigate('/');
       } else {
         dispatch(stateFalse());
       }
@@ -57,22 +57,34 @@ const Register: React.FC = () => {
     }
   };
 
+  // React.useEffect(() => {
+  //   console.log(authStatus);
+
+  //   if(authStatus){
+  //     navigate('/');
+  //   }
+
+  //   if (localStorage.getItem('LoggedInOrNot') === 'yes') {
+  //     dispatch(stateTrue());
+  //     console.log(authStatus);
+  //     navigate('/');
+  //   }
+
+  //   // if(authStatus === true){
+  //   //   navigate('/');
+  //   // }
+  // }, []);
+
+  //on page load, nav to dashboard if we should be logged in.
   React.useEffect(() => {
-    console.log(authStatus)
-    if(localStorage.getItem('LoggedInOrNot') === 'yes'){
-      dispatch(stateTrue())
-      console.log(authStatus)
+    if (authStatus) {
       navigate('/');
     }
-
-    // if(authStatus === true){
-    //   navigate('/');
-    // }
   }, []);
 
   return (
     <>
-      <h1>register</h1>
+      <h1>Register</h1>
 
       <form onSubmit={ClickedSubmit} className="register-form">
         <input
@@ -98,7 +110,9 @@ const Register: React.FC = () => {
         ></input>
         <button type="submit">Submit</button>
       </form>
+
       <Link to="/login">Login</Link>
+
       <div></div>
     </>
   );

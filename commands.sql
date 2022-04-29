@@ -16,19 +16,17 @@ CREATE TABLE users(
     user_password VARCHAR(255) NOT NULL
 );
 
-
---fake data insert SINGLE QUOTATIONS
-INSERT INTO users (user_name, user_email, user_password) VALUES ('agatha', 'ag55@gmail.com', 'nopassword');
 INSERT INTO users (user_name, user_email, user_password) VALUES ('1', '1@1.com', '1');
 
---common command
 SELECT * FROM users;
 
 --will clear table
 DELETE FROM employee;
 
+--ACCESS HerouPOO DATABASE
 -- heroku pg:psql -a haheha
 
+--THESE WORK ON MY DB ON HerouPOO
 --1@1.com 1   
 --1@3.com 1   
 --ag55@gmail.com nopassword 
