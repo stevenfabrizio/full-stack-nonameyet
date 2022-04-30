@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { NavLink, Navigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const DashHeader: React.FC = () => {
   return (

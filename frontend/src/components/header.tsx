@@ -42,7 +42,7 @@ const Header: React.FC = () => {
     <div className="header">
       {authStatus ? (
         <>
-          <h1>Welcome, {name}</h1>
+          <h1 style={{ textTransform: 'capitalize' }}>Welcome, {name}</h1>
           <div></div>
           <a onClick={(e) => ClickedLogout(e)}>Logout</a>
         </>
