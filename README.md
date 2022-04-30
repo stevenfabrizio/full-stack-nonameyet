@@ -1,5 +1,9 @@
 # idfk
 
+alexander solzhenitsyn
+bernd weikl
+Arturo Benedetti Michelangeli
+
 JUST THE LIST OF RESULTS
 https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=united-kingdom
 

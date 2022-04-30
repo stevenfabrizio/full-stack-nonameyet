@@ -1,9 +1,15 @@
-import e from 'express';
 import React from 'react';
+
+import { useAppDispatch } from '../../app/hooks';
+
+import { enUrlState } from '../../features/enUrl/enUrlSlice';
+import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
 
 const parse = require('html-react-parser');
 
 const Search: React.FC = () => {
+  const dispatch = useAppDispatch();
+
   //sending this to component to welcome them.
   const [slurpedText, setSlurpedText] = React.useState('the parsed text');
   const [searchInput, setSearchInput] = React.useState('');
@@ -53,6 +59,7 @@ const Search: React.FC = () => {
 
       console.log(enResults[1]);
       setParsedEnResults((parsedEnResults) => enResults[1]);
+      dispatch(enUrlState(enResults[3]));
       setEnUrls((enUrls) => enResults[3]);
 
       //non english part
@@ -64,6 +71,7 @@ const Search: React.FC = () => {
       console.log(nonEnResults[1]);
       setParsedNonEnResults((parsedNonEnResults) => nonEnResults[1]);
       setNonEnUrls((nonEnUrls) => nonEnResults[3]);
+      dispatch(nonEnUrlState(nonEnResults[3]));
     } catch (error) {
       console.error('Exception ' + error);
     }

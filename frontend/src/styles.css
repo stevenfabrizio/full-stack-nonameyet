@@ -114,6 +114,9 @@ button {
   grid-template-columns: 1fr auto auto 1fr;
   grid-template-rows: 1fr;
 }
+li{
+  cursor: pointer;
+}
 /* wiki stuff */
 .en-wiki h1,
 .en-wiki h2,
