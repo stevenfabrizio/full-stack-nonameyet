@@ -25,6 +25,7 @@ const Login: React.FC = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
+  //attempt to log in to postgresql DB
   const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const body = { email, password };
@@ -57,7 +58,7 @@ const Login: React.FC = () => {
     }
   };
 
-  //on page load, go to dashboard if we should be logged in.
+  //on page load, go to dashboard instead if we should be logged in.
   React.useEffect(() => {
     if (authStatus) {
       navigate('/');
@@ -86,8 +87,6 @@ const Login: React.FC = () => {
           />
           <button type="submit">Submit</button>
         </form>
-
-        {/* <Link to="/register">Register</Link> */}
       </div>
     </>
   );

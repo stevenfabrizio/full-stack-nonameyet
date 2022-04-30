@@ -112,8 +112,6 @@ const Register: React.FC = () => {
           <button type="submit">Submit</button>
         </form>
 
-        {/* <Link to="/login">Login</Link> */}
-
         <div></div>
       </div>
     </>

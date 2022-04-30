@@ -12,7 +12,8 @@ interface authState {
 // };
 
 const initialState: authState = {
-  value: localStorage.getItem('LoggedInOrNot')==='yes',
+  //get our boolean from localstorage
+  value: localStorage.getItem('LoggedInOrNot') === 'yes',
 };
 
 export const authSlice = createSlice({
@@ -25,11 +26,11 @@ export const authSlice = createSlice({
     // immutable state based off those changes
     stateTrue: (state) => {
       state.value = true;
-      localStorage.setItem('LoggedInOrNot', 'yes')
+      localStorage.setItem('LoggedInOrNot', 'yes');
     },
     stateFalse: (state) => {
       state.value = false;
-      localStorage.setItem('LoggedInOrNot', 'no')
+      localStorage.setItem('LoggedInOrNot', 'no');
     },
   },
 });

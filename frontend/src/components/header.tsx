@@ -5,10 +5,14 @@ import { Link, Navigate } from 'react-router-dom';
 import { stateFalse } from '../features/auth/authSlice';
 
 const Header: React.FC = () => {
+  //redux stuff
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
+
+  //gives the user a friendly hello
+  const [name, setName] = React.useState('Stevie Wonder');
 
   //remove localstorage, redux state on logout. nav to login.
   const ClickedLogout = (
@@ -25,33 +29,28 @@ const Header: React.FC = () => {
     <Navigate to="/login" replace />;
   };
 
-  // const ClickedLogin = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-  //   e.preventDefault();
+  //get the user's name to send to header via usestate var.
+  React.useEffect(() => {
+    const usersName: string | null = localStorage.getItem('name');
 
-  //   <Navigate to="/login" replace />;
-  // };
-
-  // const ClickedRegister = (
-  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ) => {
-  //   e.preventDefault();
-
-  //   <Navigate to="/register" replace />;
-  // };
+    if (typeof usersName === 'string') {
+      setName(usersName);
+    }
+  }, [authStatus === true]);
 
   return (
     <div className="header">
-      <div></div>
-
       {authStatus ? (
         <>
+          <h1>Welcome, {name}</h1>
           <div></div>
           <a onClick={(e) => ClickedLogout(e)}>Logout</a>
         </>
       ) : (
         <>
+          <div></div>
           <Link to="/login">Login</Link>
-          <Link to="register">Register</Link>
+          <Link to="/register">Register</Link>
         </>
       )}
     </div>

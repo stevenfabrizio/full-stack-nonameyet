@@ -1,4 +1,4 @@
---list of useful postgresql commands here
+--list of useful postgresql commands here.
 
 psql -U postgres
 
