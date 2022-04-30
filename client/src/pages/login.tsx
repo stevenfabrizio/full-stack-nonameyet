@@ -25,7 +25,7 @@ const Login: React.FC = () => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  //attempt to log in to postgresql DB
+  //match login data with server, authenticate if good.
   const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     const body = { email, password };
@@ -46,8 +46,8 @@ const Login: React.FC = () => {
 
       if (parseRes.LoggedIn) {
         localStorage.setItem('name', parseRes.TheirName);
-
         dispatch(stateTrue());
+
         navigate('/');
       } else {
         dispatch(stateFalse());
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
     }
   };
 
-  //on page load, go to dashboard instead if we should be logged in.
+  //on component load, go to dashboard instead if we should be logged in.
   React.useEffect(() => {
     if (authStatus) {
       navigate('/');
@@ -76,14 +76,14 @@ const Login: React.FC = () => {
             name="email"
             placeholder="some@email.whatever"
             value={email}
-            onChange={(e) => onChange(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <input
             type="password"
             name="password"
             placeholder=""
             value={password}
-            onChange={(e) => onChange(e)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <button type="submit">Submit</button>
         </form>

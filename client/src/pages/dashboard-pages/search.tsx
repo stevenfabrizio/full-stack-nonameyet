@@ -1,44 +1,29 @@
 import React from 'react';
 
 import { useAppDispatch } from '../../app/hooks';
-
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
 import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
-
-// const parse = require('html-react-parser');
 
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  //sending this to component to welcome them.
-
   const [searchInput, setSearchInput] = React.useState<string>('');
+
   const [parsedEnResults, setParsedEnResults] = React.useState<[]>([]);
   const [parsedNonEnResults, setParsedNonEnResults] = React.useState<[]>([]);
   const [enUrls, setEnUrls] = React.useState<[]>([]);
   const [nonEnUrls, setNonEnUrls] = React.useState<[]>([]);
-  // const [clickedEnUrl, setClickedEnUrl] = React.useState<string>(
-  //   'https://en.wikipedia.org/wiki/Richard_Wagner'
-  // );
-  // const [clickedNonEnUrl, setClickedNonEnUrl] = React.useState<string>(
-  //   'https://de.wikipedia.org/wiki/Richard_Wagner'
-  // );
-
-  // const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchInput(e.target.value);
-  // };
 
   const enResultsUrl = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=`;
   const nonEnResultsUrl = `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=`;
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      const refinedSearchInput = searchInput.replace(' ', ' ');
 
+    try {
       //
       //english lang part
-      const enPage = await fetch(`${enResultsUrl}` + `${refinedSearchInput}`);
+      const enPage = await fetch(`${enResultsUrl}` + `${searchInput}`);
       const enResults = await enPage.json();
 
       setParsedEnResults(() => enResults[1]);
@@ -51,9 +36,7 @@ const Search: React.FC = () => {
 
       //
       //non english part
-      const nonEnPage = await fetch(
-        `${nonEnResultsUrl}` + `${refinedSearchInput}`
-      );
+      const nonEnPage = await fetch(`${nonEnResultsUrl}` + `${searchInput}`);
       const nonEnResults = await nonEnPage.json();
 
       setParsedNonEnResults(() => nonEnResults[1]);
@@ -68,31 +51,49 @@ const Search: React.FC = () => {
     }
   };
 
+  //hightlights clicked li
   const ClickedAnEnSearchResult = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     const ClickedElement: HTMLLIElement = e.target as HTMLLIElement;
 
-    dispatch(enUrlState(ClickedElement.innerHTML));
+    const englishLis: NodeListOf<HTMLLIElement> =
+      document.querySelectorAll('.en-search-result');
+    for (let i = 0; i < englishLis.length; i++) {
+      englishLis[i].style.backgroundColor = 'rgba(0,0,0,0)';
+    }
+    ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
-    // console.log(ClickedElement.innerHTML);
+    dispatch(enUrlState(ClickedElement.innerHTML));
     // setClickedEnUrl(ClickedElement.innerHTML);
   };
 
+  //highlights clicked li
   const ClickedANonEnSearchResult = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
     const ClickedElement: HTMLLIElement = e.target as HTMLLIElement;
 
-    dispatch(nonEnUrlState(ClickedElement.innerHTML));
+    const nonEnglishLis: NodeListOf<HTMLLIElement> = document.querySelectorAll(
+      '.non-en-search-result'
+    );
+    for (let i = 0; i < nonEnglishLis.length; i++) {
+      nonEnglishLis[i].style.backgroundColor = 'rgba(0,0,0,0)';
+    }
+    ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
-    // console.log(ClickedElement.innerHTML);
+    dispatch(nonEnUrlState(ClickedElement.innerHTML));
     // setClickedNonEnUrl(ClickedElement.innerHTML);
   };
+
   return (
     <>
       <div className="search-containers">
-        <form onSubmit={(e) => SearchForResults(e)}>
+        <form
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+            SearchForResults(e)
+          }
+        >
           <input
             type="text"
             placeholder="Search your topic here"
@@ -106,15 +107,27 @@ const Search: React.FC = () => {
 
         <ul className="en-results">
           {parsedEnResults.map((a: string) => (
-            <li key={a} onClick={(e) => ClickedAnEnSearchResult(e)}>
+            <li
+              key={a}
+              className="en-search-result"
+              onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
+                ClickedAnEnSearchResult(e)
+              }
+            >
               {a}
             </li>
           ))}
         </ul>
 
-        <ul className="nonen-results">
+        <ul className="non-en-results">
           {parsedNonEnResults.map((a: string) => (
-            <li key={a} onClick={(e) => ClickedANonEnSearchResult(e)}>
+            <li
+              key={a}
+              className="non-en-search-result"
+              onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
+                ClickedANonEnSearchResult(e)
+              }
+            >
               {a}
             </li>
           ))}

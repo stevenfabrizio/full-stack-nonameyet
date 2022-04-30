@@ -7,17 +7,15 @@ import Header from './components/header';
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
-
 import Search from './pages/dashboard-pages/search';
 import Translate from './pages/dashboard-pages/translate';
 
 const App: React.FC = () => {
-  //get the auth state from redux
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
 
-  //navigate to login page if not logged in prev session
+  //navigate to login page if not logged in previous session
   React.useEffect(() => {
     if (authStatus) {
       <Navigate to="/login" replace />;

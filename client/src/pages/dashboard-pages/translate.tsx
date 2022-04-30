@@ -1,15 +1,14 @@
 import React from 'react';
 
 import { useAppSelector } from '../../app/hooks';
+import { CharCounter } from './wordCounter2';
 
 import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
 
+const translator = new YandexTranslator();
 const parse = require('html-react-parser');
-// const translates = require('@vitalets/google-translate-api');
 
 const Translate: React.FC = () => {
-  const translator = new YandexTranslator();
-
   //getting urls from redux sent from search component.
   const nonEnUrlReduxString: string = useAppSelector(
     (state) => state.nonEnUrlString.value
@@ -18,49 +17,45 @@ const Translate: React.FC = () => {
     (state) => state.enUrlString.value
   );
 
+  //slurping up raw unparsed html
   const [slurpedEnText, setSlurpedEnText] =
     React.useState<string>('<h1>single</h1>');
   const [slurpedNonEnText, setSlurpedNonEnText] =
     React.useState<string>('<h1>single</h1>');
 
+  //parsing the raw text to something html can use
   const enParsedText = parse(slurpedEnText);
   const nonEnParsedText = parse(slurpedNonEnText);
 
-  const enapi = `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${enUrlReduxString}`;
-
-  const nonenapi = `https://de.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`;
+  const enUrl = `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${enUrlReduxString}`;
+  const nonEnUrl = `https://de.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`;
 
   const Clicked = async () => {
     try {
-      // console.log(enapi);
-      const enpage = await fetch(enapi);
-      const enresults = await enpage.json();
+      //
+      //ENGLISH LANG WIKI FIRST
+      const enPage = await fetch(enUrl);
+      const enJson = await enPage.json();
 
-      //get wikipedia ID from the fetch
-      const myEnObj = enresults.query.pages;
-      const enkeys = Object.keys(myEnObj);
-      const enwikipediaID = enkeys[0];
-      const theenContent = myEnObj[enwikipediaID].extract.toString();
-      setSlurpedEnText(theenContent);
+      //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
+      const myEnObj = enJson.query.pages;
+      const enKeys = Object.keys(myEnObj);
+      const enWikipediaID = enKeys[0];
+      const enRawContent = myEnObj[enWikipediaID].extract.toString();
+      setSlurpedEnText(enRawContent);
 
-      //NON ENGLISH
-      // console.log(nonenapi);
-      const nonenpage = await fetch(nonenapi);
-      const nonenresults = await nonenpage.json();
+      //
+      //NON ENGLISH WIKI
+      const nonEnPage = await fetch(nonEnUrl);
+      const nonEnJson = await nonEnPage.json();
 
-      //get wikipedia ID from the fetch
-      const mynonEnObj = nonenresults.query.pages;
-      const nonenkeys = Object.keys(mynonEnObj);
-      const nonenwikipediaID = nonenkeys[0];
-      const thenonenContent = mynonEnObj[nonenwikipediaID].extract.toString();
+      //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
+      const myNonEnObj = nonEnJson.query.pages;
+      const nonEnKeys = Object.keys(myNonEnObj);
+      const nonEnWikipediaID = nonEnKeys[0];
+      const nonEnRawContent = myNonEnObj[nonEnWikipediaID].extract.toString();
 
-      console.log(thenonenContent.length)
-
-      let sendIt = '';
-      const doinit = await translator
-        .translate(thenonenContent.slice(0, 5000), 'de', 'en')
-        .then((translate) => (sendIt = translate));
-      setSlurpedNonEnText(sendIt);
+      CharCounter(nonEnRawContent)
     } catch (error) {
       console.log(`bad fetch or request or something: ${error}`);
     }
@@ -69,18 +64,6 @@ const Translate: React.FC = () => {
   React.useEffect(() => {
     console.log(nonEnUrlReduxString);
     console.log(enUrlReduxString);
-
-    //   translates('Ik spreek Engels', {to: 'en'}).then(res => {
-    //     console.log(res.text);
-    //     //=> I speak English
-    //     console.log(res.from.language.iso);
-    //     //=> nl
-    // }).catch(err => {
-    //     console.error(err);
-    // });
-    // translator
-    //   .translate('Hello world I am Fat', 'en', 'de')
-    //   .then((translate) => console.log('Translate result', translate));
   }, []);
 
   return (

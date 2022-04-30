@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
 
 const Register: React.FC = () => {
+  //redux stuff
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const authStatus: boolean = useAppSelector(
@@ -16,12 +17,12 @@ const Register: React.FC = () => {
     password: '',
     name: '',
   });
-
   const { email, password, name } = inputs;
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInputs({ ...inputs, [e.target.name]: e.target.value });
 
+  //attempt to register into database
   const ClickedSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
 
@@ -56,24 +57,6 @@ const Register: React.FC = () => {
       console.error('Exception ' + error);
     }
   };
-
-  // React.useEffect(() => {
-  //   console.log(authStatus);
-
-  //   if(authStatus){
-  //     navigate('/');
-  //   }
-
-  //   if (localStorage.getItem('LoggedInOrNot') === 'yes') {
-  //     dispatch(stateTrue());
-  //     console.log(authStatus);
-  //     navigate('/');
-  //   }
-
-  //   // if(authStatus === true){
-  //   //   navigate('/');
-  //   // }
-  // }, []);
 
   //on page load, go to dashboard if we should be logged in.
   React.useEffect(() => {
