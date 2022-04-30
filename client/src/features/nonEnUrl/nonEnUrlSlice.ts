@@ -3,7 +3,7 @@ import type { RootState } from '../../app/store';
 
 // Define a type for the slice state
 interface nonEnUrlState {
-  value: string[];
+  value: string;
 }
 
 // Define the initial state using that type
@@ -13,11 +13,11 @@ interface nonEnUrlState {
 
 const initialState: nonEnUrlState = {
   //get our boolean from localstorage
-  value: [],
+  value: 'Richard_Wagner',
 };
 
 export const nonEnUrlSlice = createSlice({
-  name: 'nonEnUrlArray',
+  name: 'nonEnUrlString',
   initialState,
   reducers: {
     // Redux Toolkit allows us to write "mutating" logic in reducers. It
@@ -34,6 +34,6 @@ export const nonEnUrlSlice = createSlice({
 export const { nonEnUrlState } = nonEnUrlSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectNonEnUrl = (state: RootState) => state.nonEnUrlArray.value;
+export const selectNonEnUrl = (state: RootState) => state.nonEnUrlString.value;
 
 export default nonEnUrlSlice.reducer;

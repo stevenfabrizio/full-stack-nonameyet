@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
     //   navigate('/search');
     // }
     !authStatus ? navigate('/login') : navigate('/search');
-  }, [authStatus === false]);
+  }, [authStatus]);
 
   return (
     <>

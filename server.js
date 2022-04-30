@@ -10,7 +10,7 @@ app.use(express.json());
 if (process.env.NODE_ENV === 'production') {
   //server static content
   //npm run build
-  app.use(express.static(path.join(__dirname, 'frontend/build')));
+  app.use(express.static(path.join(__dirname, 'client/build')));
 }
 
 //routes
@@ -21,7 +21,7 @@ app.use('/dashboard', dashboardRouter);
 
 app.get('*', (req, res) =>
   res.sendFile(
-    path.resolve(__dirname, 'frontend', 'build', 'index.html')
+    path.resolve(__dirname, 'client', 'build', 'index.html')
   )
 );
 

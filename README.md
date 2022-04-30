@@ -1,6 +1,8 @@
 # idfk
 
 alexander solzhenitsyn
+Aleksandr_Solzhenitsyn
+
 bernd weikl
 Arturo Benedetti Michelangeli
 

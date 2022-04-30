@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 // Define a type for the slice state
-interface enUrlState {
-  value: string[];
+interface nonEnUrlState {
+  value: string;
 }
 
 // Define the initial state using that type
@@ -11,29 +11,29 @@ interface enUrlState {
 //   value: false,
 // };
 
-const initialState: enUrlState = {
+const initialState: nonEnUrlState = {
   //get our boolean from localstorage
-  value: [],
+  value: 'Richard_Wagner',
 };
 
-export const enUrlSlice = createSlice({
-  name: 'enUrlArray',
+export const nonEnUrlSlice = createSlice({
+  name: 'nonEnUrlString',
   initialState,
   reducers: {
     // Redux Toolkit allows us to write "mutating" logic in reducers. It
     // doesn't actually mutate the state because it uses the Immer library,
     // which detects changes to a "draft state" and produces a brand new
     // immutable state based off those changes
-    enUrlState: (state, action) => {
+    nonEnUrlState: (state, action) => {
       state.value = action.payload;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { enUrlState } = enUrlSlice.actions;
+export const { nonEnUrlState } = nonEnUrlSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectenUrl = (state: RootState) => state.enUrlArray.value;
+export const selectNonEnUrl = (state: RootState) => state.nonEnUrlString.value;
 
-export default enUrlSlice.reducer;
+export default nonEnUrlSlice.reducer;

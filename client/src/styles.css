@@ -79,7 +79,7 @@ button {
 
   cursor: pointer;
 }
-  
+
 /* dashboard */
 .dashboard-container {
   min-height: calc(100vh - 80px);
@@ -102,31 +102,61 @@ button {
 }
 
 /* search */
-.search-containers{
+.search-containers {
   width: 100%;
+  min-height: calc(100vh - 120px);
   background-color: black;
+
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr;
+}
+.search-containers form {
+  grid-row: 1;
+  grid-column: 1 / span 2;
+  align-self: start;
+
+  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-rows: 1fr;
+}
+.en-results{
+  grid-row: 2;
+  grid-column: 1;
+}
+.nonen-results{
+  grid-row: 2;
+  grid-column: 2;
+}
+li {
+  cursor: pointer;
+}
+
+/* translated page */
+.translated-text {
+  width: 100%;
 
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
 }
-.search-containers form{
-  grid-template-columns: 1fr auto auto 1fr;
-  grid-template-rows: 1fr;
+.tt-div {
+  align-self: start;
 }
-li{
-  cursor: pointer;
+.tt-div *{
+  font-family: sans-serif;
 }
+
 /* wiki stuff */
-.en-wiki h1,
-.en-wiki h2,
-.en-wiki h3 {
+.tt-div h1,
+.tt-div h2,
+.tt-div h3 {
   margin: 24px;
   margin-bottom: 0px;
 }
-.en-wiki p,
-.en-wiki dl,
-.en-wiki li {
+.tt-div p,
+.tt-div dl,
+.tt-div li {
   margin: 24px;
   margin-top: 0px;
 }
