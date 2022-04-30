@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 
 import { useAppSelector } from './app/hooks';
 
+import Header from './components/header'
 import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import Register from './pages/register';
@@ -25,6 +26,7 @@ const App: React.FC = () => {
   return (
     <>
       <BrowserRouter>
+      <Header />
         <Routes>
           <Route index element={<Dashboard />} />
           <Route path="/" element={<Dashboard />} />

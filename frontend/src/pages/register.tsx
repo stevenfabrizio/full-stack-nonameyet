@@ -75,7 +75,7 @@ const Register: React.FC = () => {
   //   // }
   // }, []);
 
-  //on page load, nav to dashboard if we should be logged in.
+  //on page load, go to dashboard if we should be logged in.
   React.useEffect(() => {
     if (authStatus) {
       navigate('/');
@@ -84,36 +84,38 @@ const Register: React.FC = () => {
 
   return (
     <>
-      <h1>Register</h1>
+      <div className="register-container">
+        <h1>Register</h1>
 
-      <form onSubmit={ClickedSubmit} className="register-form">
-        <input
-          type="email"
-          name="email"
-          placeholder="222@aol.com"
-          value={email}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          value={password}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <input
-          type="text"
-          name="name"
-          placeholder="usernamelol"
-          value={name}
-          onChange={(e) => onChange(e)}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
+        <form onSubmit={ClickedSubmit} className="register-form">
+          <input
+            type="email"
+            name="email"
+            placeholder="222@aol.com"
+            value={email}
+            onChange={(e) => onChange(e)}
+          ></input>
+          <input
+            type="password"
+            name="password"
+            placeholder="password"
+            value={password}
+            onChange={(e) => onChange(e)}
+          ></input>
+          <input
+            type="text"
+            name="name"
+            placeholder="usernamelol"
+            value={name}
+            onChange={(e) => onChange(e)}
+          ></input>
+          <button type="submit">Submit</button>
+        </form>
 
-      <Link to="/login">Login</Link>
+        {/* <Link to="/login">Login</Link> */}
 
-      <div></div>
+        <div></div>
+      </div>
     </>
   );
 };

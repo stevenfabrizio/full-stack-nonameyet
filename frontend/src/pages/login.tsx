@@ -57,7 +57,7 @@ const Login: React.FC = () => {
     }
   };
 
-  //on page load, nav to dashboard if we should be logged in.
+  //on page load, go to dashboard if we should be logged in.
   React.useEffect(() => {
     if (authStatus) {
       navigate('/');
@@ -66,27 +66,29 @@ const Login: React.FC = () => {
 
   return (
     <>
-      <h1>Login</h1>
+      <div className="login-container">
+        <h1>Login</h1>
 
-      <form onSubmit={ClickedSubmit}>
-        <input
-          type="text"
-          name="email"
-          placeholder="some@email.whatever"
-          value={email}
-          onChange={(e) => onChange(e)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder=""
-          value={password}
-          onChange={(e) => onChange(e)}
-        />
-        <button type="submit">Submit</button>
-      </form>
+        <form onSubmit={ClickedSubmit}>
+          <input
+            type="text"
+            name="email"
+            placeholder="some@email.whatever"
+            value={email}
+            onChange={(e) => onChange(e)}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder=""
+            value={password}
+            onChange={(e) => onChange(e)}
+          />
+          <button type="submit">Submit</button>
+        </form>
 
-      <Link to="/register">Register</Link>
+        {/* <Link to="/register">Register</Link> */}
+      </div>
     </>
   );
 };
