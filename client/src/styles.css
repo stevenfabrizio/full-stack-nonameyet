@@ -26,7 +26,7 @@
 }
 
 /* the header */
-.header {
+.header-component {
   width: 100%;
   height: 80px;
 
@@ -46,7 +46,7 @@ a {
 
   cursor: pointer;
 }
-.header h1 {
+.header-component h1 {
   margin-left: 20px;
   justify-self: start;
 }
@@ -75,7 +75,6 @@ button {
   color: black;
 
   background-color: white;
-  margin: 2px;
 
   cursor: pointer;
 }
@@ -167,4 +166,56 @@ li {
 .tt-div li {
   margin: 24px;
   margin-top: 0px;
+}
+
+/* dropdown */
+.dropdown-heading {
+  width: 200px;
+  background-color: #1500ff;
+  display: grid;
+}
+.flag-link {
+  width: 200px;
+  color: rgb(134, 0, 0);
+  cursor: pointer;
+}
+.dropdown > .flag-link:focus,
+.flag-link:hover,
+.dropdown:hover,
+.dropdown-menu p:hover {
+  color: black;
+}
+.dropdown * p {
+  text-align: center;
+  text-justify: center;
+  cursor: pointer;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+.dropdown {
+  width: 160px;
+  position: relative;
+  background-color: rgb(107, 89, 89);
+}
+.dropdown-menu {
+  width: 160px;
+  position: absolute;
+  left: 0;
+  top: calc(100%);
+  background-color: grey;
+  /* box-sizing: 0 2px 5px 0 rgba(0, 0, 0, 0.1); */
+  opacity: 0;
+
+  pointer-events: none;
+  transform: translateY(-8px);
+  transition: 0.1s opacity ease-in-out, transform 0.1s ease-in-out;
+}
+.dropdown > .flag-link:focus + .dropdown-menu,
+.dropdown-menu:hover,
+.dropdown:hover .dropdown-menu {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }

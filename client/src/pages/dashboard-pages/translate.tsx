@@ -1,16 +1,18 @@
 import React from 'react';
 
 import { CharTranslator } from './charTranslator';
+
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
   stateTranslatingFalse,
   stateTranslatingTrue,
 } from '../../features/translate/translatingSlice';
+import {
+  stateTranslatedFalse,
+  stateTranslatedTrue,
+} from '../../features/translate/translatedSlice';
 import { nonParsedEnState } from '../../features/translate/nonParsedEnSlice';
 import { nonParsedNonEnState } from '../../features/translate/nonParsedNonEnSlice';
-
-// import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
-// const translator = new YandexTranslator();
 
 const parse = require('html-react-parser');
 
@@ -23,24 +25,25 @@ const Translate: React.FC = () => {
   const enUrlReduxString: string = useAppSelector(
     (state) => state.enUrlString.value
   );
-  const translatingState: boolean = useAppSelector(
-    (state: { translatingBoolean: { value: any } }) =>
-      state.translatingBoolean.value
-  );
+
   const nonParsedEnReduxString: string = useAppSelector(
     (state) => state.nonParsedEnString.value
   );
   const nonParsedNonEnReduxString: string = useAppSelector(
     (state) => state.nonParsedNonEnString.value
   );
+  const translatingState: boolean = useAppSelector(
+    (state: { translatingBoolean: { value: any } }) =>
+      state.translatingBoolean.value
+  );
+  const translatedState: boolean = useAppSelector(
+    (state: { translatedBoolean: { value: any } }) =>
+      state.translatedBoolean.value
+  );
 
   //parsing the raw strings to for html formatting
   const enParsedText = parse(nonParsedEnReduxString);
   const nonEnParsedText = parse(nonParsedNonEnReduxString);
-
-  //state variable for are we translating or not.
-  const [translationsComplete, setTranslationsComplete] =
-    React.useState<boolean>(false);
 
   const ClickedTranslate = async () => {
     try {
@@ -79,14 +82,30 @@ const Translate: React.FC = () => {
         nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
       );
       dispatch(stateTranslatingFalse());
+      dispatch(stateTranslatedTrue());
     } catch (error) {
       console.log(`bad something: ${error}`);
+      //   dispatch(
+      //     nonParsedEnState(
+      //       `<span>Problem fetching content.</span>
+      //       <br /><br />
+      //       <span>${error}</span>`
+      //     )
+      //   );
+      //   dispatch(
+      //     nonParsedNonEnState(
+      //       `<span>Problem fetching content.</span>
+      //       <br /><br />
+      //       <span>${error}</span>`
+      //     )
+      //   );
     }
   };
 
   //when arriving here from clicking translate, reset state and fetch wiki content.
   React.useEffect(() => {
     if (translatingState) {
+      dispatch(stateTranslatedFalse());
       dispatch(stateTranslatingFalse());
       ClickedTranslate();
     }
@@ -94,11 +113,13 @@ const Translate: React.FC = () => {
 
   return (
     <>
-      {/* <h1>Translated</h1> */}
+      {translatingState === false && translatedState === false ? (
+        <h1>Nothing to translate.</h1>
+      ) : (
+        <></>
+      )}
 
-      {/* <button onClick={() => ClickedTranslate()}>go fetch</button> */}
-
-      {translatingState === false ? (
+      {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
             {enUrlReduxString}
@@ -112,22 +133,34 @@ const Translate: React.FC = () => {
           </div>
         </div>
       ) : (
-        <h1>Nothing to translate.</h1>
+        <></>
       )}
 
-      {/* <div className="translated-text">
-        <div className="tt-div">
-          {enUrlReduxString}
-          <br />
-          {enParsedText}
+      {/* {translatingState === true ? (
+        <div className="spinner">
+          <div className="dot1"></div>
+          <div className="dot2"></div>
         </div>
+      ) : (
+        <></>
+      )} */}
 
-        <div className="tt-div">
-          {nonEnUrlReduxString}
-          <br /> <br />
-          {nonEnParsedText}
+      {translatingState === true ? (
+        <div className="translated-text">
+          <div className="tt-div">
+            {enUrlReduxString}
+            <br />
+            {enParsedText}
+          </div>
+          <div className="tt-div">
+            {nonEnUrlReduxString}
+            <br /> <br />
+            {nonEnParsedText}
+          </div>
         </div>
-      </div> */}
+      ) : (
+        <></>
+      )}
     </>
   );
 };

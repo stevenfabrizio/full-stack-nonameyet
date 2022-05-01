@@ -1,17 +1,37 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { De, Es, Fr, It } from 'react-flags-select';
+
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
 import { enUrlsState } from '../../features/enUrl/enUrlsSlice';
 import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
 import { nonEnUrlsState } from '../../features/nonEnUrl/nonEnUrlsSlice';
-import { stateTranslatingTrue } from '../../features/translate/translatingSlice';
+import { nonParsedEnState } from '../../features/translate/nonParsedEnSlice';
+import { nonParsedNonEnState } from '../../features/translate/nonParsedNonEnSlice';
+import {
+  stateTranslatingFalse,
+  stateTranslatingTrue,
+} from '../../features/translate/translatingSlice';
+
+const parse = require('html-react-parser');
+
+const languages = [
+  { value: 'de' },
+  { value: 'es' },
+  { value: 'fr' },
+  { value: 'it' },
+];
 
 const Search: React.FC = () => {
-  //redux variables
+  //redux states
   const dispatch = useAppDispatch();
+  const translatingState: boolean = useAppSelector(
+    (state: { translatingBoolean: { value: any } }) =>
+      state.translatingBoolean.value
+  );
   const reduxSelectedNonEnResult = useAppSelector(
     (state) => state.enUrlString.value
   );
@@ -25,12 +45,12 @@ const Search: React.FC = () => {
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
+  const [headerTxt, setHeaderTxt] = React.useState('');
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
-      //
       //english lang part
       const enPage = await fetch(
         `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
@@ -39,7 +59,6 @@ const Search: React.FC = () => {
 
       dispatch(enUrlsState(enResults[1]));
 
-      //
       //non english part
       const nonEnPage = await fetch(
         `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
@@ -89,18 +108,75 @@ const Search: React.FC = () => {
 
   //navigate to translate component when clicked.
   const Translate = () => {
+    dispatch(nonParsedEnState(''));
+    dispatch(nonParsedNonEnState(''));
     dispatch(stateTranslatingTrue());
+
     navigate('/translate');
   };
 
-  //reset the selected topic on search component load because... why not idk?
+  const ClickedP = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
+    const pEle: HTMLParagraphElement = e.target as HTMLParagraphElement;
+
+    setHeaderTxt(parse(pEle.innerHTML));
+  };
+
+  //if already translating on component load, cancel it.
   React.useEffect(() => {
     dispatch(enUrlState(''));
     dispatch(nonEnUrlState(''));
+
+    if (translatingState) {
+      dispatch(stateTranslatingFalse());
+    }
   }, []);
 
   return (
     <>
+      <div className="header">
+        <div className="dropdown">
+          <p style={{ fontSize: '1.5rem' }}>{headerTxt}</p>
+          <div className="dropdown-menu">
+            <p
+              style={{ fontSize: '1.5rem' }}
+              onClick={(
+                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+              ) => ClickedP(e)}
+            >
+              De
+              <De />
+            </p>
+            <p
+              style={{ fontSize: '1.5rem' }}
+              onClick={(
+                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+              ) => ClickedP(e)}
+            >
+              Es
+              <Es />
+            </p>
+            <p
+              style={{ fontSize: '1.5rem' }}
+              onClick={(
+                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+              ) => ClickedP(e)}
+            >
+              Fr
+              <Fr />
+            </p>
+            <p
+              style={{ fontSize: '1.5rem' }}
+              onClick={(
+                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
+              ) => ClickedP(e)}
+            >
+              It
+              <It />
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="search-containers">
         <form
           onSubmit={(e: React.FormEvent<HTMLFormElement>) =>

@@ -9,6 +9,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Search from './pages/dashboard-pages/search';
 import Translate from './pages/dashboard-pages/translate';
+import Temp from './Temp';
 
 const App: React.FC = () => {
   const authStatus: boolean = useAppSelector(
@@ -26,18 +27,19 @@ const App: React.FC = () => {
 
   return (
     <>
+      {/* <Temp /> */}
+
       <BrowserRouter>
         <Header />
+
         <Routes>
           <Route index element={<Dashboard />} />
-
           <Route path="/" element={<Dashboard />}>
             <Route index element={<Search />} />
             <Route path="search" element={<Search />} />
             <Route path="translate" element={<Translate />} />
             <Route path="*" element={<Search />} />
           </Route>
-
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Login />} />

@@ -5,12 +5,22 @@ import { Link, Navigate } from 'react-router-dom';
 import { stateFalse } from '../features/auth/authSlice';
 import { enUrlsState } from '../features/enUrl/enUrlsSlice';
 import { nonEnUrlsState } from '../features/nonEnUrl/nonEnUrlsSlice';
+import { stateTranslatedFalse } from '../features/translate/translatedSlice';
+import { stateTranslatingFalse } from '../features/translate/translatingSlice';
 
 const Header: React.FC = () => {
   //redux stuff
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
+  );
+  const translatingState: boolean = useAppSelector(
+    (state: { translatingBoolean: { value: any } }) =>
+      state.translatingBoolean.value
+  );
+  const translatedState: boolean = useAppSelector(
+    (state: { translatedBoolean: { value: any } }) =>
+      state.translatedBoolean.value
   );
 
   //DONT NEED THIS FOR REDUX RESETTING STATE??
@@ -32,6 +42,8 @@ const Header: React.FC = () => {
     localStorage.removeItem('enteredPassword');
     localStorage.removeItem('LoggedInOrNot');
 
+    dispatch(stateTranslatingFalse());
+    dispatch(stateTranslatedFalse());
     dispatch(enUrlsState([]));
     dispatch(nonEnUrlsState([]));
     dispatch(stateFalse());
@@ -49,7 +61,7 @@ const Header: React.FC = () => {
   }, [authStatus === true]);
 
   return (
-    <div className="header">
+    <div className="header-component">
       {authStatus ? (
         <>
           <h1 style={{ textTransform: 'capitalize' }}>Welcome, {name}</h1>
