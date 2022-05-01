@@ -15,6 +15,7 @@ import {
   stateTranslatingFalse,
   stateTranslatingTrue,
 } from '../../features/translate/translatingSlice';
+import { languageState } from '../../features/language/languageSlice';
 
 const parse = require('html-react-parser');
 
@@ -45,7 +46,7 @@ const Search: React.FC = () => {
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [headerTxt, setHeaderTxt] = React.useState('');
+  const [headerTxt, setHeaderTxt] = React.useState(`Select Language`);
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -67,7 +68,7 @@ const Search: React.FC = () => {
 
       dispatch(nonEnUrlsState(nonEnResults[1]));
     } catch (error) {
-      console.error('Beega Probleema ' + error);
+      console.error('Beega Probleema: ' + error);
     }
   };
 
@@ -115,10 +116,16 @@ const Search: React.FC = () => {
     navigate('/translate');
   };
 
-  const ClickedP = (e: React.MouseEvent<HTMLParagraphElement, MouseEvent>) => {
-    const pEle: HTMLParagraphElement = e.target as HTMLParagraphElement;
+  //change header text to clicked innerhtml and update redux state of language to translate.
+  const ClickedP = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+    const pEle: HTMLSpanElement = e.target as HTMLSpanElement;
 
     setHeaderTxt(parse(pEle.innerHTML));
+    const headerSpan: HTMLSpanElement = document.querySelector('.header-span')!;
+    headerSpan.style.gridTemplateColumns = '1fr 1fr';
+
+    dispatch(languageState(pEle.innerHTML.slice(0, 2)));
+    console.log(pEle.innerHTML.slice(0, 2));
   };
 
   //if already translating on component load, cancel it.
@@ -135,44 +142,40 @@ const Search: React.FC = () => {
     <>
       <div className="header">
         <div className="dropdown">
-          <p style={{ fontSize: '1.5rem' }}>{headerTxt}</p>
+          <span className="header-span">{headerTxt}</span>
           <div className="dropdown-menu">
-            <p
-              style={{ fontSize: '1.5rem' }}
-              onClick={(
-                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-              ) => ClickedP(e)}
+            <span
+              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                ClickedP(e)
+              }
             >
               De
               <De />
-            </p>
-            <p
-              style={{ fontSize: '1.5rem' }}
-              onClick={(
-                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-              ) => ClickedP(e)}
+            </span>
+            <span
+              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                ClickedP(e)
+              }
             >
               Es
               <Es />
-            </p>
-            <p
-              style={{ fontSize: '1.5rem' }}
-              onClick={(
-                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-              ) => ClickedP(e)}
+            </span>
+            <span
+              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                ClickedP(e)
+              }
             >
               Fr
               <Fr />
-            </p>
-            <p
-              style={{ fontSize: '1.5rem' }}
-              onClick={(
-                e: React.MouseEvent<HTMLParagraphElement, MouseEvent>
-              ) => ClickedP(e)}
+            </span>
+            <span
+              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                ClickedP(e)
+              }
             >
               It
               <It />
-            </p>
+            </span>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ import translatingReducer from '../features/translate/translatingSlice';
 import nonParsedNonEnReducer from '../features/translate/nonParsedNonEnSlice';
 import nonParsedEnReducer from '../features/translate/nonParsedEnSlice';
 import translatedReducer from '../features/translate/translatedSlice';
+import languageReducer from '../features/language/languageSlice';
 
 export const store = configureStore({
   reducer: {
@@ -29,6 +30,9 @@ export const store = configureStore({
     //the non parsed content fetched from the search result
     nonParsedEnString: nonParsedEnReducer,
     nonParsedNonEnString: nonParsedNonEnReducer,
+
+    //which language we will be translating from
+    languageString: languageReducer,
   },
 });
 

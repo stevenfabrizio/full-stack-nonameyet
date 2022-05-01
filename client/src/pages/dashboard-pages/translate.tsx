@@ -19,13 +19,15 @@ const parse = require('html-react-parser');
 const Translate: React.FC = () => {
   //redux variables
   const dispatch = useAppDispatch();
+  const languageReduxString: string = useAppSelector(
+    (state) => state.languageString.value
+  );
   const nonEnUrlReduxString: string = useAppSelector(
     (state) => state.nonEnUrlString.value
   );
   const enUrlReduxString: string = useAppSelector(
     (state) => state.enUrlString.value
   );
-
   const nonParsedEnReduxString: string = useAppSelector(
     (state) => state.nonParsedEnString.value
   );
@@ -66,7 +68,7 @@ const Translate: React.FC = () => {
       //
       //NON ENGLISH WIKI
       const nonEnPage = await fetch(
-        `https://de.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`
+        `https://${languageReduxString}.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`
       );
       const nonEnJson = await nonEnPage.json();
 
@@ -136,16 +138,16 @@ const Translate: React.FC = () => {
         <></>
       )}
 
-      {/* {translatingState === true ? (
+      {translatingState === true ? (
         <div className="spinner">
           <div className="dot1"></div>
           <div className="dot2"></div>
         </div>
       ) : (
         <></>
-      )} */}
+      )}
 
-      {translatingState === true ? (
+      {/* {translatingState === true ? (
         <div className="translated-text">
           <div className="tt-div">
             {enUrlReduxString}
@@ -160,7 +162,7 @@ const Translate: React.FC = () => {
         </div>
       ) : (
         <></>
-      )}
+      )} */}
     </>
   );
 };
