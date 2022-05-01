@@ -20,7 +20,7 @@ const App: React.FC = () => {
     if (authStatus) {
       <Navigate to="/login" replace />;
 
-      return;
+      // return;
     }
   }, []);
 

@@ -7,12 +7,16 @@ import { stateFalse, stateTrue } from '../features/auth/authSlice';
 const Register: React.FC = () => {
   //redux stuff
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
 
-  const [inputs, setInputs] = React.useState({
+  const navigate = useNavigate();
+  const [inputs, setInputs] = React.useState<{
+    email: string;
+    password: string;
+    name: string;
+  }>({
     email: '',
     password: '',
     name: '',
@@ -42,9 +46,9 @@ const Register: React.FC = () => {
         body: JSON.stringify(body),
       });
 
-      const parseRes = await response.json();
+      const parseResponse = await response.json();
 
-      if (parseRes.LoggedIn) {
+      if (parseResponse.LoggedIn) {
         localStorage.setItem('enteredEmail', email);
         localStorage.setItem('enteredPassword', password);
         dispatch(stateTrue());

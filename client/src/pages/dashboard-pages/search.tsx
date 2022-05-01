@@ -22,14 +22,14 @@ const Search: React.FC = () => {
   //redux states
   const dispatch = useAppDispatch();
   const translatingState: boolean = useAppSelector(
-    (state: { translatingBoolean: { value: any } }) =>
+    (state: { translatingBoolean: { value: boolean } }) =>
       state.translatingBoolean.value
-  );
-  const reduxSelectedNonEnResult: string = useAppSelector(
-    (state) => state.enUrlString.value
   );
   const reduxSelectedEnResut: string = useAppSelector(
     (state) => state.nonEnUrlString.value
+  );
+  const reduxSelectedNonEnResult: string = useAppSelector(
+    (state) => state.enUrlString.value
   );
   const reduxResultsEn: string[] = useAppSelector(
     (state) => state.enUrlsArray.value
@@ -44,22 +44,21 @@ const Search: React.FC = () => {
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     try {
       //english lang part
-      const enPage = await fetch(
+      const enResponse = await fetch(
         `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
       );
-      const enResults = await enPage.json();
-      dispatch(enUrlsState(enResults[1]));
+      const enParsedResponse = await enResponse.json();
+      dispatch(enUrlsState(enParsedResponse[1]));
 
       //non english part
-      const nonEnPage = await fetch(
+      const nonEnResponse = await fetch(
         `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
       );
-      const nonEnResults = await nonEnPage.json();
+      const nonEnParsedResponse = await nonEnResponse.json();
 
-      dispatch(nonEnUrlsState(nonEnResults[1]));
+      dispatch(nonEnUrlsState(nonEnParsedResponse[1]));
     } catch (error) {
       console.error('Beega Probleema: ' + error);
     }
@@ -71,10 +70,10 @@ const Search: React.FC = () => {
   ) => {
     const ClickedElement: HTMLLIElement = e.target as HTMLLIElement;
 
-    const englishLis: NodeListOf<HTMLLIElement> =
+    const allEnClickableElements: NodeListOf<HTMLLIElement> =
       document.querySelectorAll('.en-search-result');
-    for (let i = 0; i < englishLis.length; i++) {
-      englishLis[i].style.backgroundColor = 'rgba(0,0,0,0)';
+    for (let i = 0; i < allEnClickableElements.length; i++) {
+      allEnClickableElements[i].style.backgroundColor = 'rgba(0,0,0,0)';
     }
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
@@ -87,11 +86,10 @@ const Search: React.FC = () => {
   ) => {
     const ClickedElement: HTMLLIElement = e.target as HTMLLIElement;
 
-    const nonEnglishLis: NodeListOf<HTMLLIElement> = document.querySelectorAll(
-      '.non-en-search-result'
-    );
-    for (let i = 0; i < nonEnglishLis.length; i++) {
-      nonEnglishLis[i].style.backgroundColor = 'rgba(0,0,0,0)';
+    const allNonEnClickableElements: NodeListOf<HTMLLIElement> =
+      document.querySelectorAll('.non-en-search-result');
+    for (let i = 0; i < allNonEnClickableElements.length; i++) {
+      allNonEnClickableElements[i].style.backgroundColor = 'rgba(0,0,0,0)';
     }
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
@@ -109,13 +107,17 @@ const Search: React.FC = () => {
 
   //change header text to clicked innerhtml and update redux state of language to translate.
   const ClickedLang = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
-    const pEle: HTMLSpanElement = e.target as HTMLSpanElement;
+    const clickedLanguage: HTMLSpanElement = e.target as HTMLSpanElement;
 
-    setHeaderTxt(parse(pEle.innerHTML));
-    const headerSpan: HTMLSpanElement = document.querySelector('.header-span')!;
-    headerSpan.style.gridTemplateColumns = '1fr 1fr';
+    //restyle grid template for two columns
+    setHeaderTxt(parse(clickedLanguage.innerHTML));
+    const currentLanguage: HTMLSpanElement =
+      document.querySelector('.header-span')!;
+    currentLanguage.style.gridTemplateColumns = '1fr 1fr';
 
-    dispatch(languageState(pEle.innerHTML.slice(0, 2).toLowerCase()));
+    dispatch(
+      languageState(clickedLanguage.innerHTML.slice(0, 2).toLowerCase())
+    );
   };
 
   //if already translating on component load, cancel it.

@@ -22,11 +22,11 @@ const Translate: React.FC = () => {
   const languageReduxString: string = useAppSelector(
     (state) => state.languageString.value
   );
-  const nonEnUrlReduxString: string = useAppSelector(
-    (state) => state.nonEnUrlString.value
-  );
   const enUrlReduxString: string = useAppSelector(
     (state) => state.enUrlString.value
+  );
+  const nonEnUrlReduxString: string = useAppSelector(
+    (state) => state.nonEnUrlString.value
   );
   const nonParsedEnReduxString: string = useAppSelector(
     (state) => state.nonParsedEnString.value
@@ -50,33 +50,33 @@ const Translate: React.FC = () => {
   const ClickedTranslate = async () => {
     try {
       dispatch(stateTranslatingTrue());
-      //
       //ENGLISH LANG WIKI
-      const enPage = await fetch(
+      const enResponse = await fetch(
         `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${enUrlReduxString}`
       );
-      const enJson = await enPage.json();
+      const enUnparsedResponse = await enResponse.json();
 
       //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
-      const myEnObj = enJson.query.pages;
+      const myEnObj = enUnparsedResponse.query.pages;
       const enKeys = Object.keys(myEnObj);
-      const enWikipediaID = enKeys[0];
-      const enRawContent = myEnObj[enWikipediaID].extract.toString();
+      const enWikipediaArticleID = enKeys[0];
+      const enRawContent = myEnObj[enWikipediaArticleID].extract.toString();
 
       dispatch(nonParsedEnState(enRawContent.toString()));
 
       //
       //NON ENGLISH WIKI
-      const nonEnPage = await fetch(
+      const nonEnResponse = await fetch(
         `https://${languageReduxString}.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`
       );
-      const nonEnJson = await nonEnPage.json();
+      const nonEnUnparsedResponse = await nonEnResponse.json();
 
       //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
-      const myNonEnObj = nonEnJson.query.pages;
+      const myNonEnObj = nonEnUnparsedResponse.query.pages;
       const nonEnKeys = Object.keys(myNonEnObj);
-      const nonEnWikipediaID = nonEnKeys[0];
-      const nonEnRawContent = myNonEnObj[nonEnWikipediaID].extract.toString();
+      const nonEnWikipediaArticleID = nonEnKeys[0];
+      const nonEnRawContent =
+        myNonEnObj[nonEnWikipediaArticleID].extract.toString();
 
       const translatedIntoEnNonParsed = CharTranslator(
         nonEnRawContent,
@@ -93,23 +93,26 @@ const Translate: React.FC = () => {
     }
   };
 
-  //when arriving here from clicking translate, reset state and fetch wiki content.
+  //when arriving here from clicking translate, reset states and fetch wiki content.
   React.useEffect(() => {
     if (translatingState) {
       dispatch(stateTranslatedFalse());
       dispatch(stateTranslatingFalse());
+
       ClickedTranslate();
     }
   }, []);
 
   return (
     <>
+      {/* not translating nor havent translated yet */}
       {translatingState === false && translatedState === false ? (
         <h1>Nothing has been translated yet.</h1>
       ) : (
         <></>
       )}
 
+      {/* we have previously translated */}
       {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
@@ -127,6 +130,7 @@ const Translate: React.FC = () => {
         <></>
       )}
 
+      {/* translating */}
       {translatingState === true ? (
         <div className="spinner">
           <div className="dot1"></div>
