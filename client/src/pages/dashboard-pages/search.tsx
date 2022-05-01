@@ -2,7 +2,9 @@ import React from 'react';
 
 import { useAppDispatch } from '../../app/hooks';
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
+import { enUrlsState } from '../../features/enUrl/enUrlsSlice';
 import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
+import { nonEnUrlsState } from '../../features/nonEnUrl/nonEnUrlsSlice';
 
 const Search: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,6 +33,7 @@ const Search: React.FC = () => {
 
       setEnUrls(() => enResults[3]);
       // setEnUrls((enUrls) => enResults[3]);
+
 
       dispatch(enUrlState(enResults[3]));
 
