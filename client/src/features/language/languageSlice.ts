@@ -13,7 +13,7 @@ interface languageState {
 
 const initialState: languageState = {
   //get our boolean from localstorage
-  value: 'De',
+  value: 'de', //default german
 };
 
 export const languageSlice = createSlice({

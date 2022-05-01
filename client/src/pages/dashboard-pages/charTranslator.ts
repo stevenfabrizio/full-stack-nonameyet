@@ -1,30 +1,38 @@
 import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
 const translator = new YandexTranslator();
 
-async function CharTranslator(data: string) {
-  const stringLength: number = data.length;
+async function CharTranslator(data: string, languageReduxString: string) {
   let counter: number = 0;
   let concatTranslatedStr: string = '';
+  const targetLang: string = languageReduxString;
+  const stringLength: number = data.length;
 
-  //finally found a real use for a while statement
+  //finally found a practical use for a while statement
   while (counter < stringLength) {
     console.log(
-      `Characters to translate: ${stringLength} \nCharacters translated: ${counter}.`
+      `Characters to be translated: ${stringLength} 
+      \n
+      Characters translated: ${counter}.`
     );
 
+    //taking chunks of 10k chars at a time. yandex's limit.
     const slicedStr = data.slice(counter, counter + 10000);
 
-    const translating = await translator
-      .translate(slicedStr, 'de', 'en')
+    //need to do this pointless if statement for typescript to make yandex translator happy.
+    if (targetLang !== ('de' || 'fr' || 'it' || 'es')) {
+      return 'Error: Unknown Language Selected.';
+    }
+
+    const translating: string = await translator
+      .translate(slicedStr, targetLang, 'en')
       .then(
         (translate) => (concatTranslatedStr = concatTranslatedStr + translate)
       );
 
-    //yandex can only do 10k chars per request
     counter = counter + 10000;
   }
 
-  console.log('Done!');
+  console.log('Done! Returning...');
   return concatTranslatedStr;
 }
 

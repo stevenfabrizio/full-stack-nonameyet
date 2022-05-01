@@ -78,7 +78,10 @@ const Translate: React.FC = () => {
       const nonEnWikipediaID = nonEnKeys[0];
       const nonEnRawContent = myNonEnObj[nonEnWikipediaID].extract.toString();
 
-      const translatedIntoEnNonParsed = CharTranslator(nonEnRawContent);
+      const translatedIntoEnNonParsed = CharTranslator(
+        nonEnRawContent,
+        languageReduxString
+      );
 
       dispatch(
         nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
@@ -87,20 +90,6 @@ const Translate: React.FC = () => {
       dispatch(stateTranslatedTrue());
     } catch (error) {
       console.log(`bad something: ${error}`);
-      //   dispatch(
-      //     nonParsedEnState(
-      //       `<span>Problem fetching content.</span>
-      //       <br /><br />
-      //       <span>${error}</span>`
-      //     )
-      //   );
-      //   dispatch(
-      //     nonParsedNonEnState(
-      //       `<span>Problem fetching content.</span>
-      //       <br /><br />
-      //       <span>${error}</span>`
-      //     )
-      //   );
     }
   };
 
@@ -116,7 +105,7 @@ const Translate: React.FC = () => {
   return (
     <>
       {translatingState === false && translatedState === false ? (
-        <h1>Nothing to translate.</h1>
+        <h1>Nothing has been translated yet.</h1>
       ) : (
         <></>
       )}

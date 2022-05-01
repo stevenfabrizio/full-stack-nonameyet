@@ -9,7 +9,6 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Search from './pages/dashboard-pages/search';
 import Translate from './pages/dashboard-pages/translate';
-import Temp from './Temp';
 
 const App: React.FC = () => {
   const authStatus: boolean = useAppSelector(
@@ -27,8 +26,6 @@ const App: React.FC = () => {
 
   return (
     <>
-      {/* <Temp /> */}
-
       <BrowserRouter>
         <Header />
 

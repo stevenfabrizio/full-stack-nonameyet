@@ -1,13 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit';
+
 import authReducer from '../features/auth/authSlice';
+
 import nonEnUrlReducer from '../features/nonEnUrl/nonEnUrlSlice';
 import enUrlReducer from '../features/enUrl/enUrlSlice';
+
 import enUrlsReducer from '../features/enUrl/enUrlsSlice';
 import nonEnUrlsReducer from '../features/nonEnUrl/nonEnUrlsSlice';
-import translatingReducer from '../features/translate/translatingSlice';
+
 import nonParsedNonEnReducer from '../features/translate/nonParsedNonEnSlice';
 import nonParsedEnReducer from '../features/translate/nonParsedEnSlice';
+
+import translatingReducer from '../features/translate/translatingSlice';
 import translatedReducer from '../features/translate/translatedSlice';
+
 import languageReducer from '../features/language/languageSlice';
 
 export const store = configureStore({
@@ -19,11 +25,11 @@ export const store = configureStore({
     translatingBoolean: translatingReducer,
     translatedBoolean: translatedReducer,
 
-    //the selected search result to be fetched.
+    //the selected search result to be fetched
     enUrlString: enUrlReducer,
     nonEnUrlString: nonEnUrlReducer,
 
-    //the arrays of search results to select from
+    //the arrays of search results selecting from
     enUrlsArray: enUrlsReducer,
     nonEnUrlsArray: nonEnUrlsReducer,
 
@@ -31,7 +37,7 @@ export const store = configureStore({
     nonParsedEnString: nonParsedEnReducer,
     nonParsedNonEnString: nonParsedNonEnReducer,
 
-    //which language we will be translating from
+    //which language we will be translating from?
     languageString: languageReducer,
   },
 });

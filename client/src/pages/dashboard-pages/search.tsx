@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { De, Es, Fr, It } from 'react-flags-select';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
 import { enUrlsState } from '../../features/enUrl/enUrlsSlice';
 import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
@@ -19,13 +18,6 @@ import { languageState } from '../../features/language/languageSlice';
 
 const parse = require('html-react-parser');
 
-const languages = [
-  { value: 'de' },
-  { value: 'es' },
-  { value: 'fr' },
-  { value: 'it' },
-];
-
 const Search: React.FC = () => {
   //redux states
   const dispatch = useAppDispatch();
@@ -33,20 +25,22 @@ const Search: React.FC = () => {
     (state: { translatingBoolean: { value: any } }) =>
       state.translatingBoolean.value
   );
-  const reduxSelectedNonEnResult = useAppSelector(
+  const reduxSelectedNonEnResult: string = useAppSelector(
     (state) => state.enUrlString.value
   );
-  const reduxSelectedEnResut = useAppSelector(
+  const reduxSelectedEnResut: string = useAppSelector(
     (state) => state.nonEnUrlString.value
   );
-  const reduxResultsEn = useAppSelector((state) => state.enUrlsArray.value);
-  const reduxResultsNonEn = useAppSelector(
+  const reduxResultsEn: string[] = useAppSelector(
+    (state) => state.enUrlsArray.value
+  );
+  const reduxResultsNonEn: string[] = useAppSelector(
     (state) => state.nonEnUrlsArray.value
   );
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [headerTxt, setHeaderTxt] = React.useState(`Select Language`);
+  const [headerTxt, setHeaderTxt] = React.useState<string>(`Select Language`);
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -57,7 +51,6 @@ const Search: React.FC = () => {
         `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
       );
       const enResults = await enPage.json();
-
       dispatch(enUrlsState(enResults[1]));
 
       //non english part
@@ -86,7 +79,6 @@ const Search: React.FC = () => {
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
     dispatch(enUrlState(ClickedElement.innerHTML));
-    // setClickedEnUrl(ClickedElement.innerHTML);
   };
 
   //highlights clicked li, dispatches it to state.
@@ -104,7 +96,6 @@ const Search: React.FC = () => {
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
     dispatch(nonEnUrlState(ClickedElement.innerHTML));
-    // setClickedNonEnUrl(ClickedElement.innerHTML);
   };
 
   //navigate to translate component when clicked.
@@ -117,15 +108,14 @@ const Search: React.FC = () => {
   };
 
   //change header text to clicked innerhtml and update redux state of language to translate.
-  const ClickedP = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const ClickedLang = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const pEle: HTMLSpanElement = e.target as HTMLSpanElement;
 
     setHeaderTxt(parse(pEle.innerHTML));
     const headerSpan: HTMLSpanElement = document.querySelector('.header-span')!;
     headerSpan.style.gridTemplateColumns = '1fr 1fr';
 
-    dispatch(languageState(pEle.innerHTML.slice(0, 2)));
-    console.log(pEle.innerHTML.slice(0, 2));
+    dispatch(languageState(pEle.innerHTML.slice(0, 2).toLowerCase()));
   };
 
   //if already translating on component load, cancel it.
@@ -146,7 +136,7 @@ const Search: React.FC = () => {
           <div className="dropdown-menu">
             <span
               onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedP(e)
+                ClickedLang(e)
               }
             >
               De
@@ -154,7 +144,7 @@ const Search: React.FC = () => {
             </span>
             <span
               onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedP(e)
+                ClickedLang(e)
               }
             >
               Es
@@ -162,7 +152,7 @@ const Search: React.FC = () => {
             </span>
             <span
               onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedP(e)
+                ClickedLang(e)
               }
             >
               Fr
@@ -170,7 +160,7 @@ const Search: React.FC = () => {
             </span>
             <span
               onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedP(e)
+                ClickedLang(e)
               }
             >
               It
