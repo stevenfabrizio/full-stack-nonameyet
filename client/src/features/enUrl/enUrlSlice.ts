@@ -13,7 +13,7 @@ interface enUrlState {
 
 const initialState: enUrlState = {
   //get our boolean from localstorage
-  value: 'Richard_Wagner',
+  value: '',
 };
 
 export const enUrlSlice = createSlice({

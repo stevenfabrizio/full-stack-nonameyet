@@ -1,40 +1,55 @@
 import React from 'react';
 
-import { useAppSelector } from '../../app/hooks';
-import { CharCounter } from './wordCounter2';
+import { CharTranslator } from './charTranslator';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import {
+  stateTranslatingFalse,
+  stateTranslatingTrue,
+} from '../../features/translate/translatingSlice';
+import { nonParsedEnState } from '../../features/translate/nonParsedEnSlice';
+import { nonParsedNonEnState } from '../../features/translate/nonParsedNonEnSlice';
 
-import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
+// import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
+// const translator = new YandexTranslator();
 
-const translator = new YandexTranslator();
 const parse = require('html-react-parser');
 
 const Translate: React.FC = () => {
-  //getting urls from redux sent from search component.
+  //redux variables
+  const dispatch = useAppDispatch();
   const nonEnUrlReduxString: string = useAppSelector(
     (state) => state.nonEnUrlString.value
   );
   const enUrlReduxString: string = useAppSelector(
     (state) => state.enUrlString.value
   );
+  const translatingState: boolean = useAppSelector(
+    (state: { translatingBoolean: { value: any } }) =>
+      state.translatingBoolean.value
+  );
+  const nonParsedEnReduxString: string = useAppSelector(
+    (state) => state.nonParsedEnString.value
+  );
+  const nonParsedNonEnReduxString: string = useAppSelector(
+    (state) => state.nonParsedNonEnString.value
+  );
 
-  //slurping up raw unparsed html
-  const [slurpedEnText, setSlurpedEnText] =
-    React.useState<string>('<h1>single</h1>');
-  const [slurpedNonEnText, setSlurpedNonEnText] =
-    React.useState<string>('<h1>single</h1>');
+  //parsing the raw strings to for html formatting
+  const enParsedText = parse(nonParsedEnReduxString);
+  const nonEnParsedText = parse(nonParsedNonEnReduxString);
 
-  //parsing the raw text to something html can use
-  const enParsedText = parse(slurpedEnText);
-  const nonEnParsedText = parse(slurpedNonEnText);
+  //state variable for are we translating or not.
+  const [translationsComplete, setTranslationsComplete] =
+    React.useState<boolean>(false);
 
-  const enUrl = `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${enUrlReduxString}`;
-  const nonEnUrl = `https://de.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`;
-
-  const Clicked = async () => {
+  const ClickedTranslate = async () => {
     try {
+      dispatch(stateTranslatingTrue());
       //
-      //ENGLISH LANG WIKI FIRST
-      const enPage = await fetch(enUrl);
+      //ENGLISH LANG WIKI
+      const enPage = await fetch(
+        `https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${enUrlReduxString}`
+      );
       const enJson = await enPage.json();
 
       //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
@@ -42,11 +57,14 @@ const Translate: React.FC = () => {
       const enKeys = Object.keys(myEnObj);
       const enWikipediaID = enKeys[0];
       const enRawContent = myEnObj[enWikipediaID].extract.toString();
-      setSlurpedEnText(enRawContent);
+
+      dispatch(nonParsedEnState(enRawContent.toString()));
 
       //
       //NON ENGLISH WIKI
-      const nonEnPage = await fetch(nonEnUrl);
+      const nonEnPage = await fetch(
+        `https://de.wikipedia.org/w/api.php?origin=*&format=json&action=query&prop=extracts&titles=${nonEnUrlReduxString}`
+      );
       const nonEnJson = await nonEnPage.json();
 
       //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
@@ -55,36 +73,61 @@ const Translate: React.FC = () => {
       const nonEnWikipediaID = nonEnKeys[0];
       const nonEnRawContent = myNonEnObj[nonEnWikipediaID].extract.toString();
 
-      CharCounter(nonEnRawContent)
+      const translatedIntoEnNonParsed = CharTranslator(nonEnRawContent);
+
+      dispatch(
+        nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
+      );
+      dispatch(stateTranslatingFalse());
     } catch (error) {
-      console.log(`bad fetch or request or something: ${error}`);
+      console.log(`bad something: ${error}`);
     }
   };
 
+  //when arriving here from clicking translate, reset state and fetch wiki content.
   React.useEffect(() => {
-    console.log(nonEnUrlReduxString);
-    console.log(enUrlReduxString);
+    if (translatingState) {
+      dispatch(stateTranslatingFalse());
+      ClickedTranslate();
+    }
   }, []);
 
   return (
     <>
-      <h1>Translated</h1>
+      {/* <h1>Translated</h1> */}
 
-      <button onClick={() => Clicked()}>go fetch</button>
+      {/* <button onClick={() => ClickedTranslate()}>go fetch</button> */}
 
-      <div className="translated-text">
+      {translatingState === false ? (
+        <div className="translated-text">
+          <div className="tt-div">
+            {enUrlReduxString}
+            <br />
+            {enParsedText}
+          </div>
+          <div className="tt-div">
+            {nonEnUrlReduxString}
+            <br /> <br />
+            {nonEnParsedText}
+          </div>
+        </div>
+      ) : (
+        <h1>Nothing to translate.</h1>
+      )}
+
+      {/* <div className="translated-text">
         <div className="tt-div">
           {enUrlReduxString}
-          <br></br>
-
+          <br />
           {enParsedText}
         </div>
+
         <div className="tt-div">
           {nonEnUrlReduxString}
           <br /> <br />
           {nonEnParsedText}
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

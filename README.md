@@ -5,6 +5,9 @@ Aleksandr_Solzhenitsyn
 
 bernd weikl
 Arturo Benedetti Michelangeli
+Konrad Adenauer
+Hans Sachs
+napolean III  'popular election'
 
 JUST THE LIST OF RESULTS
 https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=united-kingdom

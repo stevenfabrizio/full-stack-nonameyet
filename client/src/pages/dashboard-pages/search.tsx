@@ -1,23 +1,30 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
-import { useAppDispatch } from '../../app/hooks';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
 import { enUrlsState } from '../../features/enUrl/enUrlsSlice';
 import { nonEnUrlState } from '../../features/nonEnUrl/nonEnUrlSlice';
 import { nonEnUrlsState } from '../../features/nonEnUrl/nonEnUrlsSlice';
+import { stateTranslatingTrue } from '../../features/translate/translatingSlice';
 
 const Search: React.FC = () => {
+  //redux variables
   const dispatch = useAppDispatch();
+  const reduxSelectedNonEnResult = useAppSelector(
+    (state) => state.enUrlString.value
+  );
+  const reduxSelectedEnResut = useAppSelector(
+    (state) => state.nonEnUrlString.value
+  );
+  const reduxResultsEn = useAppSelector((state) => state.enUrlsArray.value);
+  const reduxResultsNonEn = useAppSelector(
+    (state) => state.nonEnUrlsArray.value
+  );
 
+  const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
-
-  const [parsedEnResults, setParsedEnResults] = React.useState<[]>([]);
-  const [parsedNonEnResults, setParsedNonEnResults] = React.useState<[]>([]);
-  const [enUrls, setEnUrls] = React.useState<[]>([]);
-  const [nonEnUrls, setNonEnUrls] = React.useState<[]>([]);
-
-  const enResultsUrl = `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=`;
-  const nonEnResultsUrl = `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=`;
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,36 +32,27 @@ const Search: React.FC = () => {
     try {
       //
       //english lang part
-      const enPage = await fetch(`${enResultsUrl}` + `${searchInput}`);
+      const enPage = await fetch(
+        `https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
+      );
       const enResults = await enPage.json();
 
-      setParsedEnResults(() => enResults[1]);
-      // setParsedEnResults((parsedEnResults) => enResults[1]);
-
-      setEnUrls(() => enResults[3]);
-      // setEnUrls((enUrls) => enResults[3]);
-
-
-      dispatch(enUrlState(enResults[3]));
+      dispatch(enUrlsState(enResults[1]));
 
       //
       //non english part
-      const nonEnPage = await fetch(`${nonEnResultsUrl}` + `${searchInput}`);
+      const nonEnPage = await fetch(
+        `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
+      );
       const nonEnResults = await nonEnPage.json();
 
-      setParsedNonEnResults(() => nonEnResults[1]);
-      // setParsedNonEnResults((parsedNonEnResults) => nonEnResults[1]);
-
-      setNonEnUrls(() => nonEnResults[3]);
-      // setNonEnUrls((nonEnUrls) => nonEnResults[3]);
-
-      dispatch(nonEnUrlState(nonEnResults[3]));
+      dispatch(nonEnUrlsState(nonEnResults[1]));
     } catch (error) {
       console.error('Beega Probleema ' + error);
     }
   };
 
-  //hightlights clicked li
+  //hightlights clicked li, dispatches it to state.
   const ClickedAnEnSearchResult = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
@@ -71,7 +69,7 @@ const Search: React.FC = () => {
     // setClickedEnUrl(ClickedElement.innerHTML);
   };
 
-  //highlights clicked li
+  //highlights clicked li, dispatches it to state.
   const ClickedANonEnSearchResult = (
     e: React.MouseEvent<HTMLLIElement, MouseEvent>
   ) => {
@@ -89,6 +87,18 @@ const Search: React.FC = () => {
     // setClickedNonEnUrl(ClickedElement.innerHTML);
   };
 
+  //navigate to translate component when clicked.
+  const Translate = () => {
+    dispatch(stateTranslatingTrue());
+    navigate('/translate');
+  };
+
+  //reset the selected topic on search component load because... why not idk?
+  React.useEffect(() => {
+    dispatch(enUrlState(''));
+    dispatch(nonEnUrlState(''));
+  }, []);
+
   return (
     <>
       <div className="search-containers">
@@ -105,11 +115,11 @@ const Search: React.FC = () => {
               setSearchInput(e.target.value);
             }}
           ></input>
-          <button type="submit">Submit</button>
+          <button type="submit">Search</button>
         </form>
 
         <ul className="en-results">
-          {parsedEnResults.map((a: string) => (
+          {reduxResultsEn.map((a: string) => (
             <li
               key={a}
               className="en-search-result"
@@ -123,7 +133,7 @@ const Search: React.FC = () => {
         </ul>
 
         <ul className="non-en-results">
-          {parsedNonEnResults.map((a: string) => (
+          {reduxResultsNonEn.map((a: string) => (
             <li
               key={a}
               className="non-en-search-result"
@@ -136,7 +146,16 @@ const Search: React.FC = () => {
           ))}
         </ul>
 
-        <div></div>
+        {reduxSelectedNonEnResult.length > 0 &&
+        reduxSelectedEnResut.length > 0 ? (
+          <button className="search-translate-btn" onClick={() => Translate()}>
+            Translate!
+          </button>
+        ) : (
+          <div></div>
+        )}
+
+        <div className="non-en-search-result" style={{ display: 'none' }}></div>
       </div>
     </>
   );

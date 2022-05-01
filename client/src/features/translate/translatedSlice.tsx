@@ -2,8 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import type { RootState } from '../../app/store';
 
 // Define a type for the slice state
-interface nonEnUrlState {
-  value: string;
+interface translatedState {
+  value: boolean;
 }
 
 // Define the initial state using that type
@@ -11,29 +11,32 @@ interface nonEnUrlState {
 //   value: false,
 // };
 
-const initialState: nonEnUrlState = {
+const initialState: translatedState = {
   //get our boolean from localstorage
-  value: '',
+  value: false,
 };
 
-export const nonEnUrlSlice = createSlice({
-  name: 'nonEnUrlString',
+export const translatedSlice = createSlice({
+  name: 'translatedBoolean',
   initialState,
   reducers: {
     // Redux Toolkit allows us to write "mutating" logic in reducers. It
     // doesn't actually mutate the state because it uses the Immer library,
     // which detects changes to a "draft state" and produces a brand new
     // immutable state based off those changes
-    nonEnUrlState: (state, action) => {
-      state.value = action.payload;
+    stateTranslatedTrue: (state) => {
+      state.value = true;
+    },
+    stateTranslatedFalse: (state) => {
+      state.value = false;
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { nonEnUrlState } = nonEnUrlSlice.actions;
+export const { stateTranslatedTrue, stateTranslatedFalse } = translatedSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectNonEnUrl = (state: RootState) => state.nonEnUrlString.value;
+export const selectTranslated = (state: RootState) => state.translatedBoolean.value;
 
-export default nonEnUrlSlice.reducer;
+export default translatedSlice.reducer;

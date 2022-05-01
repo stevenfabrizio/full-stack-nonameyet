@@ -3,6 +3,8 @@ import React from 'react';
 import { useAppSelector, useAppDispatch } from '../app/hooks';
 import { Link, Navigate } from 'react-router-dom';
 import { stateFalse } from '../features/auth/authSlice';
+import { enUrlsState } from '../features/enUrl/enUrlsSlice';
+import { nonEnUrlsState } from '../features/nonEnUrl/nonEnUrlsSlice';
 
 const Header: React.FC = () => {
   //redux stuff
@@ -10,6 +12,12 @@ const Header: React.FC = () => {
   const authStatus: boolean = useAppSelector(
     (state: { authBoolean: { value: any } }) => state.authBoolean.value
   );
+
+  //DONT NEED THIS FOR REDUX RESETTING STATE??
+  // const reduxResultsEn = useAppSelector((state) => state.enUrlsArray.value);
+  // const reduxResultsNonEn = useAppSelector(
+  //   (state) => state.nonEnUrlsArray.value
+  // );
 
   //gives the user a friendly hello
   const [name, setName] = React.useState('Stevie Wonder');
@@ -24,6 +32,8 @@ const Header: React.FC = () => {
     localStorage.removeItem('enteredPassword');
     localStorage.removeItem('LoggedInOrNot');
 
+    dispatch(enUrlsState([]));
+    dispatch(nonEnUrlsState([]));
     dispatch(stateFalse());
 
     <Navigate to="/login" replace />;
