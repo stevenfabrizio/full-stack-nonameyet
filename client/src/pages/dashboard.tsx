@@ -8,7 +8,7 @@ import DashHeader from './dashboard-components/dash-header';
 const Dashboard: React.FC = () => {
   //redux variables here.
   const authStatus: boolean = useAppSelector(
-    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+    (state: { authBoolean: { value: boolean } }) => state.authBoolean.value
   );
 
   const navigate = useNavigate();

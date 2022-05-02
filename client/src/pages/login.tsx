@@ -8,7 +8,7 @@ const Login: React.FC = () => {
   //redux stuff
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector(
-    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+    (state: { authBoolean: { value: boolean } }) => state.authBoolean.value
   );
 
   const navigate = useNavigate();

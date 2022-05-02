@@ -37,11 +37,11 @@ const Translate: React.FC = () => {
     (state) => state.nonParsedNonEnString.value
   );
   const translatingState: boolean = useAppSelector(
-    (state: { translatingBoolean: { value: any } }) =>
+    (state: { translatingBoolean: { value: boolean } }) =>
       state.translatingBoolean.value
   );
   const translatedState: boolean = useAppSelector(
-    (state: { translatedBoolean: { value: any } }) =>
+    (state: { translatedBoolean: { value: boolean } }) =>
       state.translatedBoolean.value
   );
 

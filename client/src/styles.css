@@ -11,7 +11,7 @@
   justify-self: center;
 
   /* font-family: monospace; */
-  color: rgb(245, 245, 245);
+  color: rgb(24, 24, 24);
   font-family: sans-serif;
 }
 html {
@@ -44,22 +44,22 @@ html {
 }
 a {
   text-decoration: none;
-  font-size: larger;
+  font-size: 24px;
 
   outline: 1px solid rgb(114, 119, 125);
   border-radius: 1px;
 
-  color: rgb(8, 8, 8);
+  height: 28px;
   margin-right: 20px;
-  padding: 8px;
 
   cursor: pointer;
 }
 .header-component h1 {
+  font-size: 1.5rem;
+  font-weight: 500;
+
   margin-left: 20px;
   justify-self: start;
-
-  color: black;
 }
 
 /* login n register */
@@ -264,6 +264,9 @@ button {
 }
 
 /* translated pages */
+b {
+  color: rgb(211, 207, 202);
+}
 .translated-text {
   width: 100%;
 
@@ -338,11 +341,11 @@ button {
   margin-top: 7px;
 }
 .tt-div h3 span {
-  color: rgb(255, 255, 255);
+  color: rgb(232, 230, 227);
   direction: ltr;
   font-family: sans-serif;
   font-size: 16.8px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 26.8833px;
 }
 .tt-div p {
@@ -357,11 +360,16 @@ button {
   margin-top: 7px;
 }
 .tt-div * i {
-  color: rgb(235, 235, 235);
+  /* color: rgb(230, 230, 230); */
   direction: ltr;
   font-family: sans-serif;
   font-size: 14px;
   line-height: 22.4px;
+  color: rgb(211, 207, 202);
+}
+.tt-div p * span,
+.tt-div p span {
+  color: rgb(222, 222, 222);
 }
 .tt-div ul {
   color: rgb(233, 233, 233);
@@ -425,7 +433,7 @@ button {
   grid-column: 1 / span 4;
 
   margin-top: 20px;
-  margin-bottom: -14px;
+  margin-bottom: -18px;
   display: grid;
   grid-template-columns: auto 1fr 1fr auto;
   grid-template-rows: 1fr;
@@ -433,9 +441,8 @@ button {
 .search-flags h1 {
   width: 100%;
   text-align: center;
-
 }
-.search-flags div{
+.search-flags div {
   width: 20vw;
 }
 
@@ -496,8 +503,17 @@ button {
 .search-translate-btn {
   grid-row: 4;
   grid-column: 1 / span 4;
-  margin-top: 10px;
-  align-self: start;
 
-  outline: 1px solid black;
+  background-color: rgb(51, 102, 204);
+  color: rgb(255, 255, 255);
+
+  font-size: 14px;
+  font-weight: 700;
+  height: 32px;
+  width: 200px;
+
+  transition: 0.15s ease;
+}
+.search-translate-btn:hover {
+  background-color: rgb(59, 118, 235);
 }

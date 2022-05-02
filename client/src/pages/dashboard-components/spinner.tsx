@@ -1,7 +1,7 @@
 import React from 'react';
 import { Gb, De, Es, Fr, It } from 'react-flags-select';
 
-require('./spinner.css')
+require('./spinner.css');
 
 const Spinner: React.FC = () => {
   return (

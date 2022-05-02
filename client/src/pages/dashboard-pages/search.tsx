@@ -43,7 +43,6 @@ const Search: React.FC = () => {
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [headerTxt, setHeaderTxt] = React.useState<string>(`De`);
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -108,17 +107,10 @@ const Search: React.FC = () => {
     navigate('/translate');
   };
 
-  //change header text to clicked innerhtml and update redux states.
-  const ClickedLang = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  //update dropdown header with clicked slice inner html
+  const ClickedLangFn = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const clickedLanguage: HTMLSpanElement = e.target as HTMLSpanElement;
 
-    setHeaderTxt(parse(clickedLanguage.innerHTML));
-
-    // const currentLanguage: HTMLSpanElement =
-    //   document.querySelector('.header-span')!;
-    // currentLanguage.style.gridTemplateColumns = '1fr 1fr';
-
-    //get the first two letters of clicked element which are one of de es fr it
     dispatch(
       languageState(clickedLanguage.innerHTML.slice(0, 2).toLowerCase())
     );
@@ -135,8 +127,6 @@ const Search: React.FC = () => {
     const deElement: HTMLSpanElement = document.querySelector(
       '.german-span'
     ) as HTMLSpanElement;
-    //parse the german flag on component load
-    setHeaderTxt(parse(deElement.innerHTML));
 
     if (translatingState) {
       dispatch(enUrlState(''));
@@ -183,12 +173,42 @@ const Search: React.FC = () => {
 
           <div className="header">
             <div className="dropdown">
-              <span className="header-span">{headerTxt} </span>
+              <span className="header-span">
+                {' '}
+                {languageReduxString === 'it' ? (
+                  <>
+                    It <It />
+                  </>
+                ) : (
+                  <></>
+                )}
+                {languageReduxString === 'de' ? (
+                  <>
+                    De <De />
+                  </>
+                ) : (
+                  <></>
+                )}
+                {languageReduxString === 'fr' ? (
+                  <>
+                    Fr <Fr />
+                  </>
+                ) : (
+                  <></>
+                )}
+                {languageReduxString === 'es' ? (
+                  <>
+                    Es <Es />
+                  </>
+                ) : (
+                  <></>
+                )}{' '}
+              </span>
               <div className="dropdown-menu">
                 <span
                   className="german-span"
                   onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                    ClickedLang(e)
+                    ClickedLangFn(e)
                   }
                 >
                   De
@@ -196,7 +216,7 @@ const Search: React.FC = () => {
                 </span>
                 <span
                   onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                    ClickedLang(e)
+                    ClickedLangFn(e)
                   }
                 >
                   Es
@@ -204,7 +224,7 @@ const Search: React.FC = () => {
                 </span>
                 <span
                   onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                    ClickedLang(e)
+                    ClickedLangFn(e)
                   }
                 >
                   Fr
@@ -212,7 +232,7 @@ const Search: React.FC = () => {
                 </span>
                 <span
                   onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                    ClickedLang(e)
+                    ClickedLangFn(e)
                   }
                 >
                   It
@@ -231,10 +251,10 @@ const Search: React.FC = () => {
             <Gb />
           </h1>
           <h1 style={{ fontSize: '3.5rem' }}>
-          {languageReduxString === 'it' ? <It /> : <></>}
-              {languageReduxString === 'de' ? <De /> : <></>}
-              {languageReduxString === 'fr' ? <Fr /> : <></>}
-              {languageReduxString === 'es' ? <Es /> : <></>}
+            {languageReduxString === 'it' ? <It /> : <></>}
+            {languageReduxString === 'de' ? <De /> : <></>}
+            {languageReduxString === 'fr' ? <Fr /> : <></>}
+            {languageReduxString === 'es' ? <Es /> : <></>}
           </h1>
           <div></div>
         </div>
@@ -272,7 +292,7 @@ const Search: React.FC = () => {
         {reduxSelectedNonEnResult.length > 0 &&
         reduxSelectedEnResut.length > 0 ? (
           <button className="search-translate-btn" onClick={() => Translate()}>
-            Translate!
+            Translate
           </button>
         ) : (
           <div></div>

@@ -1,7 +1,25 @@
 /* spinner */
 .translating-h1 {
   position: fixed;
-  color: rgb(8, 8, 8);
+  color: rgb(21, 21, 21);
+
+  animation: 1s pulse infinite linear;
+
+  letter-spacing: -3px;
+}
+@keyframes pulse {
+  0%{
+    opacity: 1;
+  }
+  30%{
+    opacity: 0.9;
+  }
+  60%{
+    opacity: 1;
+  }
+  100%{
+    opacity: 1;
+  }
 }
 
 .cssload-wrap {
@@ -13,7 +31,7 @@
   transform-style: preserve-3d;
 }
 .cssload-circle {
-  font-size: 2rem;
+  font-size: 2.5rem;
   transform-style: preserve-3d;
   box-sizing: border-box;
   opacity: 0;
@@ -27,19 +45,19 @@
   animation: cssload-spin 10s linear alternate infinite;
 }
 .cssload-circle:nth-of-type(1) {
-  animation-delay: 1000ms;
+  animation-delay: -1000ms;
 }
 .cssload-circle:nth-of-type(2) {
-  animation-delay: 2000ms;
+  animation-delay: -2000ms;
 }
 .cssload-circle:nth-of-type(3) {
-  animation-delay: 3000ms;
+  animation-delay: -3000ms;
 }
 .cssload-circle:nth-of-type(4) {
-  animation-delay: 4000ms;
+  animation-delay: -4000ms;
 }
 .cssload-circle:nth-of-type(5) {
-  animation-delay: 5000ms;
+  animation-delay: -5000ms;
 }
 @keyframes cssload-spin {
   0% {

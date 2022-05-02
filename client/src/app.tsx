@@ -13,7 +13,7 @@ import Spinner from './pages/dashboard-components/spinner';
 
 const App: React.FC = () => {
   const authStatus: boolean = useAppSelector(
-    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+    (state: { authBoolean: { value: boolean } }) => state.authBoolean.value
   );
 
   //navigate to login page if not logged in previous session
