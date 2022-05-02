@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { Gb, De, Es, Fr, It } from 'react-flags-select';
 import { CharTranslator } from './charTranslator';
+import Spinner from '../dashboard-components/spinner';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import {
@@ -116,13 +118,11 @@ const Translate: React.FC = () => {
       {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
-            {enUrlReduxString}
-            <br />
+            <h1>{enUrlReduxString.replace('_', ' ')}</h1>
             {enParsedText}
           </div>
           <div className="tt-div">
-            {nonEnUrlReduxString}
-            <br /> <br />
+            <h1>{nonEnUrlReduxString.replace('_', ' ')}</h1>
             {nonEnParsedText}
           </div>
         </div>
@@ -131,14 +131,7 @@ const Translate: React.FC = () => {
       )}
 
       {/* translating */}
-      {translatingState === true ? (
-        <div className="spinner">
-          <div className="dot1"></div>
-          <div className="dot2"></div>
-        </div>
-      ) : (
-        <></>
-      )}
+      {translatingState === true ? <Spinner /> : <></>}
 
       {/* {translatingState === true ? (
         <div className="translated-text">

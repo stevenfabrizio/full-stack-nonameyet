@@ -29,8 +29,8 @@ const App: React.FC = () => {
     <>
       <BrowserRouter>
         <Header />
-        <Spinner />
-        {/* <Routes>
+        {/* <Spinner /> */}
+        <Routes>
           <Route index element={<Dashboard />} />
           <Route path="/" element={<Dashboard />}>
             <Route index element={<Search />} />
@@ -41,7 +41,7 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Login />} />
-        </Routes> */}
+        </Routes>
       </BrowserRouter>
     </>
   );

@@ -76,9 +76,9 @@ const Search: React.FC = () => {
     const allEnClickableElements: NodeListOf<HTMLLIElement> =
       document.querySelectorAll('.en-search-result');
     for (let i = 0; i < allEnClickableElements.length; i++) {
-      allEnClickableElements[i].style.backgroundColor = 'rgba(0,0,0,0)';
+      allEnClickableElements[i].style.color = 'rgb(32, 33, 34)';
     }
-    ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
+    ClickedElement.style.color = 'rgb(6, 69, 173)';
 
     dispatch(enUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
@@ -92,9 +92,9 @@ const Search: React.FC = () => {
     const allNonEnClickableElements: NodeListOf<HTMLLIElement> =
       document.querySelectorAll('.non-en-search-result');
     for (let i = 0; i < allNonEnClickableElements.length; i++) {
-      allNonEnClickableElements[i].style.backgroundColor = 'rgba(0,0,0,0)';
+      allNonEnClickableElements[i].style.color = 'rgb(32, 33, 34)';
     }
-    ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
+    ClickedElement.style.color = 'rgb(6, 69, 173)';
 
     dispatch(nonEnUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
@@ -134,9 +134,11 @@ const Search: React.FC = () => {
     dispatch(enUrlState(''));
     dispatch(nonEnUrlState(''));
 
-    const deElement: HTMLSpanElement = document.querySelector('.german-span') as HTMLSpanElement;
+    const deElement: HTMLSpanElement = document.querySelector(
+      '.german-span'
+    ) as HTMLSpanElement;
     //restyle grid template for two columns
-    setHeaderTxt(parse(deElement.innerHTML))
+    setHeaderTxt(parse(deElement.innerHTML));
 
     if (translatingState) {
       dispatch(stateTranslatingFalse());
@@ -162,14 +164,29 @@ const Search: React.FC = () => {
                 setSearchInput(e.target.value);
               }}
             ></input>
-            <button type="submit">Search</button>
+            <button type="submit">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                opacity={0.7}
+              >
+                <title>search</title>
+                <path
+                  fillRule="evenodd"
+                  d="M12.2 13.6a7 7 0 1 1 1.4-1.4l5.4 5.4-1.4 1.4-5.4-5.4zM13 8A5 5 0 1 1 3 8a5 5 0 0 1 10 0z"
+                />
+              </svg>
+            </button>
           </form>
 
           <div className="header">
             <div className="dropdown">
               <span className="header-span">{headerTxt}</span>
               <div className="dropdown-menu">
-                <span className='german-span'
+                <span
+                  className="german-span"
                   onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
                     ClickedLang(e)
                   }
@@ -244,8 +261,7 @@ const Search: React.FC = () => {
         ) : (
           <div></div>
         )}
-
-        {/* <div className="non-en-search-result" style={{ display: 'none' }}></div> */}
+        
       </div>
     </>
   );
