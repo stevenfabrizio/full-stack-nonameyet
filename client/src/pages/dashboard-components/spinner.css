@@ -5,19 +5,20 @@
 
   animation: 1s pulse infinite linear;
 
-  letter-spacing: -3px;
+  letter-spacing: -2px;
 }
+
 @keyframes pulse {
-  0%{
+  0% {
     opacity: 1;
   }
-  30%{
+  30% {
     opacity: 0.9;
   }
-  60%{
+  60% {
     opacity: 1;
   }
-  100%{
+  100% {
     opacity: 1;
   }
 }

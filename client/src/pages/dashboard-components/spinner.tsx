@@ -7,6 +7,7 @@ const Spinner: React.FC = () => {
   return (
     <>
       <h1 className="translating-h1">Translating...</h1>
+
       <div className="cssload-wrap">
         <div className="cssload-circle">
           <Gb />

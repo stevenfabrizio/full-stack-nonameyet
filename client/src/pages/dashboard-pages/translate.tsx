@@ -108,14 +108,12 @@ const Translate: React.FC = () => {
 
   return (
     <>
-      {/* not translating nor havent translated yet */}
       {translatingState === false && translatedState === false ? (
         <h1>Nothing has been translated yet.</h1>
       ) : (
         <></>
       )}
 
-      {/* we have previously translated */}
       {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
@@ -140,25 +138,7 @@ const Translate: React.FC = () => {
         <></>
       )}
 
-      {/* translating */}
       {translatingState === true ? <Spinner /> : <></>}
-
-      {/* {translatingState === true ? (
-        <div className="translated-text">
-          <div className="tt-div">
-            {enUrlReduxString}
-            <br />
-            {enParsedText}
-          </div>
-          <div className="tt-div">
-            {nonEnUrlReduxString}
-            <br /> <br />
-            {nonEnParsedText}
-          </div>
-        </div>
-      ) : (
-        <></>
-      )} */}
     </>
   );
 };

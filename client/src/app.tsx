@@ -9,7 +9,6 @@ import Login from './pages/login';
 import Register from './pages/register';
 import Search from './pages/dashboard-pages/search';
 import Translate from './pages/dashboard-pages/translate';
-import Spinner from './pages/dashboard-components/spinner';
 
 const App: React.FC = () => {
   const authStatus: boolean = useAppSelector(
@@ -20,8 +19,6 @@ const App: React.FC = () => {
   React.useEffect(() => {
     if (authStatus) {
       <Navigate to="/login" replace />;
-
-      // return;
     }
   }, []);
 
@@ -29,7 +26,6 @@ const App: React.FC = () => {
     <>
       <BrowserRouter>
         <Header />
-        {/* <Spinner /> */}
         <Routes>
           <Route index element={<Dashboard />} />
           <Route path="/" element={<Dashboard />}>

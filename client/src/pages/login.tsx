@@ -68,25 +68,29 @@ const Login: React.FC = () => {
   return (
     <>
       <div className="login-container">
-        <h1>Login</h1>
+        <h1>Log in</h1>
 
         <form onSubmit={ClickedSubmit}>
+          <label>Email</label>
           <input
             type="text"
             name="email"
-            placeholder="some@email.whatever"
+            placeholder="Enter your email address"
             value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
+          <label>Password</label>
           <input
             type="password"
             name="password"
-            placeholder=""
+            placeholder="Enter your password"
             value={password}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <button type="submit">Submit</button>
         </form>
+        
+        <div></div>
       </div>
     </>
   );

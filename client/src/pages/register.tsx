@@ -71,36 +71,53 @@ const Register: React.FC = () => {
 
   return (
     <>
+      <div></div>
+
       <div className="register-container">
-        <h1>Register</h1>
+        <h1>Create account</h1>
 
         <form onSubmit={ClickedSubmit} className="register-form">
+          <label>Email address</label>
           <input
             type="email"
             name="email"
-            placeholder="222@aol.com"
+            placeholder="Enter your email address"
             value={email}
             onChange={(e) => onChange(e)}
           ></input>
+
+          <label>Password</label>
           <input
             type="password"
             name="password"
-            placeholder="password"
+            placeholder="Enter your password"
             value={password}
             onChange={(e) => onChange(e)}
           ></input>
+
+          <label>Username</label>
           <input
             type="text"
             name="name"
-            placeholder="usernamelol"
+            placeholder="Enter your username"
             value={name}
             onChange={(e) => onChange(e)}
           ></input>
-          <button type="submit">Submit</button>
+          <button type="submit">Create your account</button>
         </form>
 
-        <div></div>
+        <div className="login-register-right-side">
+          <h2>Wikipedia is made by people like you.</h2>
+          <h3>{Math.round(Date.now() / 1500).toLocaleString()}</h3>
+          <p>edits</p>
+          <h3>{Math.round(Date.now() / 250000).toLocaleString()}</h3>
+          <p>articles</p>
+          <h3>{Math.round(Date.now() / 15000000).toLocaleString()}</h3>
+          <p>recent contributors</p>
+        </div>
       </div>
+
+      <div></div>
     </>
   );
 };
