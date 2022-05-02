@@ -31,3 +31,16 @@ DELETE FROM employee;
 --1@3.com 1   
 --ag55@gmail.com nopassword 
 --55@55.com  55
+
+--heroku login
+--heroku create wiki-trans-test
+--heroku addons:create heroku-postgresql:hobby-dev -a wiki-trans-test
+
+--heroku pg:psql -a wiki-trans-test
+--\dt;  why not
+
+--DO TABLE CREATE STUFF
+--\q to quit
+
+--git add .
+--git commit -m 'whatever'
