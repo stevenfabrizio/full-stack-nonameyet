@@ -21,6 +21,9 @@ const parse = require('html-react-parser');
 const Search: React.FC = () => {
   //redux states
   const dispatch = useAppDispatch();
+  const languageReduxString: string = useAppSelector(
+    (state) => state.languageString.value
+  );
   const translatingState: boolean = useAppSelector(
     (state: { translatingBoolean: { value: boolean } }) =>
       state.translatingBoolean.value
@@ -40,7 +43,7 @@ const Search: React.FC = () => {
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
-  const [headerTxt, setHeaderTxt] = React.useState<string>(`Select Language`);
+  const [headerTxt, setHeaderTxt] = React.useState<string>(`De`);
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -54,7 +57,7 @@ const Search: React.FC = () => {
 
       //non english part
       const nonEnResponse = await fetch(
-        `https://de.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
+        `https://${languageReduxString}.wikipedia.org/w/api.php?origin=*&action=opensearch&search=${searchInput}`
       );
       const nonEnParsedResponse = await nonEnResponse.json();
 
@@ -77,7 +80,7 @@ const Search: React.FC = () => {
     }
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
-    dispatch(enUrlState(ClickedElement.innerHTML));
+    dispatch(enUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
 
   //highlights clicked li, dispatches it to state.
@@ -93,7 +96,7 @@ const Search: React.FC = () => {
     }
     ClickedElement.style.backgroundColor = 'rgba(100,100,100,1)';
 
-    dispatch(nonEnUrlState(ClickedElement.innerHTML));
+    dispatch(nonEnUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
 
   //navigate to translate component when clicked.
@@ -105,25 +108,35 @@ const Search: React.FC = () => {
     navigate('/translate');
   };
 
-  //change header text to clicked innerhtml and update redux state of language to translate.
+  //change header text to clicked innerhtml and update redux states.
   const ClickedLang = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
     const clickedLanguage: HTMLSpanElement = e.target as HTMLSpanElement;
 
-    //restyle grid template for two columns
     setHeaderTxt(parse(clickedLanguage.innerHTML));
     const currentLanguage: HTMLSpanElement =
       document.querySelector('.header-span')!;
-    currentLanguage.style.gridTemplateColumns = '1fr 1fr';
+    // currentLanguage.style.gridTemplateColumns = '1fr 1fr';
 
+    //get the first two letters of clicked element which are one of de es fr it
     dispatch(
       languageState(clickedLanguage.innerHTML.slice(0, 2).toLowerCase())
     );
+
+    //now reset all search results
+    dispatch(enUrlState(''));
+    dispatch(nonEnUrlState(''));
+    dispatch(enUrlsState([]));
+    dispatch(nonEnUrlsState([]));
   };
 
   //if already translating on component load, cancel it.
   React.useEffect(() => {
     dispatch(enUrlState(''));
     dispatch(nonEnUrlState(''));
+
+    const deElement: HTMLSpanElement = document.querySelector('.german-span') as HTMLSpanElement;
+    //restyle grid template for two columns
+    setHeaderTxt(parse(deElement.innerHTML))
 
     if (translatingState) {
       dispatch(stateTranslatingFalse());
@@ -132,62 +145,68 @@ const Search: React.FC = () => {
 
   return (
     <>
-      <div className="header">
-        <div className="dropdown">
-          <span className="header-span">{headerTxt}</span>
-          <div className="dropdown-menu">
-            <span
-              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedLang(e)
-              }
-            >
-              De
-              <De />
-            </span>
-            <span
-              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedLang(e)
-              }
-            >
-              Es
-              <Es />
-            </span>
-            <span
-              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedLang(e)
-              }
-            >
-              Fr
-              <Fr />
-            </span>
-            <span
-              onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
-                ClickedLang(e)
-              }
-            >
-              It
-              <It />
-            </span>
-          </div>
-        </div>
-      </div>
-
       <div className="search-containers">
-        <form
-          onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-            SearchForResults(e)
-          }
-        >
-          <input
-            type="text"
-            placeholder="Search your topic here"
-            value={searchInput}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setSearchInput(e.target.value);
-            }}
-          ></input>
-          <button type="submit">Search</button>
-        </form>
+        <div className="form-container">
+          <div></div>
+
+          <form
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+              SearchForResults(e)
+            }
+          >
+            <input
+              type="text"
+              placeholder="Search your topic here"
+              value={searchInput}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setSearchInput(e.target.value);
+              }}
+            ></input>
+            <button type="submit">Search</button>
+          </form>
+
+          <div className="header">
+            <div className="dropdown">
+              <span className="header-span">{headerTxt}</span>
+              <div className="dropdown-menu">
+                <span className='german-span'
+                  onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                    ClickedLang(e)
+                  }
+                >
+                  De
+                  <De />
+                </span>
+                <span
+                  onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                    ClickedLang(e)
+                  }
+                >
+                  Es
+                  <Es />
+                </span>
+                <span
+                  onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                    ClickedLang(e)
+                  }
+                >
+                  Fr
+                  <Fr />
+                </span>
+                <span
+                  onClick={(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) =>
+                    ClickedLang(e)
+                  }
+                >
+                  It
+                  <It />
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div></div>
+        </div>
 
         <ul className="en-results">
           {reduxResultsEn.map((a: string) => (
@@ -226,7 +245,7 @@ const Search: React.FC = () => {
           <div></div>
         )}
 
-        <div className="non-en-search-result" style={{ display: 'none' }}></div>
+        {/* <div className="non-en-search-result" style={{ display: 'none' }}></div> */}
       </div>
     </>
   );

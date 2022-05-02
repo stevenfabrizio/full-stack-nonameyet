@@ -31,3 +31,6 @@ https://github.com/ousecTic/pern-jwt-tutorial
 https://www.youtube.com/watch?v=ZJxUOOND5_A&
 
 ---
+
+Things to add:
+A reason for logging in, such as storing 10 or so most recent searches in postgresql database.

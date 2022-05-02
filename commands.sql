@@ -44,3 +44,7 @@ DELETE FROM employee;
 
 --git add .
 --git commit -m 'whatever'
+--heroku git:remove -a wiki-trans-test
+--git add .
+--git commit -am 'make it better'
+--git push heroku master
