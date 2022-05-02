@@ -1,6 +1,7 @@
 /* spinner */
 .translating-h1 {
   position: fixed;
+  color: rgb(8, 8, 8);
 }
 
 .cssload-wrap {

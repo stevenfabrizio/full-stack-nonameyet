@@ -88,6 +88,7 @@ const Translate: React.FC = () => {
       dispatch(
         nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
       );
+
       dispatch(stateTranslatingFalse());
       dispatch(stateTranslatedTrue());
     } catch (error) {
@@ -118,10 +119,19 @@ const Translate: React.FC = () => {
       {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
+            <p style={{ fontSize: '3.5rem', marginBottom: '4px' }}>
+              <Gb />
+            </p>
             <h1>{enUrlReduxString.replace('_', ' ')}</h1>
             {enParsedText}
           </div>
           <div className="tt-div">
+            <p style={{ fontSize: '3.5rem', marginBottom: '4px' }}>
+              {languageReduxString === 'it' ? <It /> : <></>}
+              {languageReduxString === 'de' ? <De /> : <></>}
+              {languageReduxString === 'fr' ? <Fr /> : <></>}
+              {languageReduxString === 'es' ? <Es /> : <></>}
+            </p>
             <h1>{nonEnUrlReduxString.replace('_', ' ')}</h1>
             {nonEnParsedText}
           </div>

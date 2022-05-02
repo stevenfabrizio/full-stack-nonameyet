@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { De, Es, Fr, It } from 'react-flags-select';
+import { De, Es, Fr, Gb, It } from 'react-flags-select';
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { enUrlState } from '../../features/enUrl/enUrlSlice';
@@ -76,9 +76,9 @@ const Search: React.FC = () => {
     const allEnClickableElements: NodeListOf<HTMLLIElement> =
       document.querySelectorAll('.en-search-result');
     for (let i = 0; i < allEnClickableElements.length; i++) {
-      allEnClickableElements[i].style.color = 'rgb(32, 33, 34)';
+      allEnClickableElements[i].style.fontWeight = '500';
     }
-    ClickedElement.style.color = 'rgb(6, 69, 173)';
+    ClickedElement.style.fontWeight = '600';
 
     dispatch(enUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
@@ -92,9 +92,9 @@ const Search: React.FC = () => {
     const allNonEnClickableElements: NodeListOf<HTMLLIElement> =
       document.querySelectorAll('.non-en-search-result');
     for (let i = 0; i < allNonEnClickableElements.length; i++) {
-      allNonEnClickableElements[i].style.color = 'rgb(32, 33, 34)';
+      allNonEnClickableElements[i].style.fontWeight = '500';
     }
-    ClickedElement.style.color = 'rgb(6, 69, 173)';
+    ClickedElement.style.fontWeight = '600';
 
     dispatch(nonEnUrlState(ClickedElement.innerHTML.replace(' ', '_')));
   };
@@ -113,8 +113,9 @@ const Search: React.FC = () => {
     const clickedLanguage: HTMLSpanElement = e.target as HTMLSpanElement;
 
     setHeaderTxt(parse(clickedLanguage.innerHTML));
-    const currentLanguage: HTMLSpanElement =
-      document.querySelector('.header-span')!;
+
+    // const currentLanguage: HTMLSpanElement =
+    //   document.querySelector('.header-span')!;
     // currentLanguage.style.gridTemplateColumns = '1fr 1fr';
 
     //get the first two letters of clicked element which are one of de es fr it
@@ -131,16 +132,15 @@ const Search: React.FC = () => {
 
   //if already translating on component load, cancel it.
   React.useEffect(() => {
-    dispatch(enUrlState(''));
-    dispatch(nonEnUrlState(''));
-
     const deElement: HTMLSpanElement = document.querySelector(
       '.german-span'
     ) as HTMLSpanElement;
-    //restyle grid template for two columns
+    //parse the german flag on component load
     setHeaderTxt(parse(deElement.innerHTML));
 
     if (translatingState) {
+      dispatch(enUrlState(''));
+      dispatch(nonEnUrlState(''));
       dispatch(stateTranslatingFalse());
     }
   }, []);
@@ -183,7 +183,7 @@ const Search: React.FC = () => {
 
           <div className="header">
             <div className="dropdown">
-              <span className="header-span">{headerTxt}</span>
+              <span className="header-span">{headerTxt} </span>
               <div className="dropdown-menu">
                 <span
                   className="german-span"
@@ -225,6 +225,21 @@ const Search: React.FC = () => {
           <div></div>
         </div>
 
+        <div className="search-flags">
+          <div></div>
+          <h1 style={{ fontSize: '3.5rem' }}>
+            <Gb />
+          </h1>
+          <h1 style={{ fontSize: '3.5rem' }}>
+          {languageReduxString === 'it' ? <It /> : <></>}
+              {languageReduxString === 'de' ? <De /> : <></>}
+              {languageReduxString === 'fr' ? <Fr /> : <></>}
+              {languageReduxString === 'es' ? <Es /> : <></>}
+          </h1>
+          <div></div>
+        </div>
+
+        <div className="left-en-results"></div>
         <ul className="en-results">
           {reduxResultsEn.map((a: string) => (
             <li
@@ -252,6 +267,7 @@ const Search: React.FC = () => {
             </li>
           ))}
         </ul>
+        <div className="right-non-en-results"></div>
 
         {reduxSelectedNonEnResult.length > 0 &&
         reduxSelectedEnResut.length > 0 ? (
@@ -261,7 +277,6 @@ const Search: React.FC = () => {
         ) : (
           <div></div>
         )}
-        
       </div>
     </>
   );
