@@ -29,6 +29,8 @@ b {
   margin-left: 0px;
   margin-right: 0px;
   margin-top: 7px;
+
+  max-width: calc(50vw - 60px);
 }
 .tt-div i {
   /* color: rgb(230, 230, 230); */
@@ -129,7 +131,10 @@ b {
 .tt-div p * span,
 .tt-div p span,
 .tt-div p * small,
-.tt-div p small {
+.tt-div p small, .tt-div * time, .tt-div * abbr {
+  color: rgb(222, 222, 222);
+}
+.tt-div * sup{
   color: rgb(222, 222, 222);
 }
 .tt-div ul {
