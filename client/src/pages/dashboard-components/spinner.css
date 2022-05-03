@@ -1,11 +1,25 @@
 /* spinner */
-.translating-h1 {
+.translating-h1-1 {
+
+  position: fixed;
+  color: rgb(21, 21, 21);
+  top: 45%;
+
+  font-size: 30px;
+  letter-spacing: -2px;
+
+  animation: 1s pulse infinite linear;
+}
+.translating-h1-2 {
+
+  top: 55%;
   position: fixed;
   color: rgb(21, 21, 21);
 
-  animation: 1s pulse infinite linear;
-
+  font-size: 30px;
   letter-spacing: -2px;
+
+  animation: 1s pulse infinite linear;
 }
 
 @keyframes pulse {

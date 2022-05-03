@@ -1,7 +1,7 @@
 import React from 'react';
 
+import { YandexTranslator } from '@translate-tools/core/translators/YandexTranslator';
 import { Gb, De, Es, Fr, It } from 'react-flags-select';
-import { CharTranslator } from './charTranslator';
 import Spinner from '../dashboard-components/spinner';
 
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
@@ -17,6 +17,7 @@ import { nonParsedEnState } from '../../features/translate/nonParsedEnSlice';
 import { nonParsedNonEnState } from '../../features/translate/nonParsedNonEnSlice';
 
 const parse = require('html-react-parser');
+const translator = new YandexTranslator();
 
 const Translate: React.FC = () => {
   //redux variables
@@ -48,6 +49,8 @@ const Translate: React.FC = () => {
   //parsing the raw strings to for html formatting
   const enParsedText = parse(nonParsedEnReduxString);
   const nonEnParsedText = parse(nonParsedNonEnReduxString);
+  const [counter, setCounter] = React.useState<number>(0);
+  const [stringLength, setStringLength] = React.useState<number>(0);
 
   const ClickedTranslate = async () => {
     try {
@@ -74,19 +77,23 @@ const Translate: React.FC = () => {
       const nonEnUnparsedResponse = await nonEnResponse.json();
 
       //need to dig really deep to get the data. need to do many steps bc the object key has a different name for each wiki entry.
+
       const myNonEnObj = nonEnUnparsedResponse.query.pages;
       const nonEnKeys = Object.keys(myNonEnObj);
       const nonEnWikipediaArticleID = nonEnKeys[0];
       const nonEnRawContent =
         myNonEnObj[nonEnWikipediaArticleID].extract.toString();
 
-      const translatedIntoEnNonParsed = CharTranslator(
-        nonEnRawContent,
-        languageReduxString
-      );
+      setStringLength(nonEnRawContent.length);
+
+      console.log(nonEnRawContent.length);
+      console.log(stringLength);
+
+      const translatedIntoEnNonParsed = CharTranslator(nonEnRawContent);
 
       dispatch(
-        nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
+        // nonParsedNonEnState((await translatedIntoEnNonParsed).toString())
+        nonParsedNonEnState(await translatedIntoEnNonParsed)
       );
 
       dispatch(stateTranslatingFalse());
@@ -95,6 +102,50 @@ const Translate: React.FC = () => {
       console.log(`bad something: ${error}`);
     }
   };
+
+  const CharTranslator = async (data: string) => {
+    let counters: number = 0;
+    const stringLengths: number = data.length;
+    let translatedString: string = '';
+    setStringLength(data.length);
+
+    //finally found a practical use for a while statement
+    while (counters < stringLengths) {
+      console.log(
+        `Characters to be translated: ${stringLengths} 
+        \n
+        Characters translated: ${counters}.`
+      );
+
+      //taking chunks of 10k chars at a time. yandex's limit.
+      let slicedStr = data.slice(counters, counters + 10000);
+
+      //need to do this if statement for typescript to make yandex translator happy.
+      if (
+        languageReduxString != 'de' &&
+        languageReduxString != 'es' &&
+        languageReduxString != 'fr' &&
+        languageReduxString != 'it'
+      ) {
+        return console.log('Error: Unknown Language Selected.');
+      }
+
+      const translating: string = await translator
+        .translate(slicedStr, languageReduxString, 'en')
+        .then((translate) => (translatedString = translatedString + translate));
+
+      // UpdateState(counters + 10000);
+
+      setCounter(counters + 10000);
+      counters = counters + 10000;
+    }
+
+    return translatedString;
+  };
+
+  // const UpdateState = (proppies: number) => {
+  //   setCounter(proppies);
+  // };
 
   //when arriving here from clicking translate, reset states and fetch wiki content.
   React.useEffect(() => {
@@ -138,7 +189,17 @@ const Translate: React.FC = () => {
         <></>
       )}
 
-      {translatingState === true ? <Spinner /> : <></>}
+      {translatingState === true ? (
+        <>
+          {/* <h1>
+            Characters to be translated:{stringLength} Characters translated:
+            {counter}
+          </h1> */}
+          <Spinner stringLength={stringLength} counter={counter} />{' '}
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

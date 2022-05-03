@@ -3,10 +3,49 @@ import { Gb, De, Es, Fr, It } from 'react-flags-select';
 
 require('./spinner.css');
 
-const Spinner: React.FC = () => {
+type SpinnerProps = {
+  stringLength: number;
+  counter: number;
+};
+
+// const Spinner: React.FC = () => {
+const Spinner: React.FC<SpinnerProps> = (props) => {
+  const [counter, setCounter] = React.useState<number>(0);
+  const [stringLength, setStringLength] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    setCounter(props.counter);
+  }, [props.counter]);
+
+  React.useEffect(() => {
+    setStringLength(props.stringLength);
+  }, [props.stringLength]);
+
   return (
     <>
-      <h1 className="translating-h1">Translating...</h1>
+      {counter > 9999 && stringLength > 1 ? (
+        <>
+          <h1 className="translating-h1-1">
+            Characters to be translated: {stringLength}
+          </h1>
+          <h1 className="translating-h1-2">
+            {' '}
+            Characters translated: {counter}
+          </h1>{' '}
+        </>
+      ) : (
+        <></>
+      )}
+
+      {counter < 10001 && stringLength > 1 ? (
+        <>
+          <h1 className="translating-h1-1">
+            Characters to be translated: {stringLength}
+          </h1>
+        </>
+      ) : (
+        <></>
+      )}
 
       <div className="cssload-wrap">
         <div className="cssload-circle">
