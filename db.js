@@ -3,7 +3,7 @@ const Pool = require('pg').Pool;
 //note about below
 //comment out PART 2 for local environment. uncomment PART 1
 
-//DEVELOPMENT MODE
+// DEVELOPMENT MODE
 // const pool = new Pool({
 //   user: 'postgres',
 //   password: 'idk',
