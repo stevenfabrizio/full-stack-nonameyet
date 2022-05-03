@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify'
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
@@ -56,8 +57,10 @@ const Register: React.FC = () => {
         navigate('/');
       } else {
         dispatch(stateFalse());
+        toast.error(`${parseResponse}`)
       }
     } catch (error) {
+      toast.error(`ha ${error}`)
       console.error('Exception ' + error);
     }
   };
@@ -75,6 +78,11 @@ const Register: React.FC = () => {
 
       <div className="register-container">
         <h1>Create account</h1>
+
+        <p className='create-acc-p'>
+          Consider using a username other than your real name, as usernames are
+          public and cannot be made private later.
+        </p>
 
         <form onSubmit={ClickedSubmit} className="register-form">
           <label>Email address</label>
@@ -117,7 +125,7 @@ const Register: React.FC = () => {
         </div>
       </div>
 
-      <div></div>
+      <div className='empty-reg-div'></div>
     </>
   );
 };

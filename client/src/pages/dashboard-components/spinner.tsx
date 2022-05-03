@@ -26,44 +26,47 @@ const Spinner: React.FC<SpinnerProps> = (props) => {
       {counter > 9999 && stringLength > 1 ? (
         <>
           <h1 className="translating-h1-1">
-            Characters to be translated: {stringLength}
+            Characters to be translated: &ensp;{stringLength}
           </h1>
           <h1 className="translating-h1-2">
-            {' '}
-            Characters translated: {counter}
-          </h1>{' '}
-        </>
-      ) : (
-        <></>
-      )}
-
-      {counter < 10001 && stringLength > 1 ? (
-        <>
-          <h1 className="translating-h1-1">
-            Characters to be translated: {stringLength}
+            Characters translated: &ensp;{counter}
           </h1>
         </>
       ) : (
         <></>
       )}
 
-      <div className="cssload-wrap">
-        <div className="cssload-circle">
-          <Gb />
+      {counter < 9999 && stringLength > 1 ? (
+        <>
+          <h1 className="translating-h1-1">
+            Characters to be translated: &ensp;{stringLength}
+          </h1>
+        </>
+      ) : (
+        <></>
+      )}
+
+      {stringLength > 1 ? (
+        <div className="cssload-wrap">
+          <div className="cssload-circle">
+            <Gb />
+          </div>
+          <div className="cssload-circle">
+            <De />
+          </div>
+          <div className="cssload-circle">
+            <Es />
+          </div>
+          <div className="cssload-circle">
+            <Fr />
+          </div>
+          <div className="cssload-circle">
+            <It />
+          </div>
         </div>
-        <div className="cssload-circle">
-          <De />
-        </div>
-        <div className="cssload-circle">
-          <Es />
-        </div>
-        <div className="cssload-circle">
-          <Fr />
-        </div>
-        <div className="cssload-circle">
-          <It />
-        </div>
-      </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

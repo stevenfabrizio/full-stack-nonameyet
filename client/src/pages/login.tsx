@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { useAppDispatch, useAppSelector } from '../app/hooks';
 import { stateFalse, stateTrue } from '../features/auth/authSlice';
@@ -51,6 +52,7 @@ const Login: React.FC = () => {
         navigate('/');
       } else {
         dispatch(stateFalse());
+        toast.error(`${parseResponse}`);
       }
     } catch (error) {
       dispatch(stateFalse());
@@ -88,8 +90,16 @@ const Login: React.FC = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => onChange(e)}
           />
           <button type="submit">Submit</button>
+
+          <p>Don't have an account?</p>
+          <button
+            className="create-from-login"
+            onClick={() => navigate('/register')}
+          >
+            Create an account
+          </button>
         </form>
-        
+
         <div></div>
       </div>
     </>

@@ -1,35 +1,48 @@
-/* spinner */
-.translating-h1-1 {
+/* @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap'); */
 
+/* spinner */
+
+.translating-h1-1 {
+  margin-left: -22vw;
+  width: 60%;
+  text-align: end;
+  font-weight: 500;
   position: fixed;
   color: rgb(21, 21, 21);
-  top: 45%;
+  top: 48%;
 
-  font-size: 30px;
-  letter-spacing: -2px;
+  font-size: 24px;
+  letter-spacing: -1px;
 
+  font-family: 'Lato';
   animation: 1s pulse infinite linear;
 }
 .translating-h1-2 {
-
-  top: 55%;
+  margin-left: -22vw;
+  width: 60%;
+  text-align: end;
+  font-weight: 500;
+  top: 52%;
   position: fixed;
   color: rgb(21, 21, 21);
 
-  font-size: 30px;
-  letter-spacing: -2px;
+  font-size: 24px;
+  letter-spacing: -1px;
 
+  font-family: 'Lato';
   animation: 1s pulse infinite linear;
 }
-
 @keyframes pulse {
   0% {
     opacity: 1;
   }
-  30% {
-    opacity: 0.9;
+  55% {
+    opacity: 1;
   }
-  60% {
+  65% {
+    opacity: 0.85;
+  }
+  75% {
     opacity: 1;
   }
   100% {

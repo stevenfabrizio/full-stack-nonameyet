@@ -147,6 +147,8 @@ const Search: React.FC = () => {
             }
           >
             <input
+              style={{ textIndent: '2px' }}
+              autoFocus
               type="text"
               placeholder="Search your topic here"
               value={searchInput}
@@ -154,7 +156,7 @@ const Search: React.FC = () => {
                 setSearchInput(e.target.value);
               }}
             ></input>
-            <button type="submit">
+            <button className="mag-glass" type="submit">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="20"
@@ -247,10 +249,10 @@ const Search: React.FC = () => {
 
         <div className="search-flags">
           <div></div>
-          <h1 style={{ fontSize: '3.5rem' }}>
+          <h1 style={{ fontSize: '4rem' }}>
             <Gb />
           </h1>
-          <h1 style={{ fontSize: '3.5rem' }}>
+          <h1 style={{ fontSize: '4rem' }}>
             {languageReduxString === 'it' ? <It /> : <></>}
             {languageReduxString === 'de' ? <De /> : <></>}
             {languageReduxString === 'fr' ? <Fr /> : <></>}

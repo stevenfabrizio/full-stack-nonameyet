@@ -17,7 +17,7 @@ const DashHeader: React.FC = () => {
           Search
         </NavLink>
 
-        <NavLink to="/translate">Translate</NavLink>
+        <NavLink to="/translate">Translated</NavLink>
 
         <div></div>
       </div>
