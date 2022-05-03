@@ -262,33 +262,42 @@ const Search: React.FC = () => {
         </div>
 
         <div className="left-en-results"></div>
-        <ul className="en-results">
-          {reduxResultsEn.map((a: string) => (
-            <li
-              key={a}
-              className="en-search-result"
-              onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
-                ClickedAnEnSearchResult(e)
-              }
-            >
-              {a}
-            </li>
-          ))}
-        </ul>
 
-        <ul className="non-en-results">
-          {reduxResultsNonEn.map((a: string) => (
-            <li
-              key={a}
-              className="non-en-search-result"
-              onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
-                ClickedANonEnSearchResult(e)
-              }
-            >
-              {a}
-            </li>
-          ))}
-        </ul>
+        {reduxResultsEn.length > 1 ? (
+          <ul className="en-results">
+            {reduxResultsEn.map((a: string) => (
+              <li
+                key={a}
+                className="en-search-result"
+                onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
+                  ClickedAnEnSearchResult(e)
+                }
+              >
+                {a}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <></>
+        )}
+
+        {reduxResultsNonEn.length > 1 ? (
+          <ul className="non-en-results">
+            {reduxResultsNonEn.map((a: string) => (
+              <li
+                key={a}
+                className="non-en-search-result"
+                onClick={(e: React.MouseEvent<HTMLLIElement, MouseEvent>) =>
+                  ClickedANonEnSearchResult(e)
+                }
+              >
+                {a}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <></>
+        )}
         <div className="right-non-en-results"></div>
 
         {reduxSelectedNonEnResult.length > 0 &&

@@ -1,9 +1,9 @@
 const pool = require('../db');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
-const jwtGenerator = require('../utilities/jwtGenerator');
+// const jwtGenerator = require('../utilities/jwtGenerator');
 const validInfo = require('../middleware/validInfo');
-const authorization = require('../middleware/authorization');
+// const authorization = require('../middleware/authorization');
 
 //register router
 // router.post('/register', validInfo, async (req, res) => {
