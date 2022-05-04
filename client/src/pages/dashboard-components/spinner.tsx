@@ -8,7 +8,6 @@ type SpinnerProps = {
   counter: number;
 };
 
-// const Spinner: React.FC = () => {
 const Spinner: React.FC<SpinnerProps> = (props) => {
   const [counter, setCounter] = React.useState<number>(0);
   const [stringLength, setStringLength] = React.useState<number>(0);

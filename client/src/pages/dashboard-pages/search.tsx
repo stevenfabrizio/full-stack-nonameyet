@@ -62,7 +62,7 @@ const Search: React.FC = () => {
 
       dispatch(nonEnUrlsState(nonEnParsedResponse[1]));
     } catch (error) {
-      console.error('Beega Probleema: ' + error);
+      // console.error('Beega Probleema: ' + error);
     }
   };
 
@@ -263,7 +263,7 @@ const Search: React.FC = () => {
 
         <div className="left-en-results"></div>
 
-        {reduxResultsEn.length > 1 ? (
+        {reduxResultsEn[0] !== undefined ? (
           <ul className="en-results">
             {reduxResultsEn.map((a: string) => (
               <li
@@ -278,14 +278,12 @@ const Search: React.FC = () => {
             ))}
           </ul>
         ) : (
-          <h1
-            className="no-search-yet"
-          >
+          <h1 className="no-search-yet">
             Search a term to get search results.
           </h1>
         )}
 
-        {reduxResultsNonEn.length > 1 ? (
+        {reduxResultsNonEn[0] !== undefined ? (
           <ul className="non-en-results">
             {reduxResultsNonEn.map((a: string) => (
               <li
@@ -304,8 +302,8 @@ const Search: React.FC = () => {
         )}
         <div className="right-non-en-results"></div>
 
-        {reduxSelectedNonEnResult.length > 0 &&
-        reduxSelectedEnResut.length > 0 ? (
+        {reduxResultsEn[0] !== undefined &&
+        reduxResultsNonEn[0] !== undefined ? (
           <button className="search-translate-btn" onClick={() => Translate()}>
             Translate
           </button>

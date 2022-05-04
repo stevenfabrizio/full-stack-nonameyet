@@ -12,14 +12,14 @@ const Header: React.FC = () => {
   //redux stuff
   const dispatch = useAppDispatch();
   const authStatus: boolean = useAppSelector(
-    (state: { authBoolean: { value: any } }) => state.authBoolean.value
+    (state: { authBoolean: { value: boolean } }) => state.authBoolean.value
   );
   const translatingState: boolean = useAppSelector(
-    (state: { translatingBoolean: { value: any } }) =>
+    (state: { translatingBoolean: { value: boolean } }) =>
       state.translatingBoolean.value
   );
   const translatedState: boolean = useAppSelector(
-    (state: { translatedBoolean: { value: any } }) =>
+    (state: { translatedBoolean: { value: boolean } }) =>
       state.translatedBoolean.value
   );
 
@@ -65,6 +65,7 @@ const Header: React.FC = () => {
       {authStatus ? (
         <>
           <h1 style={{ textTransform: 'capitalize' }}>Welcome, {name}</h1>
+
           <div></div>
           <a onClick={(e) => ClickedLogout(e)}>Logout</a>
         </>

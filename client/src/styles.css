@@ -46,6 +46,7 @@ html {
 
 /* the header */
 .header-component {
+  z-index: 11;
   grid-column: 1 / span 3;
   grid-row: 1;
   z-index: 10;
@@ -237,6 +238,7 @@ form label {
   padding-right: 12px;
   padding-top: 5px;
 
+  margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
   width: 290px;
@@ -323,7 +325,6 @@ form p {
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(auto, auto);
 }
 .dash-header {
   z-index: 10;
@@ -344,7 +345,7 @@ form p {
 .search-containers {
   background-color: white;
   width: 100%;
-  min-height: calc(100vh - 120px);
+  min-height: calc(100vh - 100px);
 
   display: grid;
   grid-template-columns: 1fr auto auto 1fr;
@@ -356,7 +357,6 @@ form p {
   grid-column: 1 / span 4;
   grid-row: 1;
   display: grid;
-  height: 40px;
   grid-template-columns: 1fr auto auto 1fr;
   grid-template-rows: 1fr;
   background-image: linear-gradient(
@@ -364,17 +364,20 @@ form p {
     rgb(246, 246, 246) 100%
   );
 
+  height: 50px;
   border-bottom: 1px solid rgb(167, 215, 249);
 }
 .form-container form {
-  width: auto;
   grid-template-columns: auto 1fr;
   grid-template-rows: 1fr;
 
   border-radius: 1px;
 
-  margin-top: -6px;
-  margin-bottom: 8px;
+  align-self: center;
+  justify-self: center;
+
+  /* margin-top: -6px;
+  margin-bottom: 8px; */
   outline: 1px solid rgb(114, 119, 125);
 }
 .form-container form input {
@@ -415,19 +418,17 @@ form p {
   height: 40vh;
 
   display: grid;
-
 }
+
 /* dropdown */
 .header {
-  height: 50px;
-  margin-top: -12px;
   margin-left: 14px;
-  display: grid;
 
-  margin-bottom: -3px;
-  padding-bottom: 6px;
+  height: 50px;
+  /* padding-bottom: 4px; */
+
   background-color: white;
-
+  display: grid;
   border-left: 1px solid;
   border-right: 1px solid;
   border-image: linear-gradient(to top, rgb(167, 215, 249), rgba(0, 0, 0, 0)) 1
@@ -484,7 +485,6 @@ form p {
 
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: repeat(auto, 4);
 }
 .dropdown > .flag-link:focus + .dropdown-menu,
 .dropdown-menu:hover,
@@ -515,7 +515,7 @@ form p {
 }
 
 .en-results {
-  width: 30vw;
+  width: 34vw;
 
   padding: 20px;
   padding-top: 10px;
@@ -530,7 +530,7 @@ form p {
   border: 1px solid rgb(221, 221, 221);
 }
 .non-en-results {
-  width: 30vw;
+  width: 34vw;
 
   padding: 20px;
   padding-top: 10px;
@@ -590,4 +590,126 @@ form p {
 }
 .mag-glass {
   background-color: white;
+  cursor: pointer;
+}
+
+/* responsiveness */
+@media screen and (max-width: 950px) {
+  .login-register-right-side h2 {
+    font-size: 16px;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  /* register screen */
+  .create-acc-p {
+    font-weight: 500;
+    font-size: 14px;
+  }
+  .login-register-right-side h2 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  .login-register-right-side h3 {
+    font-size: 24px;
+  }
+  .login-register-right-side p {
+    font-size: 14px;
+  }
+
+  /* login screen */
+  .register-container {
+    width: 94vw;
+  }
+
+  .create-acc-p,
+  .register-form input,
+  .register-form button,
+  .login-container form input,
+  .login-container form button,
+  form p {
+    width: 42vw !important;
+
+    font-size: 13px;
+  }
+
+  .create-acc-p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  .login-container h1,
+  .register-container h1 {
+    font-size: 24px;
+  }
+
+  /* en results */
+  .en-results,
+  .non-en-results {
+    width: 44vw;
+  }
+  .en-results li,
+  .non-en-results li {
+    font-size: 13px;
+  }
+
+  /* flags */
+  .search-flags h1 *,
+  .flags-picked * {
+    font-size: 3rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .register-container {
+    grid-template-columns: 1fr auto;
+  }
+
+  .register-container {
+    grid-template-columns: 1fr auto;
+  }
+
+  .login-register-right-side {
+    display: none;
+  }
+
+  .create-acc-p,
+  .register-form input,
+  .register-form button,
+  .login-container form input,
+  .login-container form button,
+  form p {
+    width: 60vw !important;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .login-container h1,
+  .register-container h1 {
+    font-size: 22px;
+  }
+  .search-translate-btn {
+    width: 140px !important;
+
+    font-size: 13px;
+  }
+
+  .form-container form input {
+    font-size: 13px;
+    width: 160px;
+  }
+
+  a,
+  .header-component h1 {
+    font-size: 14px;
+  }
+
+  .no-search-yet,
+  .no-trans-yet {
+    font-size: 18px;
+  }
+
+  .header * span {
+    font-size: 20px;
+  }
 }

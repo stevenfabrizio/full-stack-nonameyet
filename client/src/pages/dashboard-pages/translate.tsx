@@ -15,8 +15,9 @@ import {
 } from '../../features/translate/translatedSlice';
 import { nonParsedEnState } from '../../features/translate/nonParsedEnSlice';
 import { nonParsedNonEnState } from '../../features/translate/nonParsedNonEnSlice';
+import { toast } from 'react-toastify';
 
-require('./translate.css')
+require('./translate.css');
 const parse = require('html-react-parser');
 const translator = new YandexTranslator();
 
@@ -87,9 +88,6 @@ const Translate: React.FC = () => {
 
       setStringLength(nonEnRawContent.length);
 
-      console.log(nonEnRawContent.length);
-      console.log(stringLength);
-
       const translatedIntoEnNonParsed = CharTranslator(nonEnRawContent);
 
       dispatch(
@@ -100,7 +98,7 @@ const Translate: React.FC = () => {
       dispatch(stateTranslatingFalse());
       dispatch(stateTranslatedTrue());
     } catch (error) {
-      console.log(`bad something: ${error}`);
+      // console.log(`bad something: ${error}`);
     }
   };
 
@@ -112,11 +110,11 @@ const Translate: React.FC = () => {
 
     //finally found a practical use for a while statement
     while (localCounter < stringLengths) {
-      console.log(
-        `Characters to be translated: ${stringLengths} 
-        \n
-        Characters translated: ${localCounter}.`
-      );
+      // console.log(
+      //   `Characters to be translated: ${stringLengths} 
+      //   \n
+      //   Characters translated: ${localCounter}.`
+      // );
 
       //taking chunks of 10k chars at a time. yandex's limit.
       let slicedStr = data.slice(localCounter, localCounter + 10000);
@@ -128,7 +126,7 @@ const Translate: React.FC = () => {
         languageReduxString != 'fr' &&
         languageReduxString != 'it'
       ) {
-        return console.log('Error: Unknown Language Selected.');
+        return toast.error('Error: Unknown Language Selected.');
       }
 
       const translating: string = await translator
@@ -155,7 +153,7 @@ const Translate: React.FC = () => {
   return (
     <>
       {translatingState === false && translatedState === false ? (
-        <h1 className='no-trans-yet'>Nothing has been translated yet.</h1>
+        <h1 className="no-trans-yet">Nothing has been translated yet.</h1>
       ) : (
         <></>
       )}
@@ -163,18 +161,24 @@ const Translate: React.FC = () => {
       {translatingState === false && translatedState === true ? (
         <div className="translated-text">
           <div className="tt-div">
-            <p style={{ fontSize: '4rem', marginBottom: '4px' }}>
+            <p
+              className="flags-picked"
+              style={{ fontSize: '4rem', marginBottom: '4px' }}
+            >
               <Gb />
             </p>
             <h1>{enUrlReduxString.replace('_', ' ')}</h1>
             {enParsedText}
           </div>
-          <div className="tt-div">
-            <p style={{ fontSize: '4rem', marginBottom: '4px' }}>
+          <div className="tt-div" id="tt-div-non-en">
+            <p
+              className="flags-picked"
+              style={{ fontSize: '4rem', marginBottom: '4px' }}
+            >
               {languageReduxString === 'it' ? <It /> : <></>}
               {languageReduxString === 'de' ? <De /> : <></>}
               {languageReduxString === 'fr' ? <Fr /> : <></>}
-              {languageReduxString === 'es' ? <Es /> : <></>}
+              {languageReduxString === 'es' ? <Es /> : <></>}{' '}
             </p>
             <h1>{nonEnUrlReduxString.replace('_', ' ')}</h1>
             {nonEnParsedText}

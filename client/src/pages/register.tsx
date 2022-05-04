@@ -33,7 +33,7 @@ const Register: React.FC = () => {
 
     try {
       const body = { email, password, name };
-      console.log(body);
+      // console.log(body);
 
       localStorage.setItem('enteredEmail', email);
       localStorage.setItem('enteredPassword', password);
@@ -61,7 +61,7 @@ const Register: React.FC = () => {
       }
     } catch (error) {
       toast.error(`ha ${error}`)
-      console.error('Exception ' + error);
+      // console.error('Exception ' + error);
     }
   };
 

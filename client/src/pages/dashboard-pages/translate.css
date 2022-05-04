@@ -8,6 +8,7 @@ b {
 }
 .translated-text {
   width: 100%;
+  min-height: calc(100vh - 100px);
 
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -26,8 +27,6 @@ b {
   font-size: 14px;
   line-height: 22.4px;
   margin-bottom: 7px;
-  margin-left: 0px;
-  margin-right: 0px;
   margin-top: 7px;
 
   max-width: calc(50vw - 60px);
@@ -109,7 +108,8 @@ b {
   font-weight: 700;
   line-height: 26.8833px;
 }
-.tt-div p {
+.tt-div p,
+.tt-div h4 span {
   color: rgb(211, 207, 202);
   direction: ltr;
   font-family: sans-serif;
@@ -131,10 +131,12 @@ b {
 .tt-div p * span,
 .tt-div p span,
 .tt-div p * small,
-.tt-div p small, .tt-div * time, .tt-div * abbr {
+.tt-div p small,
+.tt-div * time,
+.tt-div * abbr {
   color: rgb(222, 222, 222);
 }
-.tt-div * sup{
+.tt-div * sup {
   color: rgb(222, 222, 222);
 }
 .tt-div ul {
@@ -191,4 +193,107 @@ b {
   list-style-image: none;
   margin-bottom: 1.4px;
   scrollbar-color: rgb(69, 74, 77) rgb(32, 35, 36);
+}
+
+/* repsonsiveness */
+@media screen and (max-width: 720px) {
+  .translated-text {
+    min-height: calc(100vh - 100px);
+
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    border-top: 2px solid rgb(167, 215, 249);
+  }
+  .tt-div {
+    font-size: 13px;
+    line-height: 20px;
+    margin: 20px;
+    margin-bottom: 7px;
+    margin-top: 7px;
+
+    max-width: calc(50vw - 40px);
+  }
+  .tt-div i {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .tt-div h1 {
+    border-bottom-width: 1px;
+    font-size: 24px;
+    line-height: 34px;
+    margin-bottom: 18px;
+  }
+  .tt-div h2 {
+    border-bottom-width: 1px;
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 5px;
+    margin-top: 18px;
+  }
+  .tt-div h2 span {
+    font-size: 18px;
+    line-height: 24px;
+  }
+  .tt-div h3 {
+    font-size: 14px;
+    line-height: 22.4px;
+    margin-bottom: 7px;
+    margin-top: 7px;
+  }
+  .tt-div h3 span {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+  .tt-div p,
+  .tt-div h4 span {
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
+  .tt-div * i {
+    font-size: 13px;
+    line-height: 20px;
+  }
+  .tt-div ul {
+    font-size: 13px;
+    line-height: 18px;
+    margin-left: 18px;
+    margin-top: 4px;
+  }
+  .tt-div ul li,
+  .tt-div ul li * {
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 1px;
+  }
+  .tt-div ol {
+    font-size: 13px;
+    line-height: 20px;
+    margin-left: 40px;
+    margin-top: 4px;
+  }
+  .tt-div li {
+    font-size: 13px;
+    line-height: 20px;
+    margin-bottom: 1px;
+  }
+}
+
+@media screen and (max-width: 540px) {
+  .translated-text {
+    grid-template-columns: 1fr ;
+    grid-template-rows: auto auto;
+  }
+
+  .tt-div {
+    align-self: start;
+  
+    max-width: calc(100vw - 60px);
+  }
+
+  #tt-div-non-en{
+    grid-row: 1;
+  }
 }

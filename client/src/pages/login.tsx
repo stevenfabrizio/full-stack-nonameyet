@@ -56,7 +56,7 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       dispatch(stateFalse());
-      console.error('Exception ' + error);
+      // console.error('Exception ' + error);
     }
   };
 

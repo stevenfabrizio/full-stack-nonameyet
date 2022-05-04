@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { useAppSelector } from './app/hooks';
 
@@ -41,6 +41,7 @@ const App: React.FC = () => {
           <Route path="*" element={<Login />} />
         </Routes>
       </BrowserRouter>
+
       <ToastContainer
         position="top-right"
         autoClose={2500}
