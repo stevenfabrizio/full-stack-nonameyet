@@ -315,7 +315,9 @@ form p {
 
 /* dashboard */
 .dashboard-container {
-  background-color: white;
+  /* background-image: url(./images/WikiBg.webp); */
+  background-repeat: no-repeat;
+  background-size: cover;
 
   min-height: calc(100vh - 60px);
   width: 100%;
@@ -343,7 +345,12 @@ form p {
 
 /* search */
 .search-containers {
-  background-color: white;
+  /* background-color: white; */
+
+  /* background-image: url(./images/WikiBg.webp);
+  background-repeat: no-repeat;
+  background-size: cover; */
+
   width: 100%;
   min-height: calc(100vh - 100px);
 

@@ -16,6 +16,8 @@ import {
 } from '../../features/translate/translatingSlice';
 import { languageState } from '../../features/language/languageSlice';
 
+import WikiBG from '../../images/WikiBg.webp'
+
 const parse = require('html-react-parser');
 
 const Search: React.FC = () => {
