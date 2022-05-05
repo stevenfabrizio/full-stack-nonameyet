@@ -1,7 +1,6 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Lato&display=swap'); */
 
 /* spinner */
-
 .translating-h1-1 {
   width: 100%;
   text-align: center;
@@ -136,46 +135,41 @@
   }
 }
 
-
 @media screen and (max-width: 720px) {
   .translating-h1-1 {
     font-weight: 500;
     top: 48%;
-  
+
     font-size: 22px;
     letter-spacing: -1px;
   }
   .translating-h1-2 {
     font-weight: 500;
     top: 52%;
-  
+
     font-size: 22px;
     letter-spacing: -1px;
   }
 
-
-
-
-  .cssload-wrap, .cssload-wrap *{
+  .cssload-wrap,
+  .cssload-wrap * {
     display: none;
   }
-
 }
 
 @media screen and (max-width: 540px) {
   .translating-h1-1 {
     font-weight: 500;
     top: 48%;
-  
+
     font-size: 20px;
     letter-spacing: -1px;
   }
   .translating-h1-2 {
     font-weight: 500;
     top: 52%;
-  
+
     font-size: 20px;
     letter-spacing: -1px;
   }
-
 }

@@ -258,6 +258,8 @@ form label {
   color: rgb(51, 102, 204) !important;
   margin-top: 6px !important;
   outline: 1px solid rgb(114, 119, 125);
+
+  margin-bottom: 20px;
 }
 form p {
   background-image: url('https://en.wikipedia.org/w/resources/src/mediawiki.special.userlogin.login.styles/images/glyph-people-large.png?707d6');
@@ -312,7 +314,6 @@ form p {
   margin-bottom: 8px;
   text-align: center;
 }
-
 /* dashboard */
 .dashboard-container {
   /* background-image: url(./images/WikiBg.webp); */

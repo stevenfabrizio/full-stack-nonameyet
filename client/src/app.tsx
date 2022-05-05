@@ -17,10 +17,9 @@ const App: React.FC = () => {
     (state: { authBoolean: { value: boolean } }) => state.authBoolean.value
   );
 
-  //navigate to login page if not logged in previous session
   React.useEffect(() => {
     if (authStatus) {
-      <Navigate to="/login" replace />;
+      <Navigate to="/dashboard" replace />;
     }
   }, []);
 

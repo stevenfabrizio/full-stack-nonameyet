@@ -28,7 +28,7 @@ const Spinner: React.FC<SpinnerProps> = (props) => {
             Characters to be translated: &ensp;{stringLength}
           </h1>
           <h1 className="translating-h1-2">
-            Characters translated: &ensp;{counter}
+            Percent complete:&ensp;{Math.round((counter / stringLength) * 100)}%
           </h1>
         </>
       ) : (

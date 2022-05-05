@@ -16,7 +16,7 @@ import {
 } from '../../features/translate/translatingSlice';
 import { languageState } from '../../features/language/languageSlice';
 
-import WikiBG from '../../images/WikiBg.webp'
+import { toast } from 'react-toastify';
 
 const parse = require('html-react-parser');
 
@@ -30,12 +30,12 @@ const Search: React.FC = () => {
     (state: { translatingBoolean: { value: boolean } }) =>
       state.translatingBoolean.value
   );
-  const reduxSelectedEnResut: string = useAppSelector(
-    (state) => state.nonEnUrlString.value
-  );
-  const reduxSelectedNonEnResult: string = useAppSelector(
-    (state) => state.enUrlString.value
-  );
+  // const reduxSelectedEnResut: string = useAppSelector(
+  //   (state) => state.nonEnUrlString.value
+  // );
+  // const reduxSelectedNonEnResult: string = useAppSelector(
+  //   (state) => state.enUrlString.value
+  // );
   const reduxResultsEn: string[] = useAppSelector(
     (state) => state.enUrlsArray.value
   );
@@ -45,6 +45,7 @@ const Search: React.FC = () => {
 
   const navigate = useNavigate();
   const [searchInput, setSearchInput] = React.useState<string>('');
+  const headerElement = React.useRef();
 
   const SearchForResults = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -64,7 +65,7 @@ const Search: React.FC = () => {
 
       dispatch(nonEnUrlsState(nonEnParsedResponse[1]));
     } catch (error) {
-      // console.error('Beega Probleema: ' + error);
+      console.error(error);
     }
   };
 
@@ -126,10 +127,6 @@ const Search: React.FC = () => {
 
   //if already translating on component load, cancel it.
   React.useEffect(() => {
-    const deElement: HTMLSpanElement = document.querySelector(
-      '.german-span'
-    ) as HTMLSpanElement;
-
     if (translatingState) {
       dispatch(enUrlState(''));
       dispatch(nonEnUrlState(''));
