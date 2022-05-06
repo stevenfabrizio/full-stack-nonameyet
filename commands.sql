@@ -48,3 +48,20 @@ DELETE FROM employee;
 --git add .
 --git commit -am 'make it better'
 --git push heroku master
+
+
+
+--heroku login
+--heroku create X
+--heroku addons:create heroku-postgresql:hobby-dev -a X
+--heroku pg:psql -a X
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE users(
+    user_id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),
+    user_name VARCHAR(255) NOT NULL,
+    user_email VARCHAR(255) NOT NULL UNIQUE,
+    user_password VARCHAR(255) NOT NULL
+);
+--heroku git:remote -a wikipedia-translator
+

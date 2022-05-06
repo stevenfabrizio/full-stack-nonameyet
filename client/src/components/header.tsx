@@ -71,7 +71,7 @@ const Header: React.FC = () => {
         </>
       ) : (
         <>
-          <div></div>
+          <h1 style={{ textTransform: 'capitalize' }}>Wikipedia Translator</h1>
           <Link to="/login">Login</Link>
           <Link to="/register">Register</Link>
         </>

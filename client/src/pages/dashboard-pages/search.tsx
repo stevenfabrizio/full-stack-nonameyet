@@ -278,7 +278,7 @@ const Search: React.FC = () => {
           </ul>
         ) : (
           <h1 className="no-search-yet">
-            Search a term to get search results.
+            Search a topic to get search results.
           </h1>
         )}
 
