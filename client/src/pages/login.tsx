@@ -56,6 +56,7 @@ const Login: React.FC = () => {
       }
     } catch (error) {
       dispatch(stateFalse());
+      toast.error(`Invalid Email or Password.`);
     }
   };
 

@@ -64,4 +64,7 @@ CREATE TABLE users(
     user_password VARCHAR(255) NOT NULL
 );
 --heroku git:remote -a wikipedia-translator
+--git add .
+--git commit -am "make it better"
+--git push heroku master
 

@@ -8,9 +8,9 @@
     "npm": "8.5.0"
   },
   "scripts": {
-    "start": "node server.js",
+    "start": "cd server && node server.js",
     "heroku-postbuild": "cd client && npm install && npm run build",
-    "devStart": "nodemon server.js"
+    "devStart": "cd server && nodemon server.js"
   },
   "keywords": [],
   "author": "",
