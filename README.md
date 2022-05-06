@@ -1,35 +1,39 @@
-# idfk
+# wikipedia-translator
 
-Live Link: https://wiki-trans-test.herokuapp.com/search
-NOT DONE YET
-
----
-
-alexander solzhenitsyn
-Aleksandr_Solzhenitsyn
-
-bernd weikl
-Arturo Benedetti Michelangeli
-Konrad Adenauer
-Hans Sachs
-napolean III 'popular election'
-
-JUST THE LIST OF RESULTS
-https://en.wikipedia.org/w/api.php?origin=*&action=opensearch&search=united-kingdom
-
-example url
-https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=nepal&redirects=true
-
-https://stackoverflow.com/questions/7185288/how-can-i-get-wikipedia-content-using-wikipedias-api
-
-https://github.com/mudroljub/wikipedia-api-docs
+Live Link: https://wikipedia-translator.herokuapp.com/
 
 ---
 
-//original gh repo
-https://github.com/ousecTic/pern-jwt-tutorial
+Welcome to my wikipedia translator project. I was originally more interested in fetching the 'Talk' section of the articles and doing something with that but there isn't an API for it. 
+
+The second most interesting part of Wikipedia for me are the articles in other languages. The tone of the written words as well as the reference lists are often different. Here is an example of what I am talking about:
+
+![Napolean III](https://cdn.discordapp.com/attachments/840740146176851979/971321175936483358/unknown.png)
+
+There are limitations with the app as it stands. Often you need to be a bit intuitive with comparing topics one-to-one. Example:
+
+![Napolean III](https://cdn.discordapp.com/attachments/840740146176851979/971344745173495898/unknown.png)
+
+Other times you just won't find what you're looking for. A lot of the time you will get empty results.
 
 ---
 
-Things to add:
-A reason for logging in, such as storing 10 or so most recent searches in postgresql database.
+How I made it:
+
+The backend is an Express server with a PostgresQL database. Users can register and login with it. One thing to add in the future is saving past searches into the database that can be retrieved by the user. Also learning and adding JWT would be ideal.
+
+The frontend is React. There are routes for login, register and the dashboard. There are nested routes of search and translate within the dashboard. Many of the variables are stored in the redux store because I use them in different components.
+
+There is a fetch request to get serach results for a query. There is another fetch request when you hit Translate for nonparsed HTML article content. The non english article is translated unparsed with Yandex translate. Yandex can only serve 10k characters at a time so I splice the unparsed string and concatenate it once translated. Then it is parsed with html-react-parser and rendered.
+
+---
+
+![Register](https://cdn.discordapp.com/attachments/840740146176851979/972024421462188072/unknown.png)
+
+![Search](https://cdn.discordapp.com/attachments/840740146176851979/972024619211051068/unknown.png)
+
+![Spinner](https://cdn.discordapp.com/attachments/840740146176851979/972024879077552199/unknown.png)
+
+![Translated](https://cdn.discordapp.com/attachments/840740146176851979/972025617602183188/unknown.png)
+
+---
